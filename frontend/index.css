@@ -1,0 +1,334 @@
+/* Dark, flat UI for vegetable distribution center
+   - Black background, white text
+   - Remove boxed/card backgrounds and shadows
+   - Keep images, accent with green for actions
+   - Cleaner spacing for a professional market UI
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #000;
+  --panel: transparent;
+  --text: #ffffff;
+  --muted: #cbd5c5;
+  --accent: #16a34a;
+  --accent-2: #9be7a1;
+  --card-radius: 8px;
+  --gap: 1rem;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+html,
+body {
+  height: 100%
+}
+
+body {
+  font-family: var(--font-family);
+  line-height: 1.6;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Hero */
+.hero {
+  min-height: 64vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 1rem;
+  position: relative;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/homepage.png') center/cover no-repeat;
+  color: var(--text);
+}
+
+.hero-content {
+  max-width: 900px;
+  z-index: 1
+}
+
+.hero-content h1 {
+  font-size: 2.2rem;
+  letter-spacing: 0.6px;
+  margin-bottom: 0.6rem;
+  color: #fff;
+}
+
+.hero-content p {
+  color: var(--muted);
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+  line-height: 1.6
+}
+
+.hero-btn {
+  display: inline-block;
+  background: linear-gradient(180deg, var(--accent), #0f7a3a);
+  color: #fff;
+  padding: 0.75rem 1.2rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform .12s ease, box-shadow .12s ease;
+  box-shadow: 0 6px 18px rgba(22, 163, 74, 0.12);
+}
+
+.hero-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(22, 163, 74, 0.18)
+}
+
+/* Navigation small */
+.hero-navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 28px;
+}
+
+.logo img {
+  height: 42px;
+  filter: brightness(0) invert(1)
+}
+
+.auth .btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.auth .btn.register {
+  background: var(--accent);
+  color: #fff;
+  border: none
+}
+
+/* Sections — flat style, no boxed cards */
+section {
+  padding: 48px 18px;
+  background: transparent;
+  color: var(--text);
+}
+
+section h2 {
+  color: var(--accent-2);
+  margin-bottom: 0.6rem;
+  font-size: 1.6rem
+}
+
+/* Sales / product tiles — images visible, no boxes */
+.sale-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+/* Each tile: image + content laid out, but no outer card background */
+.sale-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+  width: 220px;
+  padding: 0;
+  /* remove padded card feel */
+  border-radius: var(--card-radius);
+  background: var(--panel);
+  box-shadow: none;
+  color: var(--text);
+}
+
+/* keep images attractive */
+.sale-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  /* image rounded only */
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* product text */
+.sale-card h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #fff;
+  font-weight: 700
+}
+
+.sale-card .old-price {
+  color: #9aa19a;
+  text-decoration: line-through;
+  font-size: 0.9rem
+}
+
+.sale-card .new-price {
+  color: var(--accent-2);
+  font-weight: 800;
+  font-size: 1.05rem
+}
+
+.sale-card .seller {
+  color: var(--muted);
+  font-size: 0.9rem
+}
+
+/* action button: flat, prominent, no box look */
+.sale-card .btn {
+  margin-top: 6px;
+  background: transparent;
+  color: var(--accent-2);
+  border: 1px solid rgba(155, 231, 161, 0.12);
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.sale-card .btn:hover {
+  background: rgba(22, 163, 74, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Fruit gallery — keep flat style */
+.fruit-gallery {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap
+}
+
+.fruit-card {
+  width: 220px;
+  padding: 10px 0;
+  text-align: center;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.fruit-card h3 {
+  color: var(--accent-2);
+  margin-bottom: 6px
+}
+
+/* Flat value boxes used elsewhere */
+.value {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--muted)
+}
+
+/* Footer: simplified dark strip */
+footer {
+  background: transparent;
+  color: var(--muted);
+  padding: 30px 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04)
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  flex-wrap: wrap
+}
+
+.footer-section h3 {
+  color: var(--accent-2)
+}
+
+/* Links and social */
+a {
+  color: var(--accent-2);
+  text-decoration: none
+}
+
+a:hover {
+  text-decoration: underline
+}
+
+/* Forms, inputs */
+input,
+textarea,
+select {
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* Utility */
+.muted {
+  color: var(--muted)
+}
+
+.small {
+  font-size: 0.9rem;
+  color: var(--muted)
+}
+
+/* Responsive tweaks */
+@media (max-width:900px) {
+  .hero-content h1 {
+    font-size: 1.6rem
+  }
+
+  .sale-cards {
+    gap: 12px
+  }
+
+  .sale-card {
+    width: 46%
+  }
+}
+
+@media (max-width:520px) {
+  .sale-card {
+    width: 100%
+  }
+
+  .hero-navbar {
+    padding: 12px
+  }
+}
+
+/* Remove any lingering card/shadow styles from previous theme */
+.card,
+.sale-card,
+.fruit-card,
+.image-cards,
+.card:hover,
+.sale-card:hover {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border: none !important;
+}
+
+/* Keep images visible and prominent without boxed containers */

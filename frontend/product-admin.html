@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Admin - 🍃 Leef</title>
+  <style>
+    :root {
+      --green: #16a34a;
+      --red: #dc2626;
+      --blue: #2563eb;
+      --bg: #fafaf9;
+      --card: #fff;
+      --muted: #555;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    aside {
+      width: 240px;
+      background: var(--card);
+      padding: 1.5em 1em;
+      box-shadow: 2px 0 6px var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2em;
+    }
+
+    aside .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      font-size: 1.5rem;
+      margin-bottom: 2em;
+      text-decoration: none;
+      color: var(--green);
+      font-weight: bold;
+    }
+
+    aside nav a {
+      display: block;
+      padding: 0.7em 0.6em;
+      color: var(--muted);
+      text-decoration: none;
+      border-radius: 0.5em;
+      transition: background 0.2s, color 0.2s;
+      font-size: 1.05rem;
+    }
+
+    aside nav a.active,
+    aside nav a:hover {
+      background: var(--green);
+      color: #fff;
+      font-weight: bold;
+    }
+
+    aside button.redeem-btn {
+      margin-top: auto;
+      width: 100%;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      padding: 0.7em;
+      border-radius: 0.5em;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    main {
+      flex: 1;
+      padding: 2.5em 3em;
+      display: flex;
+      flex-direction: column;
+      gap: 2em;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5em;
+      color: #1a2e05;
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      margin-bottom: 0.7em;
+      color: #256029;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 1.5em;
+      border-radius: 1em;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+      margin-bottom: 2em;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.3em;
+      color: #222;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 0.7em;
+      margin-bottom: 1em;
+      border: 1px solid #ddd;
+      border-radius: 0.5em;
+      font-size: 1rem;
+    }
+
+    input[type="checkbox"] {
+      width: auto;
+      margin-right: 0.5em;
+    }
+
+    input[type="file"] {
+      padding: 0.2em 0;
+    }
+
+    .btn {
+      padding: 0.5em 1.2em;
+      border: none;
+      border-radius: 0.4em;
+      cursor: pointer;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+
+    .btn.view {
+      background: var(--blue);
+    }
+
+    .btn.update {
+      background: var(--green);
+    }
+
+    .btn:active {
+      opacity: 0.85;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1em;
+      background: #fff;
+    }
+
+    th,
+    td {
+      padding: 0.7em;
+      border-bottom: 1px solid #eee;
+      font-size: 1rem;
+      text-align: left;
+    }
+
+    th {
+      background: #f5f5f5;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .outofstock {
+      color: var(--red);
+      font-weight: bold;
+    }
+
+    .instock {
+      color: var(--green);
+      font-weight: bold;
+    }
+
+    input.editable {
+      width: 90px;
+      padding: 4px 6px;
+      font-size: 1rem;
+    }
+
+    @media(max-width:900px) {
+      main {
+        padding: 1em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <aside>
+    <a href="#" class="logo">🍃 Leef</a>
+    <nav>
+      <a href="admin-dashboard.html">Overview</a>
+      <a href="new-registration.html">Registration Requests</a>
+      <a href="order.html">Orders</a>
+      <a href="product-admin.html" class="active">Products</a>
+      <a href="feedback-admin.html">Feedback</a>
+      <a href="questions-admin.html">Questions</a>
+      <a href="refund-approval.html">Refunds</a>
+
+      <a href="admin-profile.html">Profile</a>
+    </nav>
+    <button class="redeem-btn">Logout</button>
+  </aside>
+
+  <!-- Main -->
+  <main>
+    <!-- Add Product -->
+    <div class="card">
+      <h2>Add Product</h2>
+      <form id="addProductForm">
+        <label>Product Name</label>
+        <input type="text" id="productName" required>
+
+        <label>Description</label>
+        <textarea id="productDesc" required></textarea>
+
+        <label>Product Image</label>
+        <input type="file" id="productImg" accept="image/*">
+
+        <label>Price</label>
+        <div style="display:flex;gap:0.5em;align-items:center;">
+          <input type="text" id="productPrice" placeholder="Enter price (e.g. 1500 or 1500/kg)" required
+            style="flex:1;">
+          <button type="button" class="btn view" onclick="addPriceInfo()">Add Price</button>
+        </div>
+        <div id="priceInfo" style="margin:0.5em 0 1em 0; color:#256029; font-weight:500;"></div>
+
+        <div>
+          <label>Product Features:</label>
+          <div style="margin-top:0.5em;">
+            <label><input type="checkbox" id="featureMultiLoc"> Multiple Locations</label>
+            <label><input type="checkbox" id="featureQnA"> Open Q&amp;A</label>
+            <label><input type="checkbox" id="featureFeedback"> Open Feedback</label>
+            <label><input type="checkbox" id="seasonal">Seasonal category</label>
+            <label>
+              <input type="checkbox" id="featureCoins" onchange="toggleCoins()"> Use Coins
+              <input type="number" id="coinsPercentage" placeholder="Enter % of coins"
+                style="display:none; width:100px; margin-left:0.5em;">
+            </label>
+            <label>
+              <input type="checkbox" id="featurePromotion" onchange="togglePromotion()"> Add Promotion
+            </label>
+
+            <input type="checkbox" id="featureSales" onchange="toggleSales()"> Add Sales
+            </label>
+            <input type="text" id="salesDetails" placeholder="e.g. Flash sale 10% or Buy2Get1"
+              style="display:none; width:100%; padding:0.6em; border:1px solid #ddd; border-radius:0.5em; margin-top:0.5em;">
+          </div>
+        </div>
+
+        <button type="submit" class="btn update">Add Product</button>
+      </form>
+    </div>
+
+    <script>
+      // Show/hide coins input
+      function toggleCoins() {
+        const checked = document.getElementById('featureCoins').checked;
+        document.getElementById('coinsPercentage').style.display = checked ? 'inline-block' : 'none';
+      }
+
+      // Show/hide promotion input
+      function togglePromotion() {
+        const checked = document.getElementById('featurePromotion').checked;
+        document.getElementById('promotionDetails').style.display = checked ? 'block' : 'none';
+      }
+
+      // Show/hide sales input
+      function toggleSales() {
+        const checked = document.getElementById('featureSales').checked;
+        document.getElementById('salesDetails').style.display = checked ? 'block' : 'none';
+      }
+
+      // Add price info (letters allowed)
+      function addPriceInfo() {
+        const price = document.getElementById('productPrice').value;
+        if (price.trim() !== "") {
+          document.getElementById('priceInfo').textContent = "Price set: " + price;
+        } else {
+          document.getElementById('priceInfo').textContent = "";
+        }
+      }
+
+      // Handle Add Product
+      document.getElementById('addProductForm').onsubmit = function (e) {
+        e.preventDefault();
+        const name = document.getElementById('productName').value;
+        const desc = document.getElementById('productDesc').value;
+        const seller = document.getElementById('sellerName').value;
+        const shop = document.getElementById('shopName').value;
+        const price = document.getElementById('productPrice').value;
+        const sellerLink = document.getElementById('sellerLink').value;
+        const features = [];
+        if (document.getElementById('featureMultiLoc').checked) features.push('Multiple Locations');
+        if (document.getElementById('featureQnA').checked) features.push('Open Q&A');
+        if (document.getElementById('featureFeedback').checked) features.push('Open Feedback');
+        if (document.getElementById('featureCoins').checked) {
+          const coins = document.getElementById('coinsPercentage').value;
+          features.push(`Use Coins (${coins}%)`);
+        }
+        if (document.getElementById('featurePromotion').checked) {
+          const promo = document.getElementById('promotionDetails').value.trim();
+          features.push(`Promotion${promo ? ': ' + promo : ''}`);
+        }
+        if (document.getElementById('featureSales').checked) {
+          const sales = document.getElementById('salesDetails').value.trim();
+          features.push(`Sales${sales ? ': ' + sales : ''}`);
+        }
+
+        alert(`Product Added!\nName: ${name}\nDescription: ${desc}\nSeller: ${seller}\nShop: ${shop}\nPrice: ${price}\nSeller Link: ${sellerLink}\nFeatures: ${features.join(', ')}`);
+        this.reset();
+        document.getElementById('coinsPercentage').style.display = 'none';
+        document.getElementById('promotionDetails').style.display = 'none';
+        document.getElementById('salesDetails').style.display = 'none';
+        document.getElementById('priceInfo').textContent = "";
+      }
+    </script>
+
+    <!-- Existing Products -->
+    <h1>Existing Products</h1>
+
+    <!-- Search Bar -->
+    <div style="margin-bottom:1em; display:flex; gap:1em; flex-wrap:wrap;">
+      <input type="text" id="searchProduct" placeholder="Search Product Name..."
+        style="padding:0.6em 1em; border:1px solid #ccc; border-radius:0.5em; min-width:220px;">
+      <input type="text" id="searchSeller" placeholder="Search Seller Name..."
+        style="padding:0.6em 1em; border:1px solid #ccc; border-radius:0.5em; min-width:220px;">
+    </div>
+
+    <div class="card" style="overflow-x:auto;">
+      <table id="productsTable" style="min-width:950px; border:1px solid #e0e0e0;">
+        <thead>
+          <tr>
+            <th style="border-right:1px solid #e0e0e0;" onclick="sortTable(0)">Product ID</th>
+            <th style="border-right:1px solid #e0e0e0;" onclick="sortTable(1)">Product Name</th>
+            <th style="border-right:1px solid #e0e0e0;" onclick="sortTable(2)">Price(Lkr)</th>
+            <th style="border-right:1px solid #e0e0e0;" onclick="sortTable(3)">Quantity</th>
+            <th style="border-right:1px solid #e0e0e0;" onclick="sortTable(4)">Seller Name</th>
+            <th style="border-right:1px solid #e0e0e0;" onclick="sortTable(5)">Shop Name</th>
+            <th style="border-right:1px solid #e0e0e0;" onclick="sortTable(6)">Sold Amount</th>
+            <th style="border-right:1px solid #e0e0e0;" onclick="sortTable(7)">Features</th>
+            <th style="border-right:1px solid #e0e0e0;">Actions</th>
+            <th>View More</th>
+          </tr>
+        </thead>
+        <tbody id="approvedProductsBody">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      // Load approved products
+      document.addEventListener("DOMContentLoaded", () => {
+        loadApprovedProducts();
+        // Keep existing pending load
+        if (typeof fetchPendingProducts === 'function') fetchPendingProducts();
+      });
+
+      async function loadApprovedProducts() {
+        try {
+          const res = await fetch("http://localhost:5000/api/products/marketplace");
+          const products = await res.json();
+          const tbody = document.getElementById("approvedProductsBody");
+          tbody.innerHTML = "";
+
+          if (products.length === 0) {
+            tbody.innerHTML = "<tr><td colspan='10' style='text-align:center; padding:1em; color:#888;'>No approved products found</td></tr>";
+            return;
+          }
+
+          products.forEach(p => {
+            const tr = document.createElement("tr");
+
+            // Check features
+            const isCoins = p.coins_percent > 0;
+            const isAds = p.is_ads === 1;
+            const isSale = !!p.sale_details;
+
+            tr.innerHTML = `
+                        <td style="border-right:1px solid #e0e0e0;">PRD-${p.id}</td>
+                        <td style="border-right:1px solid #e0e0e0;" contenteditable="true">${p.name}</td>
+                        <td style="border-right:1px solid #e0e0e0;">
+                            <input class="editable" type="text" value="${p.price}" style="width:80px; margin-bottom:4px;">
+                        </td>
+                        <td style="border-right:1px solid #e0e0e0;">
+                             <input class="editable" type="text" value="${p.stock}" style="width:90px; margin-bottom:4px;">
+                        </td>
+                        <td style="border-right:1px solid #e0e0e0;">${p.seller_name}</td>
+                        <td style="border-right:1px solid #e0e0e0;">${p.shop_name}</td>
+                        <td style="border-right:1px solid #e0e0e0;">-</td>
+                        <td style="border-right:1px solid #e0e0e0; min-width:200px;">
+                          <div style="font-size:0.85rem;">
+                             <label><input type="checkbox" class="chk-ads" ${isAds ? 'checked' : ''}> Promoted</label>
+                             
+                             <!-- Coins -->
+                             <label><input type="checkbox" class="chk-coins" ${isCoins ? 'checked' : ''} onchange="this.closest('div').querySelector('.val-coins').style.display = this.checked ? 'block' : 'none'"> Coins (%)</label>
+                             <input type="number" class="val-coins" value="${p.coins_percent || 0}" style="display:${isCoins ? 'block' : 'none'}; width:60px; margin-bottom:4px; padding:2px;" placeholder="%">
+                             
+                             <!-- Sales -->
+                             <label><input type="checkbox" class="chk-sale" ${isSale ? 'checked' : ''} onchange="this.closest('div').querySelector('.val-sale').style.display = this.checked ? 'block' : 'none'"> Sale</label>
+                             <input type="text" class="val-sale" value="${p.sale_details || ''}" style="display:${isSale ? 'block' : 'none'}; width:100%; margin-bottom:4px; padding:2px;" placeholder="Details...">
+                          </div>
+                        </td>
+                        <td style="border-right:1px solid #e0e0e0;">
+                            <div style="display:flex; flex-direction:column; gap:0.5em;">
+                                <button class="btn update" onclick="saveRow(this, ${p.id})" style="padding:0.3em 0.5em; font-size:0.85rem;">Save</button>
+                                <button class="btn" onclick="removeProduct(${p.id})" style="background:#dc2626; color:white; padding:0.3em 0.5em; font-size:0.85rem; border:none; border-radius:0.4em; cursor:pointer;">Remove</button>
+                            </div>
+                        </td>
+                        <td><a href="#" class="btn view" style="padding:0.3em 0.8em;font-size:0.95rem;">View More</a></td>
+                    `;
+            tbody.appendChild(tr);
+          });
+
+        } catch (err) {
+          console.error("Error loading approved products:", err);
+        }
+      }
+
+      async function removeProduct(id) {
+        if (!confirm("Are you sure you want to remove this product? This will delete it permanently.")) return;
+
+        try {
+          const res = await fetch("http://localhost:5000/api/products/admin/reject", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: id, type: 'New' }) // Treating as direct delete
+          });
+
+          if (res.ok) {
+            alert("Product removed successfully");
+            loadApprovedProducts(); // Refresh
+          } else {
+            alert("Failed to remove product");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Server error");
+        }
+      }
+
+      function toggleRowCoins(checkbox) {
+        // ... (unused for this table now)
+      }
+
+      // ... sorting ...
+
+      // Save row changes (Admin Update)
+      async function saveRow(btn, id) {
+        const row = btn.closest('tr');
+        const name = row.cells[1].textContent.trim();
+        const price = row.cells[2].querySelector('input').value.trim();
+        const stock = row.cells[3].querySelector('input').value.trim();
+
+        // Features
+        const isAds = row.querySelector('.chk-ads').checked;
+        const isCoins = row.querySelector('.chk-coins').checked;
+        const coinsVal = row.querySelector('.val-coins').value;
+        const isSale = row.querySelector('.chk-sale').checked;
+        const saleVal = row.querySelector('.val-sale').value;
+
+        if (!name || !price || !stock) {
+          alert("Please fill in all fields");
+          return;
+        }
+
+        const originalText = btn.textContent;
+        btn.textContent = "Saving...";
+        btn.disabled = true;
+
+        try {
+          const res = await fetch("http://localhost:5000/api/products/admin/approve", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              id: id,
+              type: 'New',
+              name: name,
+              stock: stock,
+              finalPrice: price,
+              isAds: isAds,
+              coinsPercent: isCoins ? coinsVal : 0,
+              saleDetails: isSale ? saleVal : null
+            })
+          });
+
+          if (res.ok) {
+            btn.textContent = "Saved!";
+            btn.style.background = "#16a34a";
+            setTimeout(() => {
+              btn.textContent = originalText;
+              btn.style.background = "";
+              btn.disabled = false;
+            }, 2000);
+          } else {
+            const err = await res.json();
+            alert("Failed to save: " + (err.message || "Unknown error"));
+            btn.textContent = "Retry";
+            btn.style.background = "#dc2626";
+            btn.disabled = false;
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Error connecting to server");
+          btn.textContent = "Error";
+          btn.disabled = false;
+        }
+      }
+
+      // Search/filter functionality
+      document.getElementById('searchProduct').addEventListener('input', filterTable);
+      document.getElementById('searchSeller').addEventListener('input', filterTable);
+
+      function filterTable() {
+        const productValue = document.getElementById('searchProduct').value.toLowerCase();
+        const sellerValue = document.getElementById('searchSeller').value.toLowerCase();
+        const table = document.getElementById('productsTable');
+        const trs = table.tBodies[0].getElementsByTagName('tr');
+        for (let i = 0; i < trs.length; i++) {
+          const productName = trs[i].cells[1].textContent.toLowerCase();
+          const sellerName = trs[i].cells[4].textContent.toLowerCase();
+          const show =
+            (productName.includes(productValue) || !productValue) &&
+            (sellerName.includes(sellerValue) || !sellerValue);
+          trs[i].style.display = show ? '' : 'none';
+        }
+      }
+    </script>
+
+    <!-- Receiving Orders from Sellers -->
+    <h2 style="margin-top:2em;">Receiving Orders from Sellers</h2>
+    <div class="card" style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse; margin-bottom:2em;">
+        <thead>
+          <tr style="background:#f5f5f5;">
+            <th>Product</th>
+            <th>Type</th>
+            <th>Note</th>
+            <th>Seller ID</th>
+            <th>Seller Details</th>
+            <th>Stock</th>
+            <th>Price</th>
+            <th>Product ID</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="pendingProductsBody">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      // Fetch pending products on load
+      document.addEventListener("DOMContentLoaded", fetchPendingProducts);
+
+      async function fetchPendingProducts() {
+        console.log("Fetching pending products...");
+        try {
+          const res = await fetch("http://localhost:5000/api/products/admin/pending");
+          const products = await res.json();
+          console.log("Products:", products);
+          const tbody = document.getElementById("pendingProductsBody");
+          tbody.innerHTML = ""; // clear loading or static
+
+          if (products.length === 0) {
+            tbody.innerHTML = "<tr><td colspan='9' style='text-align:center;padding:1em;'>No pending orders found.</td></tr>";
+            return;
+          }
+
+          products.forEach(p => {
+            const typeColor = p.type === 'Update' ? '#c2410c' : '#047857'; // Orange vs Green
+            const typeBg = p.type === 'Update' ? '#ffedd5' : '#d1fae5';
+
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+            <td style="display:flex;align-items:center;gap:0.7em;">
+              <div style="width:40px;height:40px;background:#eee;border-radius:0.5em;display:flex;justify-content:center;align-items:center;overflow:hidden;">
+                 ${p.image_url ? `<img src="http://localhost:5000/${p.image_url}" style="width:100%;height:100%;object-fit:cover;">` : '<span style="font-size:1.2rem;">🍃</span>'}
+              </div>
+              ${p.name}
+            </td>
+            <td>
+              <span style="background:${typeBg};color:${typeColor};padding:0.3em 0.8em;border-radius:2em;font-size:0.85rem;font-weight:bold;">${p.type || 'New'}</span>
+            </td>
+            <td>${p.description || ''}</td>
+            <td>SELL-${p.seller_id}</td>
+            <td>
+              <div style="font-weight:bold;">${p.seller_name}</div>
+              <div style="font-size:0.85rem;color:#666;">${p.shop_name}</div>
+            </td>
+            <td>${p.stock}</td>
+            <td>${p.price}</td>
+            <td>PRD-${p.product_id}</td>
+            <td>
+              <select onchange="handleStatusChange(${p.type === 'Update' ? p.request_id : p.product_id}, '${p.type || 'New'}', this)" style="padding:0.4em; border-radius:0.3em; border:1px solid #ccc; cursor:pointer; font-weight:500;">
+                <option value="" disabled selected>Select Action</option>
+                <option value="approve" style="color:green;">Approve</option>
+                <option value="reject" style="color:red;">Reject</option>
+              </select>
+            </td>
+          `;
+            tbody.appendChild(tr);
+          });
+        } catch (err) {
+          console.error("Failed to load products", err);
+        }
+      }
+
+      async function approveProduct(id, btn) {
+        if (!confirm("Approve this product?")) return;
+
+        try {
+          const res = await fetch("http://localhost:5000/api/products/admin/approve", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ productId: id })
+          });
+
+          if (res.ok) {
+            btn.textContent = "Approved";
+            btn.style.background = "#2563eb";
+            btn.disabled = true;
+          } else {
+            alert("Failed to approve");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Error connecting to server");
+        }
+      }
+
+      function markAsDone(btn) {
+        btn.textContent = "Added to Catalogue";
+        btn.style.background = "#2563eb";
+        btn.disabled = true;
+      }
+
+      async function handleStatusChange(id, type, select) {
+        const action = select.value;
+
+        if (action === "approve") {
+          // Redirect to Catalog page
+          window.location.href = `admin-catalog-product.html?id=${id}&type=${type || 'New'}`;
+          return;
+        }
+
+        if (!confirm(`Are you sure you want to PERMANENTLY DELETE this ${type}? This cannot be undone.`)) {
+          select.value = ""; // reset
+          return;
+        }
+
+        const endpoint = "http://localhost:5000/api/products/admin/reject";
+
+        try {
+          const res = await fetch(endpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: id, type: type })
+          });
+
+          if (res.ok) {
+            const span = document.createElement("span");
+            span.textContent = "Deleted";
+            span.style.color = "#dc2626";
+            span.style.fontWeight = "bold";
+            select.replaceWith(span);
+          } else {
+            alert("Action failed");
+            select.value = "";
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Error connecting to server");
+          select.value = "";
+        }
+      }
+    </script>
+  </main>
+</body>
+
+</html>

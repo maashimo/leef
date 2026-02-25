@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refund Approval - 🍃 Leef</title>
+  <style>
+    :root {
+      --green: #16a34a;
+      --red: #dc2626;
+      --blue: #2563eb;
+      --bg: #fafaf9;
+      --card: #fff;
+      --muted: #555;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    aside {
+      width: 240px;
+      background: var(--card);
+      padding: 1.5em 1em;
+      box-shadow: 2px 0 6px var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2em;
+    }
+
+    aside .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      font-size: 1.5rem;
+      margin-bottom: 2em;
+      text-decoration: none;
+      color: var(--green);
+      font-weight: bold;
+    }
+
+    aside nav a {
+      display: block;
+      padding: 0.7em 0.6em;
+      color: var(--muted);
+      text-decoration: none;
+      border-radius: 0.5em;
+      transition: background 0.2s, color 0.2s;
+      font-size: 1.05rem;
+    }
+
+    aside nav a.active,
+    aside nav a:hover {
+      background: var(--green);
+      color: #fff;
+      font-weight: bold;
+    }
+
+    aside button.redeem-btn {
+      margin-top: auto;
+      width: 100%;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      padding: 0.7em;
+      border-radius: 0.5em;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    main {
+      flex: 1;
+      padding: 2.5em 3em;
+      display: flex;
+      flex-direction: column;
+      gap: 2em;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5em;
+      color: #1a2e05;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 1.5em;
+      border-radius: 1em;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+      margin-bottom: 2em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1em;
+      background: #fff;
+    }
+
+    th,
+    td {
+      padding: 0.7em;
+      border-bottom: 1px solid #eee;
+      font-size: 1rem;
+      text-align: left;
+    }
+
+    th {
+      background: #f5f5f5;
+      font-weight: bold;
+    }
+
+    .btn {
+      padding: 0.5em 1.2em;
+      border: none;
+      border-radius: 0.4em;
+      cursor: pointer;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+
+    .btn.approve {
+      background: var(--green);
+    }
+
+    .btn.reject {
+      background: var(--red);
+    }
+
+    .btn:active {
+      opacity: 0.85;
+    }
+
+    @media(max-width:900px) {
+      main {
+        padding: 1em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <aside>
+    <a href="#" class="logo"> 🍃 Leef</a>
+    <nav>
+      <a href="admin-dashboard.html">Overview</a>
+      <a href="new-registration.html">Registration Requests</a>
+      <a href="order.html">Orders</a>
+      <a href="product-admin.html">Products</a>
+      <a href="feedback-admin.html">Feedback</a>
+      <a href="questions-admin.html">Questions</a>
+      <a href="refund-approval.html" class="active">Refunds</a>
+
+      <a href="admin-profile.html">Profile</a>
+    </nav>
+    <button class="redeem-btn">Logout</button>
+  </aside>
+
+  <!-- Main -->
+  <main>
+    <h1>Refund Approval</h1>
+    <div class="card" style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Refund ID</th>
+            <th>Order ID</th>
+            <th>Product Name</th>
+            <th>Buyer ID</th>
+            <th>Seller ID</th>
+            <th>Amount (LKR)</th>
+            <th>Reason</th>
+            <th>Photos</th>
+            <th>Notes</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>RF-1001</td>
+            <td>ORD-2023</td>
+            <td>Tomato</td>
+            <td>CUST-1001</td>
+            <td>SELL-2001</td>
+            <td>1500</td>
+            <td>Damaged product</td>
+            <td>
+              <img src="https://via.placeholder.com/40x40?text=Photo" alt="photo" style="border-radius:4px;">
+            </td>
+            <td>
+              <span style="color:#555;">Box was crushed</span>
+            </td>
+            <td><span style="color:#eab308;font-weight:bold;">Pending</span></td>
+            <td>
+              <button class="btn approve" onclick="approveRefund(this)">Approve</button>
+              <button class="btn reject" onclick="rejectRefund(this)">Reject</button>
+            </td>
+          </tr>
+          <tr>
+            <td>RF-1002</td>
+            <td>ORD-2024</td>
+            <td>Banana</td>
+            <td>CUST-1002</td>
+            <td>SELL-2002</td>
+            <td>900</td>
+            <td>Not delivered</td>
+            <td>
+              <img src="https://via.placeholder.com/40x40?text=Photo" alt="photo" style="border-radius:4px;">
+            </td>
+            <td>
+              <span style="color:#555;">No delivery update</span>
+            </td>
+            <td><span style="color:#eab308;font-weight:bold;">Pending</span></td>
+            <td>
+              <button class="btn approve" onclick="approveRefund(this)">Approve</button>
+              <button class="btn reject" onclick="rejectRefund(this)">Reject</button>
+            </td>
+          </tr>
+          <tr>
+            <td>RF-1003</td>
+            <td>ORD-2025</td>
+            <td>Potato</td>
+            <td>CUST-1003</td>
+            <td>SELL-2003</td>
+            <td>1200</td>
+            <td>Wrong item</td>
+            <td>
+              <img src="https://via.placeholder.com/40x40?text=Photo" alt="photo" style="border-radius:4px;">
+            </td>
+            <td>
+              <span style="color:#555;">Received onions instead</span>
+            </td>
+            <td><span style="color:#eab308;font-weight:bold;">Pending</span></td>
+            <td>
+              <button class="btn approve" onclick="approveRefund(this)">Approve</button>
+              <button class="btn reject" onclick="rejectRefund(this)">Reject</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script>
+      function approveRefund(btn) {
+        const row = btn.closest('tr');
+        row.querySelector('td:nth-child(10)').innerHTML = '<span style="color:#16a34a;font-weight:bold;">Approved</span>';
+        btn.parentElement.innerHTML = '<span style="color:#16a34a;font-weight:bold;">Approved</span>';
+      }
+      function rejectRefund(btn) {
+        const row = btn.closest('tr');
+        row.querySelector('td:nth-child(10)').innerHTML = '<span style="color:#dc2626;font-weight:bold;">Rejected</span>';
+        btn.parentElement.innerHTML = '<span style="color:#dc2626;font-weight:bold;">Rejected</span>';
+      }
+    </script>
+  </main>
+</body>
+
+</html>

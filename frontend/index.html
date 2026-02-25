@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>leef 🍃 - Little England Elite Fresh</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">
+                leef 🍃
+            </a>
+
+            <nav class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#sales">Sales</a>
+                <a href="#seasonal">Seasonal</a>
+            </nav>
+
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline" style="margin-right: 10px;">Login</a>
+                <a href="register.html" class="btn btn-primary">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container" style="display: flex; align-items: center;">
+            <div class="hero-content animate-fade-up">
+                <h1 class="hero-title"><span style="color: var(--primary-color);">Freshness</span> from <br><span>Little
+                        England</span></h1>
+                <p class="hero-text">From our fields at Little England to your table, every leaf tells a story of
+                    freshness.
+                    Thank you for letting us be a part of your plate!🍃</p>
+                <div style="display: flex; gap: 1rem;">
+                    <a href="#sales" class="btn btn-primary">Shop Now</a>
+                    <a href="#about" class="btn btn-outline">Learn More</a>
+                </div>
+            </div>
+            <div class="hero-image animate-fade-in">
+                <img src="images/smiling_farmer.png" alt="Smiling Farmer with Produce" class="hero-img-main"
+                    style="border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="features" id="about">
+        <div class="container">
+            <div class="section-head animate-fade-up">
+                <h2 class="section-title">Why Choose leef?</h2>
+                <p style="max-width: 600px; margin: 0 auto; color: var(--text-light);">We are dedicated to delivering
+                    the
+                    freshest organic produce from the heart of Nuwara Eliya.</p>
+            </div>
+
+            <div class="grid-3">
+                <div class="feature-card animate-fade-up">
+                    <div class="feature-icon"><i class="fas fa-carrot"></i></div>
+                    <h3>100% Organic</h3>
+                    <p style="color: var(--text-light); margin-top: 10px;">Grown without synthetic pesticides or
+                        fertilizers,
+                        ensuring pure natural taste.</p>
+                </div>
+                <div class="feature-card animate-fade-up" style="transition-delay: 0.1s;">
+                    <div class="feature-icon"><i class="fas fa-truck-fast"></i></div>
+                    <h3>Farm to Door</h3>
+                    <p style="color: var(--text-light); margin-top: 10px;">Direct delivery from Little England fields to
+                        your
+                        doorstep within 24 hours.</p>
+                </div>
+                <div class="feature-card animate-fade-up" style="transition-delay: 0.2s;">
+                    <div class="feature-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h3>Support Local</h3>
+                    <p style="color: var(--text-light); margin-top: 10px;">Empowering local farmers and sustaining the
+                        agricultural community.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Goods Section -->
+    <section class="products" id="goods">
+        <div class="container">
+            <div class="section-head animate-fade-up">
+                <h2 class="section-title">✨ Our Premium Collection</h2>
+                <a href="products.html" class="link"
+                    style="float: right; color: var(--primary-color); text-decoration: none; font-weight: 600;">View All
+                    →</a>
+                <p style="color: var(--text-light); clear: right;">Handpicked freshness just for you.</p>
+            </div>
+
+            <div class="products-grid"
+                style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:2em; margin-top:2em;">
+                <!-- Product 1 -->
+                <div class="product-card" style="text-align:center;">
+                    <img src="images/banana.jpg" class="product-image"
+                        style="width:100%; height:120px; object-fit:cover; border-radius:1em; margin-bottom:1em;">
+                    <div class="product-info">
+                        <h3 class="product-title" style="font-size:1.1em; margin-bottom:0.4em;">Organic Bananas</h3>
+                        <p class="text-muted" style="font-size:0.9rem">Seller: Green Valley</p>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin:0.5rem 0"><span
+                                style="color:#4ade80;font-weight:bold">Rs 1000</span><span style="color:#f59e0b">★
+                                4.8</span></div>
+                        <button class="btn btn-primary btn-block" style="width:100%">Add</button>
+                    </div>
+                </div>
+                <!-- Product 2 -->
+                <div class="product-card" style="text-align:center;">
+                    <img src="images/tomato.jpg" class="product-image"
+                        style="width:100%; height:120px; object-fit:cover; border-radius:1em; margin-bottom:1em;">
+                    <div class="product-info">
+                        <h3 class="product-title" style="font-size:1.1em; margin-bottom:0.4em;">Fresh Tomatoes</h3>
+                        <p class="text-muted" style="font-size:0.9rem">Seller: Organic Life</p>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin:0.5rem 0"><span
+                                style="color:#4ade80;font-weight:bold">Rs 750</span><span style="color:#f59e0b">★
+                                4.5</span></div>
+                        <button class="btn btn-primary btn-block" style="width:100%">Add</button>
+                    </div>
+                </div>
+                <!-- Product 3 -->
+                <div class="product-card" style="text-align:center;">
+                    <img src="images/papaya.jpg" class="product-image"
+                        style="width:100%; height:120px; object-fit:cover; border-radius:1em; margin-bottom:1em;">
+                    <div class="product-info">
+                        <h3 class="product-title" style="font-size:1.1em; margin-bottom:0.4em;">Sweet Papaya</h3>
+                        <p class="text-muted" style="font-size:0.9rem">Seller: Fresh Harvest</p>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin:0.5rem 0"><span
+                                style="color:#4ade80;font-weight:bold">Rs 900</span><span style="color:#f59e0b">★
+                                4.3</span></div>
+                        <button class="btn btn-primary btn-block" style="width:100%">Add</button>
+                    </div>
+                </div>
+                <!-- Product 4 -->
+                <div class="product-card" style="text-align:center;">
+                    <img src="images/cabbage.png" class="product-image"
+                        style="width:100%; height:120px; object-fit:cover; border-radius:1em; margin-bottom:1em;">
+                    <div class="product-info">
+                        <h3 class="product-title" style="font-size:1.1em; margin-bottom:0.4em;">Fresh Cabbage</h3>
+                        <p class="text-muted" style="font-size:0.9rem">Seller: Hill Country</p>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin:0.5rem 0"><span
+                                style="color:#4ade80;font-weight:bold">Rs 350</span><span style="color:#f59e0b">★
+                                4.5</span></div>
+                        <button class="btn btn-primary btn-block" style="width:100%">Add</button>
+                    </div>
+                </div>
+                <!-- Product 5 -->
+                <div class="product-card" style="text-align:center;">
+                    <img src="images/leeks.png" class="product-image"
+                        style="width:100%; height:120px; object-fit:cover; border-radius:1em; margin-bottom:1em;">
+                    <div class="product-info">
+                        <h3 class="product-title" style="font-size:1.1em; margin-bottom:0.4em;">Organic Leeks</h3>
+                        <p class="text-muted" style="font-size:0.9rem">Seller: Green Valley</p>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin:0.5rem 0"><span
+                                style="color:#4ade80;font-weight:bold">Rs 250</span><span style="color:#f59e0b">★
+                                4.8</span></div>
+                        <button class="btn btn-primary btn-block" style="width:100%">Add</button>
+                    </div>
+                </div>
+                <!-- Product 6 -->
+                <div class="product-card" style="text-align:center;">
+                    <img src="images/carrot.png" class="product-image"
+                        style="width:100%; height:120px; object-fit:cover; border-radius:1em; margin-bottom:1em;">
+                    <div class="product-info">
+                        <h3 class="product-title" style="font-size:1.1em; margin-bottom:0.4em;">Crunchy Carrots</h3>
+                        <p class="text-muted" style="font-size:0.9rem">Seller: Nuwara Farms</p>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin:0.5rem 0"><span
+                                style="color:#4ade80;font-weight:bold">Rs 480</span><span style="color:#f59e0b">★
+                                4.2</span></div>
+                        <button class="btn btn-primary btn-block" style="width:100%">Add</button>
+                    </div>
+                </div>
+                <!-- Product 7 -->
+                <div class="product-card" style="text-align:center;">
+                    <img src="images/tomato.jpg" class="product-image"
+                        style="width:100%; height:120px; object-fit:cover; border-radius:1em; margin-bottom:1em;">
+                    <div class="product-info">
+                        <h3 class="product-title" style="font-size:1.1em; margin-bottom:0.4em;">Red Onions</h3>
+                        <p class="text-muted" style="font-size:0.9rem">Seller: Jaffna Farms</p>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin:0.5rem 0"><span
+                                style="color:#4ade80;font-weight:bold">Rs 450</span><span style="color:#f59e0b">★
+                                4.1</span></div>
+                        <button class="btn btn-primary btn-block" style="width:100%">Add</button>
+                    </div>
+                </div>
+                <!-- Product 8 -->
+                <div class="product-card" style="text-align:center;">
+                    <img src="images/leeks.png" class="product-image"
+                        style="width:100%; height:120px; object-fit:cover; border-radius:1em; margin-bottom:1em;">
+                    <div class="product-info">
+                        <h3 class="product-title" style="font-size:1.1em; margin-bottom:0.4em;">Green Beans</h3>
+                        <p class="text-muted" style="font-size:0.9rem">Seller: Upcountry Veg</p>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin:0.5rem 0"><span
+                                style="color:#4ade80;font-weight:bold">Rs 320</span><span style="color:#f59e0b">★
+                                4.6</span></div>
+                        <button class="btn btn-primary btn-block" style="width:100%">Add</button>
+                    </div>
+                </div>
+                <!-- Product 9 -->
+                <div class="product-card" style="text-align:center;">
+                    <img src="images/tomato.jpg" class="product-image"
+                        style="width:100%; height:120px; object-fit:cover; border-radius:1em; margin-bottom:1em;">
+                    <div class="product-info">
+                        <h3 class="product-title" style="font-size:1.1em; margin-bottom:0.4em;">Bell Pepper</h3>
+                        <p class="text-muted" style="font-size:0.9rem">Seller: Green House</p>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin:0.5rem 0"><span
+                                style="color:#4ade80;font-weight:bold">Rs 600</span><span style="color:#f59e0b">★
+                                4.3</span></div>
+                        <button class="btn btn-primary btn-block" style="width:100%">Add</button>
+                    </div>
+                </div>
+                <!-- Product 10 -->
+                <div class="product-card" style="text-align:center;">
+                    <img src="images/papaya.jpg" class="product-image"
+                        style="width:100%; height:120px; object-fit:cover; border-radius:1em; margin-bottom:1em;">
+                    <div class="product-info">
+                        <h3 class="product-title" style="font-size:1.1em; margin-bottom:0.4em;">Fresh Pumpkin</h3>
+                        <p class="text-muted" style="font-size:0.9rem">Seller: Ranketha</p>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin:0.5rem 0"><span
+                                style="color:#4ade80;font-weight:bold">Rs 180</span><span style="color:#f59e0b">★
+                                4.0</span></div>
+                        <button class="btn btn-primary btn-block" style="width:100%">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sales Section -->
+    <section class="products" id="sales">
+        <div class="container">
+            <div class="section-head animate-fade-up">
+                <h2 class="section-title">🔥 Ongoing Sales</h2>
+                <p style="color: var(--text-light);">Exclusive deals on our freshest harvest.</p>
+            </div>
+
+            <div class="grid-3" id="salesGrid">
+                <!-- Dynamic Content Will Load Here -->
+                <p style="text-align:center; width:100%; color:#888;">Loading hot deals...</p>
+            </div>
+            <div style="text-align:center; margin-top:3rem;">
+                <a href="products.html" class="btn btn-primary"
+                    style="padding: 0.8rem 2.5rem; font-size: 1.1rem; border-radius: 50px; box-shadow: 0 4px 15px rgba(74, 222, 128, 0.3);">View
+                    All Products →</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const grid = document.getElementById('salesGrid');
+            try {
+                const res = await fetch("http://localhost:5000/api/products/marketplace");
+                const products = await res.json();
+
+                // Filter for active sales
+                const sales = products.filter(p => p.sale_details);
+
+                grid.innerHTML = "";
+
+                if (sales.length === 0) {
+                    grid.innerHTML = "<p style='grid-column:1/-1; text-align:center; color:#888;'>No sales active right now. Check back later!</p>";
+                    return;
+                }
+
+                // Limit to 6 for homepage
+                sales.slice(0, 6).forEach((p, index) => {
+                    const delay = (index % 3) * 0.1;
+                    const imageUrl = p.image_url ? `http://localhost:5000/${p.image_url}` : 'images/default.png';
+
+                    const card = document.createElement('div');
+                    card.className = "card product-card animate-scale";
+                    card.style.transitionDelay = delay + 's';
+
+                    card.innerHTML = `
+                        <div class="product-img-wrapper" style="position:relative;">
+                            <img src="${imageUrl}" alt="${p.name}" style="width:100%; height:200px; object-fit:cover; border-radius:1em 1em 0 0;">
+                            <span style="position: absolute; top: 15px; right: 15px; background: #ef4444; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 600; font-size: 0.8rem; box-shadow:0 2px 5px rgba(0,0,0,0.2);">SALE</span>
+                        </div>
+                        <div class="product-details" style="padding:1.5em;">
+                            <h3 style="font-size: 1.2rem; margin-bottom:0.5em;">${p.name}</h3>
+                            <p style="color: #666; font-size: 0.9rem;">${p.shop_name}</p>
+                            <div class="product-price" style="margin:0.5em 0;">
+                                <span style="text-decoration: line-through; color: #999; font-size: 0.9rem;">Rs. ${p.price}</span>
+                                <div style="font-size:1.1rem; font-weight:bold; color:#ef4444;">Rs. ${p.sale_details}</div>
+                                ${p.coins_percent ? `<div style="color: #f59e0b; font-size: 0.85rem; margin-top: 0.5em;">🪙 Earn ${p.coins_percent}% Coins</div>` : ''}
+                            </div>
+                            <button onclick="window.location.href='products.html'" class="btn btn-primary" style="width:100%; padding:0.6em; margin-top:0.5em;">View</button>
+                        </div>
+                     `;
+                    grid.appendChild(card);
+                });
+
+            } catch (err) {
+                console.error(err);
+                grid.innerHTML = "<p style='grid-column:1/-1; text-align:center; color:#888;'>Failed to load sales.</p>";
+            }
+        });
+    </script>
+
+
+
+    <!-- Join Us -->
+    <section class="container" style="padding: 60px 20px; text-align: center;">
+        <div class="card animate-scale"
+            style="background: linear-gradient(135deg, var(--secondary-color), #fff); padding: 60px;">
+            <h2 style="margin-bottom: 20px;">Join the Green Revolution</h2>
+            <p style="margin-bottom: 30px; font-size: 1.1rem;">Get the freshest updates and exclusive offers delivered
+                to your
+                inbox.</p>
+            <a href="register.html" class="btn btn-primary">Create Account</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h3>🍃 leef</h3>
+                    <p style="color: rgba(255,255,255,0.8);">Delivering premium organic produce from Nuwara Eliya, Sri
+                        Lanka to
+                        your table.</p>
+                    <div class="socials">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#sales">Products</a></li>
+                        <li><a href="login.html">Login</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> leef@freshelite.com</li>
+                        <li><i class="fas fa-phone"></i> +94 74 185 0582</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Nuwara Eliya, LK</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <!-- Chatbot moved here or fixed -->
+                    <h3>Support</h3>
+                    <a href="chatbot.html" class="btn btn-outline" style="border-color: white; color: white;">Chat with
+                        Us</a>
+                </div>
+            </div>
+            <div style="text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <p>&copy; 2024 Little England Elite Fresh. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="animations.js"></script>
+</body>
+
+</html>

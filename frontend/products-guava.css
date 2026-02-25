@@ -1,0 +1,306 @@
+/* Reset & base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #fafaf9;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    color: #222;
+    line-height: 1.6;
+}
+
+main {
+    padding: 2.5em 2em;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background: #fafaf9;
+    min-height: 100vh;
+    width: 100vw;
+    box-sizing: border-box;
+}
+
+.product-detail {
+    background: #fff;
+    border-radius: 1.2em;
+    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.07), 0 1.5px 4px 0 rgba(0,0,0,0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    padding: 1.5em;
+    width: 100%;
+    max-width: 1200px;
+    margin: 2em auto;
+    box-sizing: border-box;
+    align-items: flex-start;
+    border: 1px solid #e7e5e4;
+}
+
+.product-detail-image {
+    flex: 1 1 350px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.product-detail-image img {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0.7em;
+    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.07), 0 1.5px 4px 0 rgba(0,0,0,0.03);
+    background: #fff;
+}
+
+.product-detail-info {
+    flex: 2 1 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-width: 0;
+    width: 100%;
+}
+
+.section {
+    border-bottom: 1px solid #e7e5e4;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+}
+
+.section h2 {
+    font-size: 1.25rem;
+    margin-bottom: 8px;
+    color: #292524;
+    font-weight: bold;
+}
+
+.product-detail-info h1 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #292524;
+    margin-bottom: 0.5em;
+}
+
+.product-detail-info .text-2xl {
+    font-size: 1.5em;
+    color: #16a34a;
+    font-weight: bold;
+    margin-bottom: 0.7em;
+}
+
+.rating {
+    color: #d97706;
+}
+
+.btn-primary {
+    background: linear-gradient(to right, #16a34a, #15803d);
+    color: #fff;
+    padding: 1em 2em;
+    border-radius: 0.5em;
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+    font-size: 1.1em;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px 0 rgba(22,163,74,0.10);
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 0.5em;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(to right, #15803d, #166534);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px 0 rgba(22,163,74,0.16);
+}
+
+.btn-secondary {
+    background: linear-gradient(to right, #16a34a, #15803d);
+    color: #fff;
+    padding: 1em 2em;
+    border-radius: 0.5em;
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+    font-size: 1.1em;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px 0 rgba(22,163,74,0.10);
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 0.5em;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(to right, #15803d, #166534);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px 0 rgba(22,163,74,0.16);
+}
+
+.certificate-link {
+    color: #16a34a;
+    text-decoration: underline;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.feedback {
+    background: #f0fdf4;
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+.hidden {
+    display: none;
+}
+
+.flex-gap {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.input-location {
+    padding: 0.9em 1em 0.9em 2.5em;
+    border-radius: 0.7em;
+    border: 1px solid #d6d3d1;
+    flex: 2;
+    background: #fff;
+    font-size: 1rem;
+    transition: border 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+.input-quantity {
+    padding: 0.9em 1em 0.9em 2.5em;
+    border-radius: 0.7em;
+    border: 1px solid #d6d3d1;
+    flex: 2;
+    min-width: 90px;
+    background: #fff;
+    font-size: 1rem;
+    transition: border 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+.input-unit {
+    padding: 0.9em 1em;
+    border-radius: 0.7em;
+    border: 1px solid #d6d3d1;
+    flex: 0.7;
+    max-width: 70px;
+    background: #fff;
+    font-size: 1rem;
+    transition: border 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+select, input[type="number"], input[type="text"] {
+    width: 100%;
+    padding: 0.9em 1em 0.9em 2.5em;
+    border: 1px solid #d6d3d1;
+    border-radius: 0.7em;
+    margin-bottom: 1em;
+    font-size: 1rem;
+    background: #fff;
+    transition: border 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+select:focus, input[type="number"]:focus, input[type="text"]:focus {
+    border-color: #22c55e;
+    box-shadow: 0 0 0 2px #bbf7d0;
+    outline: none;
+}
+
+.flex {
+    display: flex;
+    gap: 1em;
+    margin-top: 1em;
+    flex-direction: column;
+}
+
+.product-detail-info p {
+    margin-bottom: 0.7em;
+    color: #44403c;
+}
+
+.product-detail-info .mb-1 {
+    margin-bottom: 0.25em;
+}
+
+.product-detail-info .mb-2 {
+    margin-bottom: 0.5em;
+}
+
+.product-detail-info label {
+    font-weight: 500;
+    color: #444;
+    margin-bottom: 0.4em;
+    display: block;
+    font-size: 1rem;
+}
+
+/* Responsive adjustments */
+@media (min-width: 1024px) {
+    .product-detail {
+        flex-direction: row;
+    }
+    .product-detail-image {
+        width: auto;
+    }
+    .product-detail-info {
+        width: auto;
+    }
+    .flex {
+        flex-direction: row;
+    }
+    .btn-primary, .btn-secondary {
+        width: auto;
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 1023px) {
+    .product-detail {
+        flex-direction: column;
+        align-items: center;
+        gap: 2em;
+        padding: 1.5em 1em;
+    }
+    .product-detail-image,
+    .product-detail-info {
+        width: 100%;
+        max-width: 700px;
+    }
+    main {
+        padding: 1em;
+    }
+}
+
+@media (max-width: 600px) {
+    .product-detail {
+        padding: 1em 0.2em;
+    }
+    .product-detail-image img {
+        max-width: 100%;
+        height: auto;
+    }
+    h1 {
+        font-size: 1.5rem;
+    }
+    .p-6 {
+        padding: 1em;
+    }
+    .rounded-2xl {
+        border-radius: 0.7em;
+    }
+}.input-error {
+    border-color: #dc3545 !important;
+    background-color: #ffe5e5;
+}

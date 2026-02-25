@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Profile - AgriConnect</title>
+  <style>
+    :root {
+      --green: #16a34a;
+      --blue: #2563eb;
+      --red: #dc2626;
+      --bg: #f4f6f8;
+      --card: #fff;
+      --muted: #555;
+      --shadow: rgba(0, 0, 0, 0.07);
+      --border: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    aside {
+      width: 240px;
+      background: var(--card);
+      padding: 1.5em 1em;
+      box-shadow: 2px 0 6px var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2em;
+    }
+
+    aside .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      font-size: 1.5rem;
+      margin-bottom: 2em;
+      text-decoration: none;
+      color: var(--green);
+      font-weight: bold;
+    }
+
+    aside nav a {
+      display: block;
+      padding: 0.7em 0.6em;
+      color: var(--muted);
+      text-decoration: none;
+      border-radius: 0.5em;
+      transition: background 0.2s, color 0.2s;
+      font-size: 1.05rem;
+    }
+
+    aside nav a.active,
+    aside nav a:hover {
+      background: var(--green);
+      color: #fff;
+      font-weight: bold;
+    }
+
+    aside button.redeem-btn {
+      margin-top: auto;
+      width: 100%;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      padding: 0.7em;
+      border-radius: 0.5em;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    main {
+      flex: 1;
+      padding: 2.5em 3em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--bg);
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1.2em;
+      color: #1a2e05;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .profile-card {
+      background: var(--card);
+      padding: 2.5em 2.5em 2em 2.5em;
+      border-radius: 1.2em;
+      box-shadow: 0 6px 32px rgba(0, 0, 0, 0.08);
+      max-width: 420px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5em;
+      border: 1px solid var(--border);
+    }
+
+    .profile-img {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--green);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+      margin-bottom: 0.5em;
+      background: #f3f3f3;
+    }
+
+    .profile-name {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #222;
+      margin-bottom: 0.2em;
+      letter-spacing: 0.01em;
+      text-align: center;
+    }
+
+    .profile-role {
+      color: var(--green);
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 1em;
+      text-align: center;
+    }
+
+    .profile-info {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7em;
+    }
+
+    .profile-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6em 0;
+      border-bottom: 1px solid #f2f2f2;
+    }
+
+    .profile-row:last-child {
+      border-bottom: none;
+    }
+
+    .profile-label {
+      font-weight: 600;
+      color: #256029;
+      font-size: 1.01em;
+      flex: 1;
+    }
+
+    .profile-value {
+      color: #222;
+      font-size: 1.04em;
+      flex: 2;
+      text-align: right;
+      word-break: break-all;
+    }
+
+    .profile-actions {
+      display: flex;
+      gap: 1em;
+      margin-top: 1.5em;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .btn {
+      padding: 0.55em 1.5em;
+      border: none;
+      border-radius: 0.4em;
+      cursor: pointer;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(22, 163, 74, 0.07);
+      outline: none;
+    }
+
+    .btn.update {
+      background: var(--green);
+    }
+
+    .btn.forgot {
+      background: var(--blue);
+    }
+
+    .btn.update:hover {
+      background: #12813a;
+    }
+
+    .btn.forgot:hover {
+      background: #1746a2;
+    }
+
+    @media(max-width:600px) {
+      main {
+        padding: 1em;
+      }
+
+      .profile-card {
+        padding: 1em;
+      }
+
+      .profile-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.2em;
+      }
+
+      .profile-value {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <aside>
+    <a href="#" class="logo">🍃
+      Leef</a>
+    <nav>
+      <a href="admin-dashboard.html">Overview</a>
+      <a href="new-registration.html">Registration Requests</a>
+      <a href="order.html">Orders</a>
+      <a href="product-admin.html">Products</a>
+      <a href="feedback-admin.html">Feedback</a>
+      <a href="questions-admin.html">Questions</a>
+      <a href="refund-approval.html">Refunds</a>
+
+      <a href="admin-profile.html" class="active">Profile</a>
+    </nav>
+    <button class="redeem-btn" id="logout-btn">Logout</button>
+  </aside>
+
+  <!-- Main -->
+  <main>
+    <h1>Admin Profile</h1>
+    <div class="profile-card">
+      <img src="images/smiling_farmer.png" alt="Admin Profile" class="profile-img">
+      <div class="profile-name">Leef Admin</div>
+      <div class="profile-role">Administrator</div>
+      <div class="profile-info">
+        <div class="profile-row">
+          <span class="profile-label">Email</span>
+          <span class="profile-value">leef@gmail.com</span>
+        </div>
+      </div>
+      <div class="profile-actions">
+        <button class="btn forgot" onclick="resetPassword()">Reset Password</button>
+      </div>
+    </div>
+  </main>
+  <script>
+    document.getElementById('logout-btn').onclick = function () {
+      // Clear any stored data if needed
+      localStorage.removeItem('userRole');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('userEmail');
+      window.location.href = "index.html";
+    };
+
+    async function resetPassword() {
+      const email = "leef@gmail.com";
+      try {
+        const response = await fetch('http://localhost:5000/api/auth/forgot-password', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            role: 'admin',
+            email: email
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert(data.message);
+          // Redirect to reset password page - passing email and role to make it easier
+          window.location.href = `reset-password.html?email=${email}&role=admin`;
+        } else {
+          alert("Error: " + data.message);
+        }
+      } catch (e) {
+        console.error(e);
+        alert("Failed to connect to server");
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seller Dashboard - leef 🍃</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <style>
+    /* Top Navbar Styles (Standardized) */
+    .top-navbar {
+      background-color: rgba(10, 10, 10, 0.95);
+      border-bottom: 1px solid #333;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .navbar-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .navbar-logo {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: bold;
+      color: #4ade80;
+    }
+
+    .navbar-nav {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 2rem;
+    }
+
+    .navbar-link {
+      text-decoration: none;
+      color: #eee;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      transition: background-color 0.2s;
+    }
+
+    .navbar-link.active {
+      background-color: #10b981;
+      color: white;
+    }
+
+    .navbar-link:hover {
+      background-color: #333;
+    }
+
+    @media (max-width: 768px) {
+      .top-navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar-nav {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+
+    /* Dashboard Specifics */
+    .dashboard-card {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .muted-text {
+      color: #9ca3af;
+      font-size: 0.9rem;
+    }
+
+    .order-line {
+      background: #222;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .status-select {
+      background: #111;
+      color: #fff;
+      border: 1px solid #333;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      outline: none;
+    }
+
+    .status-select:focus {
+      border-color: #4ade80;
+    }
+
+    .btn-small {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+
+<body class="">
+
+  <!-- Navbar -->
+  <nav class="top-navbar">
+    <div class="navbar-header">
+      <a href="index.html" class="navbar-logo">
+        leef 🍃
+      </a>
+    </div>
+    <ul class="navbar-nav">
+      <li><a href="seller-dashboard.html" class="navbar-link active">Dashboard</a></li>
+      <li><a href="inventory.html" class="navbar-link">Inventory</a></li>
+      <li><a href="profile-seller.html" class="navbar-link">Profile</a></li>
+      <li><a href="login.html" class="navbar-link" style="color:#ef4444;">Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Dashboard Main -->
+  <main class="main-content container" style="max-width: 1200px; margin: 2rem auto; padding: 0 1rem;">
+    <h1 class="page-title">Seller Dashboard</h1>
+    <p class="page-subtitle" style="margin-bottom: 2rem;">Manage your orders, products, and reports efficiently.</p>
+
+    <!-- Reports Section -->
+    <section class="dashboard-card">
+      <div class="section-header" style="border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 1rem;">
+        <h2 class="section-title" style="margin:0;">📊 Reports</h2>
+        <button class="btn btn-primary btn-small" id="downloadReport">Download Report</button>
+      </div>
+      <p class="muted-text">Click “Download Report” to create your monthly report.</p>
+    </section>
+
+    <!-- Orders Section -->
+    <section class="dashboard-card">
+      <div class="section-header" style="border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 1.5rem;">
+        <h2 class="section-title" style="margin:0;">📦 Ongoing Orders</h2>
+        <span class="muted-text">Sorted by day — pending pickup marked clearly</span>
+      </div>
+
+      <h3 style="font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 1rem;">Today's Orders</h3>
+
+      <!-- Order 1 -->
+      <div class="order-line">
+        <div>
+          <div style="font-weight: 600; font-size: 1.05rem; color: #fff;">20kg Fresh Potatoes #1023</div>
+          <div class="muted-text">Order A1001 • Anjalika • Kandy</div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-weight: bold; color: #4ade80; font-size: 1.1rem; margin-bottom: 0.3rem;">LKR 6,800</div>
+          <select class="status-select" data-order="A1001">
+            <option value="pending" selected>Pending</option>
+            <option value="ready">Ready (Mark Ready)</option>
+            <option value="picked">Picked by Driver</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Order 2 -->
+      <div class="order-line">
+        <div>
+          <div style="font-weight: 600; font-size: 1.05rem; color: #fff;">15kg Organic Tomatoes #1088</div>
+          <div class="muted-text">Order A1002 • Saman • Colombo</div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-weight: bold; color: #4ade80; font-size: 1.1rem; margin-bottom: 0.3rem;">LKR 4,500</div>
+          <select class="status-select" data-order="A1002">
+            <option value="pending" selected>Pending</option>
+            <option value="ready">Ready (Mark Ready)</option>
+            <option value="picked">Picked by Driver</option>
+          </select>
+        </div>
+      </div>
+
+      <h3 style="font-size: 1.1rem; font-weight: 600; color: #fff; margin: 2rem 0 1rem;">Yesterday's Orders</h3>
+      <div class="order-line">
+        <div>
+          <div style="font-weight: 600; font-size: 1.05rem; color: #fff;">10kg Carrots #1054</div>
+          <div class="muted-text">Order A0998 • Nimal • Kandy</div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-weight: bold; color: #4ade80; font-size: 1.1rem; margin-bottom: 0.3rem;">LKR 2,400</div>
+          <div
+            style="background: rgba(22, 163, 74, 0.2); color: #4ade80; padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.9rem; display: inline-block;">
+            Picked by Driver</div>
+        </div>
+      </div>
+
+      <h3 style="font-size: 1.1rem; font-weight: 600; color: #fff; margin: 2rem 0 1rem;">Tomorrow's Orders</h3>
+      <div class="order-line">
+        <div>
+          <div style="font-weight: 600; font-size: 1.05rem; color: #fff;">30kg Cabbage (Local) #1102</div>
+          <div class="muted-text">Order A1005 • Sahan • Nuwara Eliya</div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-weight: bold; color: #4ade80; font-size: 1.1rem; margin-bottom: 0.3rem;">LKR 9,000</div>
+          <select class="status-select" data-order="A1005">
+            <option value="pending" selected>Pending</option>
+            <option value="ready">Ready (Mark Ready)</option>
+            <option value="picked">Picked by Driver</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feedback Section -->
+    <section class="dashboard-card">
+      <div class="section-header" style="border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 1.5rem;">
+        <h2 class="section-title" style="margin:0;">📝 Product Feedbacks</h2>
+      </div>
+
+      <div class="order-line" style="display: block;">
+        <div style="font-weight: 600; color: #fff; margin-bottom: 0.5rem;">Fresh Potatoes — 2 New Feedbacks</div>
+        <div class="muted-text" style="font-style: italic;">“Very fresh and good quality. Delivery was on time!” —
+          Janaka Silva</div>
+        <div class="muted-text" style="font-style: italic; margin-top: 0.5rem;">“Packaging could be better.” — Sunil
+          Perera</div>
+      </div>
+
+      <div class="order-line" style="display: block;">
+        <div style="font-weight: 600; color: #fff; margin-bottom: 0.5rem;">Organic Tomatoes — 1 Feedback</div>
+        <div class="muted-text" style="font-style: italic;">“Excellent taste and very well packed.” — Ruwan Fernando
+        </div>
+      </div>
+
+      <div class="order-line" style="display: block;">
+        <div style="font-weight: 600; color: #fff; margin-bottom: 0.5rem;">Carrots — 1 Feedback</div>
+        <div class="muted-text" style="font-style: italic;">“Good but some were smaller than expected.” — Nadeesha
+          Priyan</div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById('downloadReport').addEventListener('click', () => {
+      alert('Download Report (Monthly) - placeholder action.');
+    });
+
+    // small toast helper
+    function showToast(msg, timeout = 3000) {
+      const t = document.createElement('div');
+      t.textContent = msg;
+      Object.assign(t.style, {
+        position: 'fixed', right: '20px', bottom: '20px',
+        background: '#16a34a', color: '#fff', padding: '10px 14px',
+        borderRadius: '8px', zIndex: 9999, fontSize: '0.9rem', boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+      });
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), timeout);
+    }
+
+    // handle status change events
+    document.querySelectorAll('.status-select').forEach(sel => {
+      // initial visual mapping
+      const applyStyle = (s) => {
+        const val = s.value;
+        if (val === 'pending') {
+          s.style.color = '#fbbf24'; // Warning yellow
+          s.style.borderColor = '#fbbf24';
+        } else if (val === 'ready') {
+          s.style.color = '#38bdf8'; // Info blue
+          s.style.borderColor = '#38bdf8';
+        } else if (val === 'picked') {
+          s.style.color = '#4ade80'; // Success green
+          s.style.borderColor = '#4ade80';
+        }
+      };
+
+      applyStyle(sel);
+
+      sel.addEventListener('change', (e) => {
+        const orderId = sel.dataset.order || 'order';
+        const val = sel.value;
+        applyStyle(sel);
+
+        let msg = '';
+        if (val === 'pending') msg = `${orderId} set to Pending`;
+        else if (val === 'ready') msg = `${orderId} marked Ready for pickup`;
+        else if (val === 'picked') msg = `${orderId} marked Picked by driver`;
+
+        showToast(msg);
+      });
+    });
+  </script>
+</body>
+
+</html>

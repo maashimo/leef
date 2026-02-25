@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Product - 🍃 Leef</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #fafaf9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .header {
+            width: 100%;
+            padding: 1rem;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.6em 1.2em;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-primary {
+            background: #16a34a;
+            color: white;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 90%;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        label {
+            display: block;
+            margin-top: 1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-top: 0.4rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #16a34a;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <a href="inventory.html" class="btn btn-secondary">← Back to Inventory</a>
+    </header>
+
+    <main class="container">
+        <h1>Update Product</h1>
+        <p style="color:#666; margin-bottom:1.5rem;">Submit changes for admin approval. Your current product will remain
+            live until approved.</p>
+
+        <form id="updateForm">
+            <input type="hidden" id="productId">
+
+            <label>Product Name:</label>
+            <input type="text" id="name" required>
+
+            <label>Category:</label>
+            <input type="text" id="category" required>
+
+            <label>Price:</label>
+            <input type="text" id="price" required>
+
+            <label>Stock:</label>
+            <input type="text" id="stock" required>
+
+            <label>Add Note (Reason for update):</label>
+            <textarea id="note" rows="4"></textarea>
+
+            <button type="submit" class="btn btn-primary" style="margin-top:1.5rem; width:100%;">Submit Update
+                Request</button>
+        </form>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const params = new URLSearchParams(window.location.search);
+            document.getElementById("productId").value = params.get("id") || "";
+            document.getElementById("name").value = params.get("name") || "";
+            document.getElementById("category").value = params.get("category") || "";
+            document.getElementById("price").value = params.get("price") || "";
+            document.getElementById("stock").value = params.get("stock") || "";
+        });
+
+        document.getElementById("updateForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (!user) return alert("Please login first");
+
+            const data = {
+                productId: document.getElementById("productId").value,
+                sellerId: user.id || user.seller_id,
+                name: document.getElementById("name").value,
+                category: document.getElementById("category").value,
+                price: document.getElementById("price").value,
+                stock: document.getElementById("stock").value,
+                note: document.getElementById("note").value
+            };
+
+            try {
+                const res = await fetch("http://localhost:5000/api/products/update-request", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await res.json();
+                if (res.ok) {
+                    alert("Update requested! Check your inventory status.");
+                    window.location.href = "inventory.html";
+                } else {
+                    alert("Error: " + result.message);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Connection failed");
+            }
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Route - 🍃 Leef</title>
+  <style>
+    :root {
+      --green: #16a34a;
+      --blue: #2563eb;
+      --red: #dc2626;
+      --bg: #f4f6f8;
+      --card: #fff;
+      --muted: #555;
+      --shadow: rgba(0,0,0,0.07);
+      --border: #e5e7eb;
+    }
+    * { box-sizing: border-box; margin:0; padding:0; font-family: 'Segoe UI', Arial, sans-serif; }
+    body { background: var(--bg); display: flex; min-height: 100vh; }
+    aside {
+      width: 240px;
+      background: var(--card);
+      padding: 1.5em 1em;
+      box-shadow: 2px 0 6px var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2em;
+    }
+    aside .logo { display: flex; align-items: center; gap: 0.5em; font-size: 1.5rem; margin-bottom: 2em; text-decoration: none; color: var(--green); font-weight: bold; }
+    aside nav a { display:block; padding:0.7em 0.6em; color: var(--muted); text-decoration:none; border-radius:0.5em; transition: background 0.2s, color 0.2s; font-size:1.05rem;}
+    aside nav a.active, aside nav a:hover { background: var(--green); color: #fff; font-weight: bold; }
+    aside button.redeem-btn { margin-top:auto; width:100%; background: var(--red); color:#fff; border:none; padding:0.7em; border-radius:0.5em; cursor:pointer; font-weight:bold; font-size:1rem;}
+    main { flex:1; padding:2.5em 3em; display:flex; flex-direction:column; align-items:center; background: var(--bg);}
+    h1 { font-size:2rem; margin-bottom:1.2em; color:#1a2e05; font-weight:700; letter-spacing:0.01em;}
+    .route-card {
+      background: var(--card);
+      padding:2em 2.5em;
+      border-radius:1.2em;
+      box-shadow: 0 6px 32px rgba(0,0,0,0.08);
+      max-width: 420px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1px solid var(--border);
+      gap: 1.5em;
+    }
+    .route-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2em;
+    }
+    .route-form label {
+      font-weight: 600;
+      color: #256029;
+      margin-bottom: 0.3em;
+      display: block;
+    }
+    .route-form select,
+    .route-form input[type="date"] {
+      width: 100%;
+      padding: 0.7em;
+      border: 1px solid #ddd;
+      border-radius: 0.5em;
+      font-size: 1rem;
+      margin-bottom: 0.2em;
+      background: #fafaf9;
+      color: #222;
+    }
+    .route-actions {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin-top: 1em;
+    }
+    .btn {
+      padding:0.55em 1.5em;
+      border:none;
+      border-radius:0.4em;
+      cursor:pointer;
+      color:#fff;
+      font-weight:600;
+      font-size:1rem;
+      transition: background 0.2s, box-shadow 0.2s;
+      background: var(--green);
+      box-shadow: 0 2px 8px rgba(22,163,74,0.07);
+      outline: none;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+    .btn:disabled {
+      background: #b7e0c2;
+      cursor: not-allowed;
+    }
+    @media(max-width:600px) {
+      main { padding:1em; }
+      .route-card { padding:1em; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside>
+    <a href="#" class="logo"> 🍃 Leef</a>
+    <nav>
+      <a href="admin-dashboard.html">Overview</a>
+      <a href="new-registration.html">Registration Requests</a>
+      <a href="order.html">Orders</a>
+      <a href="product-admin.html">Products</a>
+      <a href="feedback-admin.html">Feedback</a>
+      <a href="questions-admin.html">Questions</a>
+      <a href="refund-approval.html">Refunds</a>
+      <a href="view-route.html" class="active">View Routes</a>
+      <a href="admin-profile.html">Profile</a>
+   
+    </nav>
+    <button class="redeem-btn">Logout</button>
+  </aside>
+
+  <!-- Main -->
+  <main>
+    <h1>View Truck Route</h1>
+    <div class="route-card">
+      <form class="route-form" id="routeForm" onsubmit="return false;">
+        <div>
+          <label for="truckId">Select Truck ID</label>
+          <select id="truckId" required>
+            <option value="">-- Select Truck --</option>
+            <option value="TRK-001">TRK-001</option>
+            <option value="TRK-002">TRK-002</option>
+            <option value="TRK-003">TRK-003</option>
+          </select>
+        </div>
+        <div>
+          <label for="routeDate">Select Date</label>
+          <input type="date" id="routeDate" required>
+        </div>
+        <div class="route-actions">
+          <a href="#" id="viewRouteBtn" class="btn" style="pointer-events:none;opacity:0.7;">View Route</a>
+        </div>
+      </form>
+    </div>
+  </main>
+  <script>
+    // Enable the View Route button only if both fields are filled
+    const truckId = document.getElementById('truckId');
+    const routeDate = document.getElementById('routeDate');
+    const viewRouteBtn = document.getElementById('viewRouteBtn');
+
+    function updateViewRouteLink() {
+      if (truckId.value && routeDate.value) {
+        viewRouteBtn.style.pointerEvents = 'auto';
+        viewRouteBtn.style.opacity = '1';
+        // Example: link to a route details page with query params
+        viewRouteBtn.href = `route-details.html?truck=${encodeURIComponent(truckId.value)}&date=${encodeURIComponent(routeDate.value)}`;
+      } else {
+        viewRouteBtn.style.pointerEvents = 'none';
+        viewRouteBtn.style.opacity = '0.7';
+        viewRouteBtn.href = '#';
+      }
+    }
+
+    truckId.addEventListener('change', updateViewRouteLink);
+    routeDate.addEventListener('input', updateViewRouteLink);
+  </script>
+</body>
+</html>

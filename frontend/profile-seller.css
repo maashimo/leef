@@ -1,0 +1,157 @@
+/* Seller Profile Page Styles */
+
+body {
+  background: #fafaf9;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  color: #222;
+  margin: 0;
+}
+
+.header {
+  background: #fff;
+  border-bottom: 1px solid #e7e5e4;
+  padding: 1.2em 0;
+  margin-bottom: 2em;
+}
+
+.header-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #15803d;
+  text-decoration: none;
+}
+
+.logo-icon {
+  font-size: 1.7em;
+}
+
+.nav {
+  display: flex;
+  gap: 1.5em;
+}
+
+.nav-link {
+  color: #44403c;
+  font-weight: 500;
+  padding: 0.5em 1.2em;
+  border-radius: 0.5em;
+  transition: background 0.15s, color 0.15s;
+  text-decoration: none;
+}
+
+.nav-link.active,
+.nav-link:focus {
+  background: #dcfce7;
+  color: #15803d;
+  font-weight: 600;
+}
+
+.nav-link:hover {
+  background: #f0fdf4;
+  color: #16a34a;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 1em;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #15803d;
+  margin-bottom: 1.5em;
+}
+
+form.bg-white {
+  background: #fff;
+  border-radius: 1.2em;
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.07), 0 1.5px 4px 0 rgba(0,0,0,0.03);
+  padding: 2em 2em 1.5em 2em;
+  margin-bottom: 2em;
+}
+
+label {
+  font-size: 1rem;
+  color: #44403c;
+  margin-bottom: 0.4em;
+  display: block;
+  font-weight: 600;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.9em 1em;
+  margin-top: 0.25em;
+  border: 1px solid #d6d3d1;
+  border-radius: 0.7em;
+  background: #fff;
+  font-size: 1em;
+  transition: border 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.input-field:focus {
+  border-color: #22c55e;
+  box-shadow: 0 0 0 2px #bbf7d0;
+  outline: none;
+}
+
+.bg-green-600 {
+  background: linear-gradient(to right, #16a34a, #15803d);
+}
+
+.bg-green-600:hover,
+.bg-green-600:focus {
+  background: linear-gradient(to right, #15803d, #166534);
+}
+
+.text-white {
+  color: #fff;
+}
+
+.rounded-xl {
+  border-radius: 0.7em;
+}
+
+.text-blue-500 {
+  color: #2563eb;
+}
+
+.text-blue-500:hover {
+  text-decoration: underline;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.mb-6 { margin-bottom: 1.5em; }
+.mb-4 { margin-bottom: 1em; }
+.mb-2 { margin-bottom: 0.5em; }
+.space-y-4 > * + * { margin-top: 1.2em; }
+
+@media (max-width: 600px) {
+  .container {
+    padding: 0 0.5em;
+  }
+  form.bg-white {
+    padding: 1em 0.5em;
+  }
+}

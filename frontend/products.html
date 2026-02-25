@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products - leef 🍃</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <style>
+    /* Top Navbar Styles (Matching Customer Dashboard) */
+    .top-navbar {
+      background-color: rgba(10, 10, 10, 0.95);
+      border-bottom: 1px solid #333;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .navbar-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .navbar-logo {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: bold;
+      color: #4ade80;
+    }
+
+    .navbar-location {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-left: 2rem;
+    }
+
+    .navbar-nav {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 2rem;
+    }
+
+    .navbar-link {
+      text-decoration: none;
+      color: #eee;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      transition: background-color 0.2s;
+    }
+
+    .navbar-link.active {
+      background-color: #10b981;
+      color: white;
+    }
+
+    .navbar-link:hover {
+      background-color: #333;
+    }
+
+    /* Filter Styles */
+    .filter-bar {
+      background: #1a1a1a;
+      padding: 1rem;
+      border-radius: 0.8rem;
+      border: 1px solid #333;
+      margin-bottom: 2rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter-input {
+      background: #111;
+      border: 1px solid #333;
+      color: #fff;
+      padding: 0.6rem 1rem;
+      border-radius: 0.5rem;
+      outline: none;
+    }
+
+    .filter-input:focus {
+      border-color: #4ade80;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .top-navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar-nav {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body class="">
+
+  <!-- Top Navbar -->
+  <nav class="top-navbar">
+    <div class="navbar-header">
+      <a href="index.html" class="navbar-logo">
+        leef 🍃
+      </a>
+      <div class="navbar-location">Colombo, Sri Lanka</div>
+    </div>
+    <ul class="navbar-nav">
+      <li><a href="customer-dashboard.html" class="navbar-link">Dashboard</a></li>
+      <li><a href="products.html" class="navbar-link active">Products</a></li>
+      <li><a href="cart.html" class="navbar-link ">Cart</a></li>
+
+      <li><a href="feedback.html" class="navbar-link">Feedback</a></li>
+      <li><a href="returns.html" class="navbar-link">Refund</a></li>
+      <li><a href="profile.html" class="navbar-link ">Profile</a></li>
+      <li><a href="index.html" class="navbar-link">Logout</a></li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <div class="dashboard-header">
+      <div>
+        <h1 class="page-title">Marketplace</h1>
+        <p class="page-subtitle">Browse fresh products from trusted sellers</p>
+      </div>
+      <div class="header-actions">
+        <a href="cart.html" class="btn btn-primary">🛒 View Cart</a>
+      </div>
+    </div>
+
+    <!-- Search & Filters -->
+    <div class="filter-bar">
+      <input id="searchInput" class="filter-input" type="search" placeholder="Search products..."
+        style="flex: 1; min-width: 220px;">
+      <select id="categoryFilter" class="filter-input">
+        <option value="all">All categories</option>
+        <option value="fruit">Fruit</option>
+        <option value="vegetable">Vegetable</option>
+        <option value="seasonal">Seasonal items</option>
+      </select>
+      <select id="sortFilter" class="filter-input">
+        <option value="default">Sort By</option>
+        <option value="most-sold">Most sold</option>
+        <option value="price-asc">Price: Low → High</option>
+        <option value="price-desc">Price: High → Low</option>
+      </select>
+    </div>
+
+    <!-- Products Grid -->
+    <div id="productsGrid" class="products-grid">
+      <!-- Populated by JS -->
+      <div style="text-align: center; grid-column: 1/-1; color: #888;">Loading fresh products...</div>
+    </div>
+  </main>
+
+  <script>
+    let allProducts = [];
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      await loadProducts();
+    });
+
+    async function loadProducts() {
+      try {
+        const res = await fetch("http://localhost:5000/api/products/marketplace");
+        allProducts = await res.json();
+        renderProducts(allProducts);
+      } catch (err) {
+        console.error(err);
+        document.getElementById("productsGrid").innerHTML = "<div style='text-align: center; grid-column: 1/-1; color: #888;'>Failed to load products. Please try again later.</div>";
+      }
+    }
+
+    let lastRenderedProducts = [];
+
+    function renderProducts(products) {
+      const grid = document.getElementById("productsGrid");
+      grid.innerHTML = "";
+      lastRenderedProducts = products;
+
+      if (products.length === 0) {
+        grid.innerHTML = "<div style='text-align: center; grid-column: 1/-1; color: #888;'>No products found matching your criteria.</div>";
+        return;
+      }
+
+      products.forEach((p, idx) => {
+        const card = document.createElement("div");
+        card.className = "product-card";
+
+        const imageUrl = p.image_url ? `http://localhost:5000/${p.image_url}` : 'images/default.png';
+        const saleBadge = p.sale_details ? `<div style="position:absolute; top:10px; right:10px; background:#ef4444; color:white; padding:0.2em 0.6em; border-radius:1em; font-size:0.75rem; font-weight:bold; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">SALE: ${p.sale_details}</div>` : '';
+        const coinsBadge = p.coins_percent ? `<div style="color: #f59e0b; font-size: 0.8rem; margin-bottom: 0.5em; display:flex; align-items:center; gap:0.3em;"><span style="font-size:1rem;">🪙</span> Earn ${p.coins_percent}% Coins</div>` : '';
+
+        // Determine the display price: use sale price if available, otherwise original price
+        let displayPrice = p.price; // default: original price (e.g. "90 per 300g")
+        if (p.sale_details) {
+          // sale_details contains the sale price (e.g. "80 per 30 g")
+          displayPrice = p.sale_details;
+        }
+
+        // Build price HTML
+        let priceHtml = "";
+        if (p.sale_details) {
+          // Show original crossed out + sale price in red
+          priceHtml = `<div style="margin-bottom:0.8em;">
+                           <span style="text-decoration: line-through; color: #999; font-size: 0.9rem;">Rs. ${p.price}</span>
+                           <span style="display:block; font-weight:bold; color:#ef4444; font-size:1.1rem;">Rs. ${p.sale_details}</span>
+                         </div>`;
+        } else {
+          // No sale — show regular price in green
+          priceHtml = `<div style="margin-bottom:0.8em; display:flex; align-items:center; gap:0.5rem;">
+                           <span class="product-price" style="font-weight:bold; color:#4ade80; font-size:1.1rem;">Rs. ${p.price}</span>
+                         </div>`;
+        }
+
+        // The price passed to addToCart is the display price (sale price if sale, else original)
+        const cartPrice = displayPrice;
+
+        card.innerHTML = `
+                <div style="position:relative;">
+                  <img src="${imageUrl}" alt="${p.name}" class="product-image"
+                    style="width:100%; height:140px; object-fit:cover; border-radius:0.8em; margin:0 auto 0.8em auto; display:block;">
+                  ${saleBadge}
+                </div>
+                <div class="product-info" style="padding:0 0.5em;">
+                  <h3 class="product-title" style="margin-bottom:0.2em;">${p.name}</h3>
+                  <div style="display:flex; justify-content:space-between; font-size:0.85rem; color:#9ca3af; margin-bottom:0.5em;">
+                     <span>${p.shop_name}</span>
+                     <span>${p.category || 'General'}</span>
+                  </div>
+                  
+                  ${priceHtml}
+                  
+                  ${coinsBadge}
+                  
+                  <button class="btn btn-primary btn-block add-to-cart-btn" style="width:100%; border-radius:0.5em; padding:0.6em;" data-idx="${idx}">Add to Cart</button>
+                  <a href="product-details.html?id=${p.id}" class="link" style="display:block; margin-top:0.6em; font-size:0.85rem; text-align:center; color:#888; text-decoration:none;">View Details</a>
+                </div>
+             `;
+        grid.appendChild(card);
+      });
+
+      // Attach click events for Add to Cart buttons
+      document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+          const idx = parseInt(this.dataset.idx);
+          const p = lastRenderedProducts[idx];
+          const displayPrice = p.sale_details || p.price;
+          addToCart(p.id, p.name, String(displayPrice), p.image_url, 1, p.stock, p.coins_percent || 0);
+        });
+      });
+    }
+
+    function showToast(message, type = 'success') {
+      let container = document.getElementById('toast-container');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        document.body.appendChild(container);
+      }
+
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+          <span>${message}</span>
+          <button onclick="this.parentElement.remove()" style="background:transparent; border:none; color:white; font-size:1.2rem; cursor:pointer; padding:0; margin-left:10px;">&times;</button>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => toast.classList.add('show'));
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    function addToCart(productId, name, price, img, qty, stock, coinsPercent) {
+      const user = localStorage.getItem('user');
+      if (!user) {
+        showToast('Please login to add items to your cart.', 'error');
+        window.location.href = 'login.html';
+        return;
+      }
+
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      let found = cart.find(item => item.name === name);
+
+      if (found) {
+        if (stock !== undefined && found.qty + qty > stock) {
+          showToast(`Cannot add more. You already have ${found.qty} in cart, and only ${stock} available.`, 'error');
+          return;
+        }
+        found.qty += qty;
+        found.coins_percent = coinsPercent || found.coins_percent || 0;
+        found.id = productId || found.id;
+      } else {
+        if (stock !== undefined && qty > stock) {
+          showToast(`Cannot add more. Only ${stock} available.`, 'error');
+          return;
+        }
+        cart.push({ id: productId, name, price, img, qty, stock, coins_percent: coinsPercent || 0 });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      showToast(`${name} added to cart!`, 'success');
+    }
+
+    // Filter Logic
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const sortFilter = document.getElementById('sortFilter');
+
+    function filterProducts() {
+      const q = (searchInput.value || '').trim().toLowerCase();
+      const cat = categoryFilter.value;
+      const sort = sortFilter.value;
+
+      let filtered = allProducts.filter(p => {
+        const matchesSearch = p.name.toLowerCase().includes(q) || (p.description && p.description.toLowerCase().includes(q));
+        const matchesCat = cat === 'all' || (p.category && p.category.toLowerCase() === cat);
+        return matchesSearch && matchesCat;
+      });
+
+      if (sort === 'price-asc') {
+        filtered.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+      } else if (sort === 'price-desc') {
+        filtered.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+      } else if (sort === 'most-sold') {
+        filtered.sort((a, b) => (b.sold_count || 0) - (a.sold_count || 0));
+      }
+
+      renderProducts(filtered);
+    }
+
+    searchInput.addEventListener('input', filterProducts);
+    categoryFilter.addEventListener('change', filterProducts);
+    sortFilter.addEventListener('change', filterProducts);
+  </script>
+</body>
+
+</html>

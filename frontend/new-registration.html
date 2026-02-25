@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Requests - 🍃 Leef</title>
+  <style>
+    :root {
+      --green: #16a34a;
+      --orange: #f97316;
+      --blue: #2563eb;
+      --red: #dc2626;
+      --bg: #fafaf9;
+      --card: #fff;
+      --muted: #555;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    aside {
+      width: 240px;
+      background: var(--card);
+      padding: 1.5em 1em;
+      box-shadow: 2px 0 6px var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2em;
+    }
+
+    aside .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      font-size: 1.4rem;
+      margin-bottom: 2em;
+      text-decoration: none;
+      color: var(--green);
+      font-weight: bold;
+    }
+
+    aside nav a {
+      display: block;
+      padding: 0.6em 0.4em;
+      color: var(--muted);
+      text-decoration: none;
+      border-radius: 0.5em;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    aside nav a.active,
+    aside nav a:hover {
+      background: var(--green);
+      color: #fff;
+      font-weight: bold;
+    }
+
+    aside button.redeem-btn {
+      margin-top: auto;
+      width: 100%;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      padding: 0.6em;
+      border-radius: 0.5em;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* Main content */
+    main {
+      flex: 1;
+      padding: 2em;
+      display: flex;
+      flex-direction: column;
+      gap: 2em;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.2em;
+      color: #222;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5em;
+      color: #222;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 1em;
+      margin-bottom: 1em;
+    }
+
+    .tab {
+      padding: 0.6em 1em;
+      background: #eee;
+      border-radius: 0.5em;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .tab.active {
+      background: var(--green);
+      color: #fff;
+      font-weight: bold;
+    }
+
+    /* Card */
+    .card {
+      background: var(--card);
+      padding: 1.2em;
+      border-radius: 1em;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 0.6em;
+      border-bottom: 1px solid #eee;
+      font-size: 0.9rem;
+      text-align: left;
+    }
+
+    th {
+      background: #f5f5f5;
+      font-weight: bold;
+    }
+
+    td button {
+      padding: 0.3em 0.6em;
+      border: none;
+      border-radius: 0.4em;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    .approve-btn {
+      background: var(--green);
+    }
+
+    .reject-btn {
+      background: var(--red);
+    }
+
+    .view-btn {
+      background: var(--blue);
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: var(--card);
+      padding: 1.5em;
+      border-radius: 1em;
+      width: 90%;
+      max-width: 500px;
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 0.5em;
+      right: 0.8em;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    @media(max-width:900px) {
+      main {
+        padding: 1em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <aside>
+    <a href="./index.html" class="logo">🍃 Leef</a>
+    <nav>
+      <a href="./admin-dashboard.html" class="nav-link">Overview</a>
+      <a href="./new-registration.html" class="nav-link">Registration Requests</a>
+      <a href="./order.html" class="nav-link">Orders</a>
+      <a href="./product-admin.html" class="nav-link">Products</a>
+      <a href="./feedback-admin.html" class="nav-link">Feedback</a>
+      <a href="./questions-admin.html" class="nav-link">Questions</a>
+      <a href="./refund-approval.html" class="nav-link">Refunds</a>
+
+      <a href="./admin-profile.html" class="nav-link">Profile</a>
+    </nav>
+    <button class="redeem-btn" onclick="window.location.href='./logout.html'">Logout</button>
+  </aside>
+
+  <!-- Main -->
+  <main>
+    <h1>Registration Requests</h1>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab active" data-tab="customers">Customer Registrations</div>
+      <div class="tab" data-tab="sellers">Add Seller</div>
+    </div>
+
+    <!-- Tab Content -->
+    <div id="customers" class="tab-content card">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Town</th>
+            <th>Joined On</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ruwan Perera</td>
+            <td>Colombo</td>
+            <td>2025-10-15</td>
+            <td>
+              <button class="view-btn" onclick="viewDetails('Ruwan', 'Colombo', 'Customer')">View</button>
+              <button class="approve-btn">Approve</button>
+              <button class="reject-btn">Reject</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Saroja Silva</td>
+            <td>Kandy</td>
+            <td>2025-10-15</td>
+            <td>
+              <button class="view-btn" onclick="viewDetails('Saroja', 'Kandy', 'Customer')">View</button>
+              <button class="approve-btn">Approve</button>
+              <button class="reject-btn">Reject</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="sellers" class="tab-content card" style="display:none;">
+      <h2>Add New Seller</h2>
+      <p style="margin-bottom:1em; color:#555;">Enter the seller's email address to send them a registration invitation.
+        Sellers cannot send registration requests themselves.</p>
+      <div style="display:flex; gap:1em; align-items:center;">
+        <input type="email" id="seller-email" placeholder="Enter seller's email"
+          style="padding:0.6em 1em; border:1px solid #ccc; border-radius:0.5em; width:300px; font-size:1em;">
+        <button class="approve-btn" onclick="sendSellerInvite()">Send Email</button>
+      </div>
+    </div>
+
+    <!-- Registered Users Section -->
+    <section class="card" style="margin-top:2em;">
+      <h2>Registered Users</h2>
+      <!-- Add this search bar above the Registered Users section -->
+      <div style="margin-bottom:1em; display:flex; justify-content:flex-end;">
+        <input type="text" id="user-search" placeholder="Search by name, town, or role..."
+          style="padding:0.6em 1em; border:1px solid #ccc; border-radius:0.5em; width:260px; font-size:1em;">
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Name / Business</th>
+            <th>Town / Shop Town</th>
+            <th>Role</th>
+            <th>Joined On</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="registered-users-table">
+          <!-- Dynamic Content -->
+          <tr>
+            <td colspan="5" style="text-align:center;">Loading users...</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+      <div class="modal-content">
+        <button class="close-btn" onclick="closeModal()">×</button>
+        <h2 id="modalName"></h2>
+        <p><strong>Town / Shop Town:</strong> <span id="modalTown"></span></p>
+        <p><strong>Role:</strong> <span id="modalRole"></span></p>
+        <p><strong>Joined On:</strong> <span id="modalJoined"></span></p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Tabs functionality
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const target = tab.dataset.tab;
+        tabContents.forEach(tc => tc.style.display = tc.id === target ? 'block' : 'none');
+      });
+    });
+
+    // Send seller invite
+    async function sendSellerInvite() {
+      const emailInput = document.getElementById('seller-email');
+      const email = emailInput.value.trim();
+      const sendBtn = document.querySelector('#sellers .approve-btn');
+
+      if (email) {
+        const originalText = sendBtn ? sendBtn.textContent : "Send Email";
+        if (sendBtn) {
+          sendBtn.disabled = true;
+          sendBtn.textContent = "Sending...";
+        }
+
+        try {
+          const res = await fetch('http://localhost:5000/api/admin/invite-seller', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          });
+
+          if (res.ok) {
+            alert(`Invitation sent to ${email}`);
+            emailInput.value = ''; // Clear input
+          } else {
+            const txt = await res.text();
+            alert("Failed to send invitation: " + txt);
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Error sending invitation. Is the backend running?");
+        } finally {
+          if (sendBtn) {
+            sendBtn.disabled = false;
+            sendBtn.textContent = originalText;
+          }
+        }
+      } else {
+        alert('Please enter a valid email address.');
+      }
+    }
+
+    // Customer Requests Logic
+    async function fetchCustomerRequests() {
+      try {
+        const res = await fetch('http://localhost:5000/api/admin/requests/customers');
+        if (!res.ok) throw new Error('Failed to fetch requests');
+        const requests = await res.json();
+
+        const tbody = document.querySelector('#customers table tbody');
+        tbody.innerHTML = ''; // Clear existing (static) rows
+
+        if (requests.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No pending requests</td></tr>';
+          return;
+        }
+
+        requests.forEach(req => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+                <td>${req.name}</td>
+                <td>${req.town || 'N/A'}</td>
+                <td>${new Date(req.created_at).toLocaleDateString()}</td>
+                <td>
+                    <button class="view-btn" onclick="viewDetails('${req.name}', '${req.town || 'N/A'}', 'Customer')">View</button>
+                    <button class="approve-btn" onclick="approveCustomer(${req.customer_id})">Approve</button>
+                    <button class="reject-btn">Reject</button>
+                </td>
+            `;
+          tbody.appendChild(tr);
+        });
+
+      } catch (err) {
+        console.error(err);
+        // Don't alert on load, just log
+      }
+    }
+
+    async function approveCustomer(customerId) {
+      if (!confirm("Approve this customer?")) return;
+
+      try {
+        const res = await fetch('http://localhost:5000/api/admin/approve-customer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ customerId })
+        });
+
+        if (res.ok) {
+          alert("Customer approved! Email sent.");
+          fetchCustomerRequests(); // Refresh list
+        } else {
+          const txt = await res.text();
+          alert("Failed to approve: " + txt);
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Error approving customer.");
+      }
+    }
+
+    // Load requests on page load
+    fetchCustomerRequests();
+    fetchRegisteredUsers();
+
+    async function fetchRegisteredUsers() {
+      try {
+        const res = await fetch('http://localhost:5000/api/admin/users');
+        const users = await res.json();
+
+        const tbody = document.getElementById('registered-users-table');
+        tbody.innerHTML = '';
+
+        if (users.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No registered users found.</td></tr>';
+          return;
+        }
+
+        users.forEach(u => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+                <td>${u.name}</td>
+                <td>${u.town || 'N/A'}</td>
+                <td><span class="badge ${u.role === 'Seller' ? 'role-seller' : 'role-customer'}" 
+                          style="background:${u.role === 'Seller' ? '#e0f2fe' : '#dcfce7'}; color:${u.role === 'Seller' ? '#0369a1' : '#16a34a'}; padding:0.2em 0.6em; border-radius:0.4em; font-size:0.85rem; font-weight:600;">
+                    ${u.role}
+                </span></td>
+                <td>${new Date(u.created_at).toLocaleDateString()}</td>
+                <td>
+                    <button class="view-btn" onclick="viewDetails('${u.name}', '${u.town || 'N/A'}', '${u.role}')">View</button>
+                    <button class="reject-btn" onclick="removeUser(this)">Remove</button>
+                </td>
+            `;
+          tbody.appendChild(tr);
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Modal view details (now accepts town/shopTown instead of email)
+    function viewDetails(name, town, role) {
+      document.getElementById('modalName').textContent = name;
+      document.getElementById('modalTown').textContent = town;
+      document.getElementById('modalRole').textContent = role;
+      const joined = new Date().toLocaleDateString();
+      document.getElementById('modalJoined').textContent = joined;
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+
+    // Remove user row from registered users table
+    function removeUser(btn) {
+      if (confirm("Are you sure you want to remove this user?")) {
+        btn.closest('tr').remove();
+      }
+    }
+
+    // User search functionality (searches name, town/shop town, and role)
+    document.getElementById('user-search').addEventListener('input', function () {
+      const search = this.value.toLowerCase();
+      const rows = document.querySelectorAll('#registered-users-table tr');
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(search) ? '' : 'none';
+      });
+    });
+
+    // Ensure sidebar links navigate correctly; highlight active link
+    (function () {
+      const links = document.querySelectorAll('aside nav a.nav-link');
+      const current = location.pathname.split('/').pop() || 'new-registration.html';
+      links.forEach(a => {
+        const href = a.getAttribute('href')?.split('/').pop();
+        // highlight active
+        if (href === current) a.classList.add('active');
+        // navigation fallback
+        a.addEventListener('click', function (e) {
+          const target = this.getAttribute('href');
+          if (!target || target === '#') return;
+          e.preventDefault();
+          window.location.href = target;
+        });
+      });
+    })();
+  </script>
+</body>
+
+</html>

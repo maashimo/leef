@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - leef 🍃</title>
+  <style>
+    /* Variables */
+    :root {
+      --green: #16a34a;
+      --orange: #f97316;
+      --red: #dc2626;
+      --blue: #2563eb;
+      --bg: #fafaf9;
+      --card: #fff;
+      --muted: #555;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    aside {
+      width: 240px;
+      background: var(--card);
+      padding: 1.5em 1em;
+      box-shadow: 2px 0 6px var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2em;
+    }
+
+    aside .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      font-size: 1.4rem;
+      margin-bottom: 2em;
+      text-decoration: none;
+      color: var(--green);
+      font-weight: bold;
+    }
+
+    aside nav a {
+      display: block;
+      padding: 0.6em 0.4em;
+      color: var(--muted);
+      text-decoration: none;
+      border-radius: 0.5em;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    aside nav a.active,
+    aside nav a:hover {
+      background: var(--green);
+      color: #fff;
+      font-weight: bold;
+    }
+
+    aside button.redeem-btn {
+      margin-top: auto;
+      width: 100%;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      padding: 0.6em;
+      border-radius: 0.5em;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* Main content */
+    main {
+      flex: 1;
+      padding: 2em;
+      display: flex;
+      flex-direction: column;
+      gap: 2em;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card);
+      padding: 1.2em;
+      border-radius: 1em;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+    }
+
+    .flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: #222;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.2em;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5em;
+    }
+
+    h3 {
+      font-size: 1rem;
+      margin-bottom: 0.4em;
+    }
+
+    .text-muted {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* Notification */
+    .notifications {
+      position: relative;
+    }
+
+    .btn-icon {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--green);
+      position: relative;
+    }
+
+    .notification-count {
+      position: absolute;
+      top: -0.3em;
+      right: -0.3em;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: bold;
+      padding: 0.1em 0.4em;
+      border-radius: 50%;
+    }
+
+    .notification-panel {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 2em;
+      width: 250px;
+      background: var(--card);
+      padding: 1em;
+      border-radius: 1em;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+      z-index: 10;
+    }
+
+    .notification-panel ul {
+      list-style: none;
+    }
+
+    .notification-panel li {
+      padding: 0.5em 0;
+      border-bottom: 1px solid #eee;
+      font-size: 0.9rem;
+      color: #444;
+    }
+
+    .notification-panel li:last-child {
+      border-bottom: none;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 0.6em;
+      border-bottom: 1px solid #eee;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background: #f5f5f5;
+      font-weight: bold;
+    }
+
+    /* Metrics */
+    .metrics {
+      display: flex;
+      gap: 1em;
+      flex-wrap: wrap;
+    }
+
+    .metric {
+      flex: 1;
+      min-width: 150px;
+      background: #fdfdfd;
+      border: 1px solid #eee;
+      padding: 1em;
+      border-radius: 1em;
+    }
+
+    .metric h3 {
+      font-size: 1.5rem;
+      margin-top: 0.2em;
+    }
+
+    .metric span {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Responsive */
+    @media(max-width:900px) {
+      aside {
+        width: 200px;
+      }
+
+      main {
+        padding: 1em;
+      }
+
+      .metrics {
+        flex-direction: column;
+      }
+    }
+  </style>
+  <link id="dynamic-style" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <aside>
+    <a href="#" class="logo">leef 🍃</a>
+    <nav>
+      <a href="admin-dashboard.html" class="active">Overview</a>
+      <a href="new-registration.html">Registration Requests</a>
+      <a href="order.html">Orders</a>
+      <a href="product-admin.html">Products</a>
+      <a href="feedback-admin.html">Feedback</a>
+      <a href="questions-admin.html">Questions</a>
+      <a href="refund-approval.html">Refunds</a>
+
+      <a href="admin-profile.html">Profile</a>
+    </nav>
+    <button class="redeem-btn">Logout</button>
+  </aside>
+
+  <!-- Main Dashboard -->
+  <main>
+    <!-- Header -->
+    <div class="card flex" style="justify-content:space-between; align-items:center;">
+      <div>
+        <h1>Admin Dashboard</h1>
+      </div>
+      <div class="flex" style="gap:1em; align-items:center;">
+        <div class="notifications">
+          <button class="btn-icon" id="notifBtn">🔔</button>
+          <span class="notification-count">6</span>
+          <div class="notification-panel" id="notificationPanel">
+            <ul>
+              <li>Truck-02 delayed by 1h</li>
+              <li>New seller registration awaiting approval</li>
+              <li>Payment gateway test succeeded</li>
+              <li>Order #A-1002 is ready</li>
+              <li>Order #A-1003 cancelled</li>
+              <li>Order #A-1001 delivered</li>
+            </ul>
+          </div>
+        </div>
+        <button class="download-btn"
+          style="background:var(--blue);color:#fff;padding:0.7em 1.4em;border:none;border-radius:0.6em;font-weight:600;cursor:pointer;box-shadow:0 2px 8px rgba(37,99,235,0.10);">
+          ⬇️ Download Report
+        </button>
+      </div>
+    </div>
+
+    <!-- Key metrics removed as requested -->
+
+    <!-- Top Sellers & Customers -->
+    <div class="card">
+      <h2>Top Sellers & Top Customers</h2>
+      <div style="display:flex; flex-wrap:wrap; gap:2em;">
+        <!-- Top Sellers -->
+        <div style="flex:1; min-width:200px;">
+          <h3 style="color:var(--green);">Top Sellers</h3>
+          <table>
+            <thead>
+              <tr style="background:#e7fbe9;">
+                <th>Seller</th>
+                <th>Revenue</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>GreenFields Agro</td>
+                <td style="text-align:right;">42,000</td>
+              </tr>
+              <tr>
+                <td>Sunny Harvest</td>
+                <td style="text-align:right;">31,200</td>
+              </tr>
+              <tr>
+                <td>Valley Produce</td>
+                <td style="text-align:right;">28,500</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Top Customers -->
+        <div style="flex:1; min-width:200px;">
+          <h3 style="color:var(--blue);">Top Customers</h3>
+          <table>
+            <thead>
+              <tr style="background:#e7f0fb;">
+                <th>Customer</th>
+                <th>Spent</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ruwan</td>
+                <td style="text-align:right;">15,000</td>
+              </tr>
+              <tr>
+                <td>Saroja</td>
+                <td style="text-align:right;">12,500</td>
+              </tr>
+              <tr>
+                <td>Kasun</td>
+                <td style="text-align:right;">10,800</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Notification toggle
+    const notifBtn = document.getElementById('notifBtn');
+    const notifPanel = document.getElementById('notificationPanel');
+    notifBtn.addEventListener('click', e => {
+      notifPanel.style.display = notifPanel.style.display === 'block' ? 'none' : 'block';
+      e.stopPropagation();
+    });
+    document.body.addEventListener('click', () => { notifPanel.style.display = 'none'; });
+    notifPanel.addEventListener('click', e => e.stopPropagation());
+
+    // Fetch notifications
+    async function loadNotifications() {
+      try {
+        const res = await fetch("http://localhost:5000/api/products/admin/notifications");
+        const notifs = await res.json();
+        const ul = document.querySelector("#notificationPanel ul");
+        const countSpan = document.querySelector(".notification-count");
+
+        ul.innerHTML = "";
+        countSpan.textContent = notifs.length;
+
+        if (notifs.length === 0) {
+          ul.innerHTML = "<li style='color:#888; text-align:center; padding:0.5em;'>No new notifications</li>";
+          return;
+        }
+
+        notifs.forEach(n => {
+          const li = document.createElement("li");
+          li.textContent = n.message;
+          // Style based on type
+          if (n.type === 'warning') {
+            li.style.borderLeft = "3px solid #f97316";
+            li.style.background = "#fff7ed";
+          }
+          li.style.padding = "0.5em";
+          li.style.marginBottom = "0.2em";
+          li.style.fontSize = "0.9rem";
+          ul.appendChild(li);
+        });
+      } catch (err) {
+        console.error("Error loading notifications:", err);
+      }
+    }
+
+    // Load on start and refresh every 30s
+    document.addEventListener("DOMContentLoaded", loadNotifications);
+    setInterval(loadNotifications, 30000);
+
+    // Load new-registration.css when Registration Requests is clicked
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', function (e) {
+        if (this.textContent.trim() === 'Registration Requests') {
+          document.getElementById('dynamic-style').setAttribute('href', 'new-registration.css');
+        } else {
+          document.getElementById('dynamic-style').removeAttribute('href');
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

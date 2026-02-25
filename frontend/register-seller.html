@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Registration | leef 🍃</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Password Strength Styles */
+        .password-strength-container {
+            margin-top: 5px;
+        }
+
+        .strength-meter-bg {
+            height: 4px;
+            background: #333;
+            /* Dark background for the track */
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .strength-meter-fill {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s ease, background-color 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .password-feedback {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .strength-weak {
+            background-color: #ef4444;
+        }
+
+        .strength-medium {
+            background-color: #eab308;
+        }
+
+        .strength-strong {
+            background-color: #22c55e;
+        }
+
+        /* File Input Styling */
+        .file-input-wrapper {
+            position: relative;
+            margin-top: 5px;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="auth-container">
+        <div class="auth-card animate-scale" style="max-width: 600px;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <a href="index.html" class="logo" style="justify-content: center; margin-bottom: 10px;">
+                    leef 🍃
+                </a>
+                <h1>Seller Registration</h1>
+                <p style="color: var(--text-light);">Complete your partner account setup</p>
+            </div>
+
+            <div id="error-message"
+                style="display:none; color: #dc2626; background: #fee2e2; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center;">
+            </div>
+
+            <form action="http://localhost:5000/api/auth/register" method="post" enctype="multipart/form-data"
+                class="register-form" id="registerForm">
+
+                <input type="hidden" name="role" value="seller">
+                <input type="hidden" name="token" id="tokenInput">
+
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" name="fullname" placeholder="e.g. Nimal Perera" required>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" name="email" id="emailInput" readonly required
+                        style="background-color: #f3f4f6; cursor: not-allowed;">
+                    <small style="color: #666;">Email cannot be changed as it is linked to your invitation.</small>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" name="password" id="passwordInput" placeholder="••••••••"
+                        required>
+                    <div class="password-strength-container" id="strengthContainer" style="display:none;">
+                        <div class="strength-meter-bg">
+                            <div class="strength-meter-fill" id="strengthMeter"></div>
+                        </div>
+                        <div class="password-feedback" id="passwordFeedback"></div>
+                    </div>
+                </div>
+
+                <!-- Shop Name -->
+                <div class="form-group">
+                    <label class="form-label">Shop Name</label>
+                    <input type="text" class="form-input" name="shop_name" placeholder="e.g. Nimal's Organic Farm"
+                        required>
+                </div>
+
+                <!-- Shop Town -->
+                <div class="form-group">
+                    <label class="form-label">Shop Town / Location</label>
+                    <select name="shop_town" class="form-input" required>
+                        <option value="" disabled selected>Select Shop Town</option>
+                        <option>Colombo</option>
+                        <option>Kandy</option>
+                        <option>Galle</option>
+                        <option>Kurunegala</option>
+                        <option>Matara</option>
+                        <option>Nuwara Eliya</option>
+                        <option>Gampaha</option>
+                        <option>Jaffna</option>
+                    </select>
+                </div>
+
+                <!-- Bio / Shop Details -->
+                <div class="form-group">
+                    <label class="form-label">Shop Details / Bio</label>
+                    <textarea class="form-input" name="bio" placeholder="Tell us about your farm and produce..."
+                        rows="3"></textarea>
+                </div>
+
+                <!-- Address (Personal/Business) -->
+                <div class="form-group">
+                    <label class="form-label">Primary Address</label>
+                    <input type="text" class="form-input" name="address" placeholder="e.g. 123 Farm Road, Nuwara Eliya"
+                        required>
+                </div>
+
+                <!-- Certificates -->
+                <div class="form-group">
+                    <label class="form-label">Business Registration / Certificates (Optional)</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" name="certificates" accept=".pdf,.jpg,.jpeg,.png">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
+                    Complete Registration
+                </button>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="animations.js"></script>
+    <script>
+        // Extract token and email from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        const email = urlParams.get('email');
+        const tokenInput = document.getElementById('tokenInput');
+        const emailInput = document.getElementById('emailInput');
+        const form = document.getElementById('registerForm');
+        const errorMessage = document.getElementById('error-message');
+        const submitBtn = form.querySelector('button[type="submit"]');
+
+        if (!email) {
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = 'Missing invitation details (Email). Please follow the link in your email.';
+            form.style.display = 'none';
+        } else {
+            // Token is optional/not currently implemented in simple invite flow
+            if (token) tokenInput.value = token;
+            emailInput.value = email;
+        }
+
+        // Password Strength Logic
+        const passwordInput = document.getElementById('passwordInput');
+        const strengthContainer = document.getElementById('strengthContainer');
+        const strengthMeter = document.getElementById('strengthMeter');
+        const passwordFeedback = document.getElementById('passwordFeedback');
+        let isPasswordValid = false;
+
+        passwordInput.addEventListener('input', function () {
+            const password = this.value;
+            strengthContainer.style.display = 'block';
+
+            const hasMinLength = password.length >= 6;
+            const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+            if (password.length === 0) {
+                strengthMeter.style.width = '0%';
+                passwordFeedback.textContent = '';
+                isPasswordValid = false;
+                return;
+            }
+
+            if (!hasMinLength) {
+                strengthMeter.style.width = '33%';
+                strengthMeter.classList.add('strength-weak');
+                passwordFeedback.textContent = 'Too short (min 6 chars)';
+                passwordFeedback.style.color = '#ef4444';
+                isPasswordValid = false;
+            } else if (!hasSpecialChar) {
+                strengthMeter.style.width = '66%';
+                strengthMeter.classList.add('strength-medium');
+                passwordFeedback.textContent = 'Add a special character';
+                passwordFeedback.style.color = '#eab308';
+                isPasswordValid = false;
+            } else {
+                strengthMeter.style.width = '100%';
+                strengthMeter.classList.add('strength-strong');
+                passwordFeedback.textContent = 'Strong password';
+                passwordFeedback.style.color = '#22c55e';
+                isPasswordValid = true;
+            }
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!isPasswordValid) {
+                const password = passwordInput.value;
+                const hasMinLength = password.length >= 6;
+                const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+                if (!hasMinLength || !hasSpecialChar) {
+                    alert("Password must be at least 6 characters long and include a special character.");
+                    passwordInput.focus();
+                    return;
+                }
+            }
+
+            const formData = new FormData(e.target);
+            const originalText = submitBtn.textContent;
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Registering...';
+
+            try {
+                const res = await fetch('http://localhost:5000/api/auth/register', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!res.ok) {
+                    const errorText = await res.text();
+                    alert(errorText);
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                    return;
+                }
+
+                const data = await res.json();
+
+                if (data.verified) {
+                    alert(data.message);
+                    window.location.href = 'login.html';
+                } else {
+                    // Fallback if not verified automatically
+                    window.location.href = `verify-email.html?email=${encodeURIComponent(data.email)}&role=${data.role}`;
+                }
+
+            } catch (err) {
+                alert('Cannot connect to backend 😢. Is the server running?');
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+    </script>
+</body>
+
+</html>

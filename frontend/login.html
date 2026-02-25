@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | leef 🍃</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-card animate-scale">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <a href="index.html" class="logo" style="justify-content: center; margin-bottom: 10px;">
+                    leef 🍃
+                </a>
+                <h1 style="font-size: 2rem;">Welcome Back</h1>
+                <p style="color: var(--text-light);">Login to access your fresh account</p>
+            </div>
+
+            <form class="auth-form">
+
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="text" name="identifier" class="form-input" placeholder="e.g. niaml@example.com"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-input" placeholder="••••••••" required>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <label class="form-check" style="margin: 0; font-size: 0.9rem; color: var(--text-light);">
+                        <input type="checkbox"> Remember me
+                    </label>
+                    <a href="forgot-password.html" style="font-size: 0.9rem; color: var(--primary-color);">Forgot
+                        password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+            </form>
+
+            <div style="text-align: center; margin-top: 24px; font-size: 0.9rem; color: var(--text-light);">
+                Don't have an account? <a href="register.html"
+                    style="color: var(--primary-color); font-weight: 600;">Register here</a>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="index.html" style="color: var(--text-light); text-decoration: none; font-size: 0.9rem;">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="animations.js"></script>
+    <script>
+        document.querySelector(".auth-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const identifier = document.querySelector('input[name="identifier"]').value.trim();
+            const password = document.querySelector('input[name="password"]').value;
+
+            try {
+                const res = await fetch("http://localhost:5000/api/auth/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ identifier, password }),
+                });
+
+                // if backend sends an error message, show it
+                if (!res.ok) {
+                    const msg = await res.text();
+                    alert(msg);
+                    return;
+                }
+
+                const data = await res.json();
+                // (optional) store who is logged in
+                localStorage.setItem("user", JSON.stringify(data));
+
+                // ✅ redirect to dashboard based on returned role
+                if (data.role === "customer") window.location.href = "customer-dashboard.html?v=" + new Date().getTime();
+                else if (data.role === "seller") window.location.href = "seller-dashboard.html";
+                else window.location.href = "admin-dashboard.html";
+            } catch (err) {
+                alert("Cannot connect to backend 😢. Is server.js running?");
+            }
+        });
+    </script>
+
+</body>
+
+</html>

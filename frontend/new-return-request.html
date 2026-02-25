@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Return Request - 🍃 Leef</title>
+    <link rel="stylesheet" href="returns.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #fafaf9;
+            margin: 0;
+            padding: 0;
+        }
+        .main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .modal-close {
+            text-decoration: none;
+            font-size: 1.5rem;
+            color: #555;
+        }
+        .modal-section {
+            margin-bottom: 1.5rem;
+        }
+        .modal-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .modal-orders {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .modal-order {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem;
+            border: 1px solid #d6d3d1;
+            border-radius: 0.7em;
+            cursor: pointer;
+        }
+        .modal-order.selected {
+            border-color: #16a34a;
+            background: #f0fdf4;
+        }
+        .modal-order input {
+            display: none;
+        }
+        .modal-order-img {
+            width: 50px;
+            height: 50px;
+        }
+        .modal-order-price {
+            margin-left: auto;
+            font-weight: 600;
+        }
+        .modal-reasons label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .modal-textarea {
+            width: 100%;
+            min-height: 60px;
+            padding: 0.5rem;
+            border-radius: 0.5em;
+            border: 1px solid #d6d3d1;
+            resize: vertical;
+        }
+        .modal-upload {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem;
+            border: 1px dashed #bbb;
+            border-radius: 0.5em;
+            cursor: pointer;
+        }
+        .modal-upload-help {
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+        .modal-btn-cancel, .modal-btn-submit {
+            padding: 0.7rem 1.5rem;
+            border-radius: 0.5em;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+        .modal-btn-cancel {
+            background: #fff;
+            border: 1px solid #16a34a;
+            color: #16a34a;
+        }
+        .modal-btn-cancel:hover {
+            background: #f0fdf4;
+        }
+        .modal-btn-submit {
+            background: #16a34a;
+            color: #fff;
+        }
+        .modal-btn-submit:hover {
+            background: #15803d;
+        }
+    </style>
+</head>
+<body>
+    <main class="main">
+        <form class="return-request-form">
+            <div class="modal-header">
+                <h2>New Return Request</h2>
+                <a href="returns.html" class="modal-close" aria-label="Close">&times;</a>
+            </div>
+
+            <div class="modal-section">
+                <label class="modal-label">Select Order to Return</label>
+                <div class="modal-orders">
+                    <label class="modal-order selected">
+                        <input type="radio" name="order" checked>
+                        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f966.png" alt="Gotukola" class="modal-order-img" />
+                        <span>
+                            <span class="modal-order-title">Gotukola</span><br>
+                            <span class="modal-order-id">ORD-2025-012</span>
+                        </span>
+                        <span class="modal-order-price">LKR 120</span>
+                    </label>
+                    <label class="modal-order">
+                        <input type="radio" name="order">
+                        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f331.png" alt="Cabbage" class="modal-order-img" />
+                        <span>
+                            <span class="modal-order-title">Cabbage</span><br>
+                            <span class="modal-order-id">ORD-2025-011</span>
+                        </span>
+                        <span class="modal-order-price">LKR 250</span>
+                    </label>
+                    <label class="modal-order">
+                        <input type="radio" name="order">
+                        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f955.png" alt="Carrot" class="modal-order-img" />
+                        <span>
+                            <span class="modal-order-title">Carrot</span><br>
+                            <span class="modal-order-id">ORD-2025-010</span>
+                        </span>
+                        <span class="modal-order-price">LKR 180</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <label class="modal-label">Reason for Return</label>
+                <div class="modal-reasons">
+                    <label><input type="radio" name="reason"> Product damaged during delivery</label>
+                    <label><input type="radio" name="reason"> Quality not as expected</label>
+                    <label><input type="radio" name="reason"> Wrong product delivered</label>
+                    <label><input type="radio" name="reason"> Other</label>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <label class="modal-label">Additional Comments (Optional)</label>
+                <textarea class="modal-textarea" placeholder="Please provide any additional details about the issue..."></textarea>
+            </div>
+
+            <div class="modal-section">
+                <label class="modal-label">Upload Supporting Images</label>
+                <div class="modal-upload">
+                    <span class="modal-upload-icon">
+                        <svg width="32" height="32" fill="none" stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="6" rx="2"/><circle cx="12" cy="13" r="3"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    </span>
+                    <div>Click to upload images</div>
+                    <div class="modal-upload-help">Help us process your return faster</div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <a href="returns.html" class="modal-btn-cancel">Cancel</a>
+                <button type="submit" class="modal-btn-submit">Submit Return Request</button>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

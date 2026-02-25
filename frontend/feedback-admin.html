@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Feedbacks -🍃 Leef</title>
+  <style>
+    :root {
+      --green: #16a34a;
+      --red: #dc2626;
+      --blue: #2563eb;
+      --bg: #fafaf9;
+      --card: #fff;
+      --muted: #555;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    aside {
+      width: 240px;
+      background: var(--card);
+      padding: 1.5em 1em;
+      box-shadow: 2px 0 6px var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2em;
+    }
+
+    aside .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      font-size: 1.5rem;
+      margin-bottom: 2em;
+      text-decoration: none;
+      color: var(--green);
+      font-weight: bold;
+    }
+
+    aside nav a {
+      display: block;
+      padding: 0.7em 0.6em;
+      color: var(--muted);
+      text-decoration: none;
+      border-radius: 0.5em;
+      transition: background 0.2s, color 0.2s;
+      font-size: 1.05rem;
+    }
+
+    aside nav a.active,
+    aside nav a:hover {
+      background: var(--green);
+      color: #fff;
+      font-weight: bold;
+    }
+
+    aside button.redeem-btn {
+      margin-top: auto;
+      width: 100%;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      padding: 0.7em;
+      border-radius: 0.5em;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    main {
+      flex: 1;
+      padding: 2.5em 3em;
+      display: flex;
+      flex-direction: column;
+      gap: 2em;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5em;
+      color: #1a2e05;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 1.5em;
+      border-radius: 1em;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+      margin-bottom: 2em;
+    }
+
+    .feedback-list {
+      margin-top: 1em;
+    }
+
+    .feedback-item {
+      border-bottom: 1px solid #eee;
+      padding: 1em 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+    }
+
+    .feedback-header {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+    }
+
+    .feedback-product {
+      font-weight: 600;
+      color: #256029;
+    }
+
+    .feedback-customer {
+      color: #555;
+      font-size: 0.98em;
+    }
+
+    .feedback-date {
+      color: #888;
+      font-size: 0.93em;
+      margin-left: auto;
+    }
+
+    .feedback-text {
+      margin: 0.3em 0 0.5em 0;
+      color: #222;
+    }
+
+    .feedback-reply {
+      margin-top: 0.5em;
+    }
+
+    .reply-box {
+      display: flex;
+      gap: 0.5em;
+      margin-top: 0.3em;
+    }
+
+    .reply-box input {
+      flex: 1;
+      padding: 0.5em;
+      border: 1px solid #ccc;
+      border-radius: 0.4em;
+    }
+
+    .reply-box button {
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: 0.4em;
+      padding: 0.5em 1em;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .badge-new {
+      background: var(--red);
+      color: #fff;
+      font-size: 0.85em;
+      border-radius: 0.7em;
+      padding: 0.2em 0.8em;
+      margin-left: 0.7em;
+    }
+
+    .no-feedback {
+      color: #888;
+      font-size: 1.1em;
+      text-align: center;
+      margin: 2em 0;
+    }
+
+    @media(max-width:900px) {
+      main {
+        padding: 1em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <aside>
+    <a href="#" class="logo">🍃 Leef</a>
+    <nav>
+      <a href="admin-dashboard.html">Overview</a>
+      <a href="new-registration.html">Registration Requests</a>
+      <a href="order.html">Orders</a>
+      <a href="product-admin.html">Products</a>
+      <a href="feedback-admin.html" class="active">Feedback</a>
+      <a href="questions-admin.html">Questions</a>
+      <a href="refund-approval.html">Refunds</a>
+
+      <a href="admin-profile.html">Profile</a>
+    </nav>
+    <button class="redeem-btn">Logout</button>
+  </aside>
+
+  <!-- Main -->
+  <main>
+    <h1>Product Feedbacks</h1>
+    <div class="card">
+      <div id="feedbackCount" style="font-weight:600; color:#256029; margin-bottom:1em;"></div>
+      <div class="feedback-list" id="feedbackList">
+        <!-- Feedback items will be rendered here -->
+      </div>
+    </div>
+  </main>
+  <script>
+    // Example feedback data - user name removed, replaced with customerId
+    const feedbacks = [
+      {
+        id: 1,
+        productId: "PROD-2001",
+        customerId: "CUST-1001",
+        date: "2025-10-15",
+        text: "Very fresh and good quality!",
+        isNew: true,
+        reply: "",
+        overallRating: 5,
+        freshnessRating: 5,
+        shippingRating: 4
+      },
+      {
+        id: 2,
+        productId: "PROD-2002",
+        customerId: "CUST-1002",
+        date: "2025-10-14",
+        text: "Delivery was late.",
+        isNew: true,
+        reply: "",
+        overallRating: 3,
+        freshnessRating: 4,
+        shippingRating: 2
+      },
+      {
+        id: 3,
+        productId: "PROD-2003",
+        customerId: "CUST-1003",
+        date: "2025-10-10",
+        text: "No issues, satisfied.",
+        isNew: false,
+        reply: "Thank you for your feedback!",
+        overallRating: 5,
+        freshnessRating: 5,
+        shippingRating: 5
+      }
+    ];
+
+    function renderStars(rating) {
+      let stars = '';
+      for (let i = 0; i < 5; i++) {
+        stars += i < rating ? '★' : '☆';
+      }
+      return `<span style="color:#f59e42;font-size:1.1em;">${stars}</span>`;
+    }
+
+    function renderFeedbacks() {
+      const list = document.getElementById('feedbackList');
+      const count = document.getElementById('feedbackCount');
+      list.innerHTML = '';
+      const newCount = feedbacks.filter(f => f.isNew).length;
+
+      if (feedbacks.length === 0) {
+        count.textContent = "No feedbacks";
+        list.innerHTML = `<div class="no-feedback">No feedbacks available.</div>`;
+        return;
+      }
+
+      count.textContent = newCount > 0 ? `${newCount} new feedback${newCount > 1 ? 's' : ''}` : "No new feedbacks";
+
+      feedbacks.forEach((fb, idx) => {
+        const item = document.createElement('div');
+        item.className = 'feedback-item';
+        item.innerHTML = `
+        <div class="feedback-header">
+          <span class="feedback-product">Product ID: ${fb.productId}</span>
+          <span class="feedback-customer">Customer ID: ${fb.customerId}</span>
+          <span class="feedback-date">${fb.date}</span>
+          ${fb.isNew ? '<span class="badge-new">New</span>' : ''}
+        </div>
+        <div class="feedback-text">${fb.text}</div>
+        <div style="margin:0.3em 0 0.5em 0;">
+          <b>Overall rating:</b> ${renderStars(fb.overallRating)}
+          &nbsp; <b>Freshness:</b> ${renderStars(fb.freshnessRating)}
+          &nbsp; <b>Shipping service:</b> ${renderStars(fb.shippingRating)}
+        </div>
+        <div class="feedback-reply" id="reply-${fb.id}">
+          ${fb.reply ? `<b>Admin reply:</b> <span>${fb.reply}</span>` : `
+            <div class="reply-box">
+              <input type="text" placeholder="Write a reply..." id="input-reply-${fb.id}">
+              <button onclick="replyFeedback(${idx})">Reply</button>
+            </div>
+          `}
+        </div>
+      `;
+        list.appendChild(item);
+      });
+    }
+
+    function replyFeedback(idx) {
+      const fb = feedbacks[idx];
+      const input = document.getElementById('input-reply-' + fb.id);
+      if (input && input.value.trim() !== "") {
+        fb.reply = input.value.trim();
+        fb.isNew = false;
+        renderFeedbacks();
+      }
+    }
+
+    // Initial render
+    renderFeedbacks();
+  </script>
+</body>
+
+</html>

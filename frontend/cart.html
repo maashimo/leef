@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart - leef 🍃</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <style>
+    /* Top Navbar Styles (Matching Dashboard) */
+    .top-navbar {
+      background-color: rgba(10, 10, 10, 0.95);
+      border-bottom: 1px solid #333;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .navbar-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .navbar-logo {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: bold;
+      color: #4ade80;
+    }
+
+    .navbar-location {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-left: 2rem;
+    }
+
+    .navbar-nav {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 2rem;
+    }
+
+    .navbar-link {
+      text-decoration: none;
+      color: #eee;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      transition: background-color 0.2s;
+    }
+
+    .navbar-link.active {
+      background-color: #10b981;
+      color: white;
+    }
+
+    .navbar-link:hover {
+      background-color: #333;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .top-navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar-nav {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+
+    /* Cart Specific Styles */
+    .cart-container {
+      display: flex;
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .cart-left {
+      flex: 2;
+    }
+
+    .cart-right {
+      flex: 1;
+    }
+
+    .qty-box {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 6px;
+      padding: 2px;
+      width: fit-content;
+    }
+
+    .qty-btn {
+      background: #333;
+      color: #fff;
+      border: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qty-box input {
+      width: 30px;
+      text-align: center;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+
+    .remove-btn {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .remove-btn:hover {
+      background: rgba(239, 68, 68, 0.3);
+    }
+
+    .totals p {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      color: #ccc;
+    }
+
+    .totals b {
+      font-size: 1.1rem;
+      color: #fff;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      background: linear-gradient(to right, #16a34a, #15803d);
+      color: white;
+      padding: 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    .checkout-btn:hover {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 900px) {
+      .cart-container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body class="">
+
+  <!-- Top Navbar -->
+  <nav class="top-navbar">
+    <div class="navbar-header">
+      <a href="index.html" class="navbar-logo">
+        leef 🍃
+      </a>
+      <div class="navbar-location">Colombo, Sri Lanka</div>
+    </div>
+    <ul class="navbar-nav">
+      <li><a href="customer-dashboard.html" class="navbar-link">Dashboard</a></li>
+      <li><a href="products.html" class="navbar-link">Products</a></li>
+      <li><a href="cart.html" class="navbar-link active">Cart</a></li>
+
+      <li><a href="feedback.html" class="navbar-link">Feedback</a></li>
+      <li><a href="returns.html" class="navbar-link">Refund</a></li>
+      <li><a href="profile.html" class="navbar-link ">Profile</a></li>
+      <li><a href="index.html" class="navbar-link">Logout</a></li>
+    </ul>
+  </nav>
+
+  <main class="cart-container">
+    <section class="cart-left">
+      <h1 class="page-title" style="margin-bottom: 1rem;">Shopping Cart</h1>
+
+      <div class="table-container"
+        style="background: #1a1a1a; padding: 1rem; border-radius: 1rem; border: 1px solid #333;">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="cart-body">
+            <!-- Items inserted dynamically -->
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-top: 1rem; text-align: right;">
+        <button class="btn btn-primary" style="background: #333; border: 1px solid #444;">Update cart</button>
+      </div>
+
+      <!-- Approved Orders -->
+      <section class="approved-orders" style="margin-top: 2rem;">
+        <h2 class="section-title">Approved Orders</h2>
+        <div class="table-container"
+          style="background: #1a1a1a; padding: 1rem; border-radius: 1rem; border: 1px solid #333;">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Product</th>
+                <th>Location</th>
+                <th>Qty</th>
+                <th>Amount</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="approved-orders-body">
+              <!-- populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <aside class="cart-right">
+      <div class="product-card" style="text-align: left;">
+        <h2 class="section-title" style="margin-bottom: 1rem;">Cart Totals</h2>
+        <div class="totals">
+          <p>Subtotal <span id="subtotal">Rs 0.00</span></p>
+          <div style="display:flex; align-items:center; gap:0.5em; color: #f59e0b; font-size: 0.95em; margin: 0.8em 0;">
+            🪙 Your Coins: <span id="coinBalanceDisplay" style="font-weight:bold;">0.00</span>
+          </div>
+          <p>Coin Savings <span id="coins-discount" style="color: #4ade80;">- Rs 0.00</span></p>
+          <div style="border-top: 1px solid #333; margin: 0.5rem 0;"></div>
+          <p><b>Total</b> <span id="total" style="color: #4ade80; font-size: 1.2rem;">Rs 0.00</span></p>
+          <p style="font-size:0.8rem; color:#888; margin-top:0.5rem;">You'll earn 1% coins on this purchase</p>
+        </div>
+        <button id="proceedBtn" class="checkout-btn">PROCEED TO CHECKOUT</button>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    function showToast(message, type = 'success') {
+      let container = document.getElementById('toast-container');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        document.body.appendChild(container);
+      }
+
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+          <span>${message}</span>
+          <button onclick="this.parentElement.remove()" style="background:transparent; border:none; color:white; font-size:1.2rem; cursor:pointer; padding:0; margin-left:10px;">&times;</button>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => toast.classList.add('show'));
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    let items = JSON.parse(localStorage.getItem('cart')) || [];
+    let customerCoinBalance = 0;
+    let coinsUsedMap = {};
+
+    function renderCart() {
+      const body = document.getElementById("cart-body");
+      let subtotal = 0;
+      let totalCoinSavings = 0;
+      let remainingCoins = customerCoinBalance;
+      body.innerHTML = items.map((item, i) => {
+        const priceStr = String(item.price);
+        const price = parseFloat(priceStr) || 0;
+        const suffix = priceStr.replace(/[\d.]+/, '').trim().toLowerCase();
+
+        let unitInKg = 1;
+        if (suffix.includes('100g') || suffix.includes('100 g')) {
+          unitInKg = 0.1;
+        } else if (suffix.includes('500g') || suffix.includes('500 g')) {
+          unitInKg = 0.5;
+        } else if (suffix.includes('250g') || suffix.includes('250 g')) {
+          unitInKg = 0.25;
+        } else if (suffix.includes('50g') || suffix.includes('50 g')) {
+          unitInKg = 0.05;
+        } else if (suffix.includes('kg')) {
+          unitInKg = 1;
+        } else if (suffix.includes('g')) {
+          const gMatch = suffix.match(/(\d+)\s*g/);
+          if (gMatch) {
+            unitInKg = parseFloat(gMatch[1]) / 1000;
+          } else {
+            unitInKg = 0.001;
+          }
+        }
+
+        const costMultiplier = item.qty / unitInKg;
+        const sub = price * costMultiplier;
+
+        const cp = parseFloat(item.coins_percent) || 0;
+        const userWantsCoins = coinsUsedMap[i] || false;
+
+        // Apply coin discount only if customer toggled it on
+        let coinSaving = 0;
+        if (cp > 0 && userWantsCoins && remainingCoins > 0) {
+          const potentialSaving = sub * (cp / 100);
+          coinSaving = Math.min(potentialSaving, remainingCoins);
+          remainingCoins -= coinSaving;
+          totalCoinSavings += coinSaving;
+        }
+        const finalSub = sub - coinSaving;
+        subtotal += sub;
+
+        // Show "Use Coins" checkbox only if product has coins offer AND customer has coins
+        let coinUI = '';
+        if (cp > 0 && customerCoinBalance > 0) {
+          coinUI = `<div style="margin-top:4px;">
+            <label style="display:flex; align-items:center; gap:0.4em; cursor:pointer; color:#f59e0b; font-size:0.8rem;">
+              <input type="checkbox" ${userWantsCoins ? 'checked' : ''} onchange="toggleCoinUse(${i})" style="accent-color:#f59e0b;">
+              🪙 Use coins for ${cp}% off
+            </label>
+            ${coinSaving > 0 ? `<div style="color:#4ade80; font-size:0.7rem; margin-top:2px;">Saving Rs ${coinSaving.toFixed(2)}</div>` : ''}
+          </div>`;
+        } else if (cp > 0 && customerCoinBalance <= 0) {
+          coinUI = `<div style="color:#888; font-size:0.75rem; margin-top:4px;">🪙 ${cp}% coin offer (no coins yet)</div>`;
+        }
+
+        return `
+          <tr>
+            <td class="product-cell">
+              <div>
+                <div style="font-weight:600; color: #fff;">${item.name}</div>
+                <div style="font-size:0.9em;color:#9ca3af;">${item.orderId || ''}</div>
+                ${coinUI}
+              </div>
+            </td>
+            <td style="color: #ccc;">Rs ${price.toFixed(2)}</td>
+            <td>
+              <div style="display: flex; gap: 0.5em; align-items: center;">
+                <div class="qty-box" style="padding: 0.2rem 0.5rem; background: #222;">
+                  <button class="qty-btn" onclick="changeQty(${i}, 'kg', -1)">−</button>
+                  <input type="text" value="${Math.floor(item.qty)}" readonly />
+                  <span style="color:#888; font-size:0.8rem; margin-right: 0.3rem;">kg</span>
+                  <button class="qty-btn" onclick="changeQty(${i}, 'kg', 1)">+</button>
+                </div>
+                <div class="qty-box" style="padding: 0.2rem 0.5rem; background: #222;">
+                  <button class="qty-btn" onclick="changeQty(${i}, 'g', -100)">−</button>
+                  <input type="text" value="${Math.round((item.qty % 1) * 1000)}" readonly />
+                  <span style="color:#888; font-size:0.8rem; margin-right: 0.3rem;">g</span>
+                  <button class="qty-btn" onclick="changeQty(${i}, 'g', 100)">+</button>
+                </div>
+              </div>
+            </td>
+            <td style="color: #4ade80; font-weight: bold;">Rs ${finalSub.toFixed(2)}${coinSaving > 0 ? `<div style="font-size:0.7rem; color:#f59e0b;">(-Rs ${coinSaving.toFixed(2)} coins)</div>` : ''}</td>
+            <td>
+              <button class="remove-btn" onclick="removeItem(${i})">&times;</button>
+            </td>
+          </tr>`;
+      }).join("");
+
+      const finalTotal = subtotal - totalCoinSavings;
+      document.getElementById("subtotal").textContent = `Rs ${subtotal.toFixed(2)}`;
+      document.getElementById("coins-discount").textContent = `- Rs ${totalCoinSavings.toFixed(2)}`;
+      document.getElementById("total").textContent = `Rs ${finalTotal.toFixed(2)}`;
+      document.getElementById("coinBalanceDisplay").textContent = remainingCoins.toFixed(2);
+    }
+
+    function toggleCoinUse(index) {
+      coinsUsedMap[index] = !coinsUsedMap[index];
+      renderCart();
+    }
+
+    function changeQty(index, type, delta) {
+      let currentKg = Math.floor(items[index].qty);
+      let currentG = Math.round((items[index].qty % 1) * 1000);
+
+      if (type === 'kg') currentKg += delta;
+      if (type === 'g') currentG += delta;
+
+      if (currentKg < 0) currentKg = 0;
+      if (currentG < 0) currentG = 0;
+      if (currentG > 999) {
+        currentKg += Math.floor(currentG / 1000);
+        currentG = currentG % 1000;
+      }
+
+      let newQty = currentKg + (currentG / 1000);
+
+      // Stock Check
+      if (items[index].stock !== undefined && newQty > items[index].stock) {
+        showToast("Cannot exceed available stock of " + items[index].stock, "error");
+        return;
+      }
+
+      if (newQty <= 0) return removeItem(index);
+
+      items[index].qty = newQty;
+      localStorage.setItem('cart', JSON.stringify(items));
+      renderCart();
+    }
+
+    function removeItem(index) {
+      items.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(items));
+      renderCart();
+    }
+
+    const BASE_URL = `http://${window.location.hostname}:5000`;
+
+    document.addEventListener('DOMContentLoaded', async function () {
+      const userStr = localStorage.getItem('user');
+
+      // Fetch coin balance
+      if (userStr) {
+        try {
+          const user = JSON.parse(userStr);
+          if (user.role === 'customer') {
+            const coinRes = await fetch(`${BASE_URL}/api/coins/${user.id}`);
+            if (coinRes.ok) {
+              const coinData = await coinRes.json();
+              customerCoinBalance = parseFloat(coinData.coins) || 0;
+            }
+          }
+        } catch (e) { console.error('Failed to fetch coins', e); }
+      }
+
+      // Sync cart items with latest product data (coins_percent etc.)
+      try {
+        const prodRes = await fetch(`${BASE_URL}/api/products/marketplace`);
+        if (prodRes.ok) {
+          const allProducts = await prodRes.json();
+          let cartUpdated = false;
+          items.forEach(item => {
+            // Try to match by id first, then by name
+            const match = allProducts.find(p => (item.id && p.id === item.id) || p.name === item.name);
+            if (match) {
+              if (!item.id) { item.id = match.id; cartUpdated = true; }
+              if (!item.coins_percent || item.coins_percent === 0) {
+                if (match.coins_percent && match.coins_percent > 0) {
+                  item.coins_percent = match.coins_percent;
+                  cartUpdated = true;
+                }
+              }
+            }
+          });
+          if (cartUpdated) {
+            localStorage.setItem('cart', JSON.stringify(items));
+          }
+        }
+      } catch (e) { console.error('Failed to sync product data', e); }
+
+      renderCart();
+      renderApprovedOrders();
+    });
+
+    // Dynamic approved orders from database
+    let approvedOrders = [];
+
+    async function renderApprovedOrders() {
+      const body = document.getElementById("approved-orders-body");
+      const userStr = localStorage.getItem("user");
+      if (!userStr) {
+        body.innerHTML = "<tr><td colspan='6' style='text-align:center; color:#888;'>Login to view approved orders.</td></tr>";
+        return;
+      }
+
+      try {
+        const user = JSON.parse(userStr);
+        const res = await fetch(`http://localhost:5000/api/orders/customer/${user.id}`);
+        if (!res.ok) throw new Error("Failed to fetch approved orders");
+
+        const allOrders = await res.json();
+
+        // Load previously consumed order IDs so we don't show them twice
+        let consumedIds = [];
+        try {
+          const storedConsumed = localStorage.getItem("consumedOrders");
+          if (storedConsumed) consumedIds = JSON.parse(storedConsumed);
+        } catch (e) { }
+
+        // Filter: Only approved, less than 30 days old, AND NOT already consumed
+        approvedOrders = allOrders.filter(o => {
+          if (o.status !== "approved") return false;
+          if (consumedIds.includes(o.id)) return false;
+          const orderDate = new Date(o.updated_at || o.created_at);
+          const hoursDiff = (new Date() - orderDate) / (1000 * 60 * 60);
+          return hoursDiff <= 720;
+        });
+
+        if (approvedOrders.length === 0) {
+          body.innerHTML = "<tr><td colspan='6' style='text-align:center; color:#888;'>No newly approved custom orders.</td></tr>";
+          return;
+        }
+
+        body.innerHTML = approvedOrders.map((o, idx) => {
+          let locs = o.locations;
+          if (typeof locs === "string") {
+            try { locs = JSON.parse(locs); } catch (e) { locs = []; }
+          }
+          if (!Array.isArray(locs)) locs = [];
+
+          // Format admin note specifically requested by user
+          const noteHtml = o.admin_note ? `<div style="font-size:0.85em; color:#f59e0b; margin-top:4px;">*Note: ${o.admin_note}</div>` : '';
+
+          return locs.map((L, j) => {
+            // Extract numerical price first
+            let basePrice = 0;
+            if (o.price) {
+              const priceMatch = o.price.match(/[\d.]+/);
+              if (priceMatch) basePrice = parseFloat(priceMatch[0]);
+            }
+            const amount = (parseFloat(L.qty) * basePrice).toFixed(2);
+
+            return `
+              <tr>
+                ${j === 0 ? `<td rowspan="${locs.length}" style="vertical-align:middle;font-weight:600; color:#fff;">#REQ-${o.id}</td>` : ''}
+                ${j === 0 ? `<td rowspan="${locs.length}" style="vertical-align:middle; color:#ccc;">${o.product_name}${noteHtml}</td>` : ''}
+                <td style="padding:0.9em 1em; color:#ccc;">${L.location}</td>
+                <td style="padding:0.9em 1em; text-align:center; color:#ccc;">${L.qty}</td>
+                <td style="padding:0.9em 1em; color:#4ade80;">LKR ${amount}</td>
+                ${j === 0 ? `<td rowspan="${locs.length}" style="vertical-align:middle;">
+                  <button onclick="addOrderLocationsToCart(${idx}, this)" style="padding:0.4rem 0.6rem;border-radius:0.35rem;background:#16a34a;color:#fff;border:none;cursor:pointer;">
+                    Add to Cart
+                  </button>
+                </td>` : ''}
+              </tr>
+            `;
+          }).join('');
+        }).join('');
+      } catch (err) {
+        console.error("Error rendering approved orders:", err);
+        body.innerHTML = "<tr><td colspan='6' style='text-align:center; color:#ef4444;'>Error loading approved orders.</td></tr>";
+      }
+    }
+
+    function addOrderLocationsToCart(orderIndex, btn) {
+      const order = approvedOrders[orderIndex];
+      let locs = order.locations;
+      if (typeof locs === "string") {
+        try { locs = JSON.parse(locs); } catch (e) { locs = []; }
+      }
+
+      locs.forEach(loc => {
+        // Extract numerical price first
+        let basePrice = 0;
+        if (order.price) {
+          const priceMatch = order.price.match(/[\d.]+/);
+          if (priceMatch) basePrice = parseFloat(priceMatch[0]);
+        }
+
+        items.push({
+          orderId: `#REQ-${order.id}`,
+          id: order.product_id,
+          name: order.product_name,
+          price: basePrice,
+          qty: parseFloat(loc.qty) || 0,
+          img: order.image_url ? `http://localhost:5000/${order.image_url}` : "images/default.png"
+        });
+      });
+      localStorage.setItem('cart', JSON.stringify(items));
+
+      // Save this order ID into the consumed array so it disappears from the table next refresh
+      let consumedIds = [];
+      try {
+        const storedConsumed = localStorage.getItem("consumedOrders");
+        if (storedConsumed) consumedIds = JSON.parse(storedConsumed);
+      } catch (e) { }
+
+      if (!consumedIds.includes(order.id)) {
+        consumedIds.push(order.id);
+        localStorage.setItem("consumedOrders", JSON.stringify(consumedIds));
+      }
+
+      // Re-fetch orders so the UI updates and the consumed order immediately vanishes
+      renderCart();
+      renderApprovedOrders();
+      showToast("Items added to cart!", "success");
+    }
+
+    document.getElementById('proceedBtn').addEventListener('click', async function () {
+      const totalEl = document.getElementById('total');
+      const totalText = totalEl?.textContent || 'Rs 0.00';
+      const amount = parseFloat(totalText.replace(/[^0-9.]/g, '')) || 0;
+      if (amount <= 0) {
+        showToast('Your cart is empty.', 'error');
+        return;
+      }
+
+      const userStr = localStorage.getItem('user');
+      if (!userStr) {
+        showToast('Please login first.', 'error');
+        return;
+      }
+      const user = JSON.parse(userStr);
+
+      // Calculate total coins to spend (only for items where user checked 'Use Coins')
+      let totalSpend = 0;
+      let remaining = customerCoinBalance;
+      items.forEach((item, i) => {
+        const cp = parseFloat(item.coins_percent) || 0;
+        if (cp > 0 && coinsUsedMap[i] && remaining > 0) {
+          const priceStr = String(item.price);
+          const price = parseFloat(priceStr) || 0;
+          const suffix = priceStr.replace(/[\d.]+/, '').trim().toLowerCase();
+          let unitInKg = 1;
+          if (suffix.includes('100g') || suffix.includes('100 g')) { unitInKg = 0.1; }
+          else if (suffix.includes('500g') || suffix.includes('500 g')) { unitInKg = 0.5; }
+          else if (suffix.includes('250g') || suffix.includes('250 g')) { unitInKg = 0.25; }
+          else if (suffix.includes('50g') || suffix.includes('50 g')) { unitInKg = 0.05; }
+          else if (suffix.includes('kg')) { unitInKg = 1; }
+          else if (suffix.includes('g')) {
+            const gMatch = suffix.match(/(\d+)\s*g/);
+            if (gMatch) { unitInKg = parseFloat(gMatch[1]) / 1000; }
+            else { unitInKg = 0.001; }
+          }
+          const costMul = item.qty / unitInKg;
+          const sub = price * costMul;
+          const potentialSaving = sub * (cp / 100);
+          const coinSaving = Math.min(potentialSaving, remaining);
+          remaining -= coinSaving;
+          totalSpend += coinSaving;
+        }
+      });
+
+      try {
+        // Spend coins if any were used
+        if (totalSpend > 0) {
+          const spendRes = await fetch(`${BASE_URL}/api/coins/spend`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ customerId: user.id, coinsToSpend: totalSpend.toFixed(2) })
+          });
+          if (!spendRes.ok) {
+            const err = await spendRes.json();
+            showToast(err.error || 'Failed to spend coins', 'error');
+            return;
+          }
+        }
+
+        // Earn 1% of the final total
+        await fetch(`${BASE_URL}/api/coins/earn`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ customerId: user.id, amount: amount.toFixed(2) })
+        });
+      } catch (e) {
+        console.error('Coin API error', e);
+      }
+
+      localStorage.setItem('checkoutAmount', amount.toFixed(2));
+      window.location.href = 'payment.html';
+    });
+  </script>
+</body>
+
+</html>

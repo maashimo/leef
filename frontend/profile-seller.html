@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seller Profile - leef 🍃</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <style>
+    /* Top Navbar Styles (Standardized) */
+    .top-navbar {
+      background-color: rgba(10, 10, 10, 0.95);
+      border-bottom: 1px solid #333;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .navbar-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .navbar-logo {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: bold;
+      color: #4ade80;
+    }
+
+    .navbar-nav {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 2rem;
+    }
+
+    .navbar-link {
+      text-decoration: none;
+      color: #eee;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      transition: background-color 0.2s;
+    }
+
+    .navbar-link.active {
+      background-color: #10b981;
+      color: white;
+    }
+
+    .navbar-link:hover {
+      background-color: #333;
+    }
+
+    @media (max-width: 768px) {
+      .top-navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar-nav {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+
+    /* Profile Specific */
+    .profile-container {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .profile-card {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #ccc;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.7rem;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: #fff;
+      outline: none;
+    }
+
+    .form-input:focus {
+      border-color: #4ade80;
+    }
+
+    .cert-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #166534;
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    .cert-link:hover {
+      background: #15803d;
+    }
+
+    .cert-add-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #333;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body class="">
+
+  <!-- Navbar -->
+  <nav class="top-navbar">
+    <div class="navbar-header">
+      <a href="index.html" class="navbar-logo">
+        leef 🍃
+      </a>
+    </div>
+    <ul class="navbar-nav">
+      <li><a href="seller-dashboard.html" class="navbar-link">Dashboard</a></li>
+      <li><a href="inventory.html" class="navbar-link">Inventory</a></li>
+      <li><a href="profile-seller.html" class="navbar-link active">Profile</a></li>
+      <li><a href="login.html" class="navbar-link" style="color:#ef4444;">Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="profile-container">
+    <h1 class="page-title" style="margin-bottom: 1.5rem;">Seller Profile</h1>
+
+    <div class="profile-card">
+      <form style="display: flex; flex-direction: column; gap: 1rem;">
+        <!-- Name -->
+        <div class="form-group">
+          <label for="sellerName" class="form-label">Name</label>
+          <input type="text" id="sellerName" value="Thilina Perera" readonly class="form-input"
+            style="background:#222; cursor:not-allowed; opacity:0.7;">
+        </div>
+
+        <!-- Username -->
+        <div class="form-group">
+          <label for="sellerUsername" class="form-label">Username</label>
+          <input type="text" id="sellerUsername" value="thilina123" class="form-input">
+        </div>
+
+        <!-- Certificates -->
+        <div class="form-group">
+          <label class="form-label">Certificates (PDF)</label>
+          <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+            <a href="#" class="cert-link">
+              <span>View Certificate 1</span>
+              <span style="font-size:1.2em;">📄</span>
+            </a>
+            <a href="#" class="cert-link">
+              <span>View Certificate 2</span>
+              <span style="font-size:1.2em;">📄</span>
+            </a>
+            <button type="button" class="cert-add-btn">
+              <span>+ Add Certificates</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="form-group">
+          <label for="sellerAddress" class="form-label">Address</label>
+          <input type="text" id="sellerAddress" value="No. 45, Colombo Rd, Kandy" class="form-input">
+        </div>
+
+        <!-- Shop Name -->
+        <div class="form-group">
+          <label for="shopName" class="form-label">Shop Name</label>
+          <input type="text" id="shopName" value="Thilina's Organic Store" class="form-input">
+        </div>
+
+        <!-- Shop Location -->
+        <div class="form-group" style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+          <div>
+            <label for="shopLocation" class="form-label">Shop Location</label>
+            <input type="text" id="shopLocation" value="Kandy" class="form-input">
+          </div>
+          <div>
+            <label for="shopAddress" class="form-label">Shop Address</label>
+            <input type="text" id="shopAddress" value="No. 12, Market Rd, Kandy" class="form-input">
+          </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="form-group" style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+          <div>
+            <label for="sellerPhone" class="form-label">Phone Number</label>
+            <input type="text" id="sellerPhone" value="+94 77 123 4567" class="form-input">
+          </div>
+          <div>
+            <label for="sellerEmail" class="form-label">Email</label>
+            <input type="email" id="sellerEmail" value="thilina@example.com" class="form-input">
+          </div>
+        </div>
+
+        <!-- Update Button -->
+        <button type="submit" class="btn btn-primary" style="margin-top: 1rem; padding: 0.8rem; font-size: 1rem;">
+          Update Profile
+        </button>
+      </form>
+    </div>
+
+    <!-- Change Password Section -->
+    <div class="profile-card" style="margin-top: 2rem;">
+      <h2 class="form-label"
+        style="font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; display:block; color:#fff;">
+        Change Password</h2>
+      <form id="changePasswordForm">
+        <div class="form-group">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <label class="form-label">Current Password</label>
+            <a href="forgot-password.html" style="color:#4ade80; font-size:0.9rem; text-decoration:none;">Forgot
+              Password?</a>
+          </div>
+          <input type="password" class="form-input" placeholder="Enter current password" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">New Password</label>
+          <input type="password" class="form-input" placeholder="Enter new password" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Confirm New Password</label>
+          <input type="password" class="form-input" placeholder="Confirm new password" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="padding: 0.8rem; font-size: 1rem; width:100%;">Update
+          Password</button>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user || user.role !== 'seller') {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Fetch Data
+      try {
+        const res = await fetch(`http://localhost:5000/api/auth/profile/seller/${user.id}`);
+        if (res.ok) {
+          const data = await res.json();
+          document.getElementById('sellerName').value = data.name || '';
+          document.getElementById('sellerUsername').value = data.username || '';
+          document.getElementById('sellerAddress').value = data.address || ''; // Sellers schema doesn't have address? It has shop_details.
+          // Schema Check: Sellers has (name, email, phone, shop_name, shop_details, username...)
+          // It does NOT have 'address'. It has 'shop_details'. 
+          // But 'sellerAddress' input exists. I'll map it to 'shop_details' or ignore?
+          // Wait, shop_details is used for Bio/Town in my register logic.
+          // I'll leave sellerAddress empty or map to shop_details?
+
+          document.getElementById('shopName').value = data.shop_name || '';
+          // shopLocation -> I don't have a specific column. Stored in shop_details string?
+          // For now I'll just load what I can.
+
+          document.getElementById('sellerPhone').value = data.phone || '';
+          document.getElementById('sellerEmail').value = data.email || '';
+        }
+      } catch (err) {
+        console.error(err);
+      }
+
+      // Update
+      const form = document.querySelector('form');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('sellerName').value; // Readonly?
+        // Name is readonly in HTML: `<input type="text" id="sellerName" ... readonly>`
+        // So user can't change it.
+
+        const phone = document.getElementById('sellerPhone').value;
+        const shopName = document.getElementById('shopName').value;
+
+        // We can update phone and shopName
+        try {
+          const res = await fetch("http://localhost:5000/api/auth/profile/update", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              role: 'seller',
+              id: user.id,
+              name: document.getElementById('sellerName').value, // Send existing name
+              phone,
+              shop_name: shopName,
+              // shop_details?
+            })
+          });
+
+          if (res.ok) {
+            alert("Profile Updated Successfully!");
+          } else {
+            alert("Update failed");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Server Error");
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

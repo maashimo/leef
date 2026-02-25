@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You May Like - 🍃 Leef</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">leef 🍃</a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="products" style="padding-top: 120px;">
+        <div class="container">
+            <div class="section-head">
+                <h2 class="section-title">✨ Recommended for You</h2>
+                <p style="color: var(--text-light);">Sponsored picks and toprated items.</p>
+            </div>
+
+            <div class="grid-3" id="adsGrid">
+                <!-- populated by js -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const res = await fetch("http://localhost:5000/api/products/marketplace");
+                const products = await res.json();
+
+                const grid = document.getElementById("adsGrid");
+
+                // Filter ONLY Ads
+                const ads = products.filter(p => p.is_ads);
+
+                if (ads.length === 0) {
+                    grid.innerHTML = "<p>No recommendations at the moment.</p>";
+                    return;
+                }
+
+                ads.forEach(p => {
+                    const card = document.createElement("div");
+                    card.className = "card product-card";
+                    card.innerHTML = `
+                  <div class="product-img-wrapper">
+                    <img src="${p.image_url || 'images/default.png'}" alt="${p.name}">
+                    <span style="position: absolute; top: 15px; right: 15px; background: #6366f1; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 600; font-size: 0.8rem;">SPONSORED</span>
+                  </div>
+                  <div class="product-details">
+                    <h3 style="font-size: 1.2rem;">${p.name}</h3>
+                    <p style="color: var(--text-light); font-size: 0.9rem;">Seller: ${p.shop_name}</p>
+                    <div class="product-price">
+                       Rs. ${p.price}
+                    </div>
+                     ${p.coins_percent ? `<div style="color: #f59e0b; font-size: 0.9rem; margin-top: 5px;">🪙 ${p.coins_percent}% Coins</div>` : ''}
+                    <button class="action-btn">Add to Cart</button>
+                  </div>
+                `;
+                    grid.appendChild(card);
+                });
+
+            } catch (err) {
+                console.error(err);
+            }
+        });
+    </script>
+
+</body>
+
+</html>

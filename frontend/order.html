@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Management - 🍃 Leef</title>
+  <style>
+    :root {
+      --green: #16a34a;
+      --orange: #f97316;
+      --blue: #2563eb;
+      --red: #dc2626;
+      --bg: #fafaf9;
+      --card: #fff;
+      --muted: #555;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    aside {
+      width: 240px;
+      background: var(--card);
+      padding: 1.5em 1em;
+      box-shadow: 2px 0 6px var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2em;
+    }
+
+    aside .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      font-size: 1.4rem;
+      margin-bottom: 2em;
+      text-decoration: none;
+      color: var(--green);
+      font-weight: bold;
+    }
+
+    aside nav a {
+      display: block;
+      padding: 0.6em 0.4em;
+      color: var(--muted);
+      text-decoration: none;
+      border-radius: 0.5em;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    aside nav a.active,
+    aside nav a:hover {
+      background: var(--green);
+      color: #fff;
+      font-weight: bold;
+    }
+
+    aside button.redeem-btn {
+      margin-top: auto;
+      width: 100%;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      padding: 0.6em;
+      border-radius: 0.5em;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    main {
+      flex: 1;
+      padding: 2em;
+      display: flex;
+      flex-direction: column;
+      gap: 2em;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.2em;
+      color: #222;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5em;
+      color: #222;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 1.2em;
+      border-radius: 1em;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+      margin-bottom: 2em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 0.6em;
+      border-bottom: 1px solid #eee;
+      font-size: 0.9rem;
+      text-align: left;
+    }
+
+    th {
+      background: #f5f5f5;
+      font-weight: bold;
+    }
+
+    td button {
+      padding: 0.3em 0.6em;
+      border: none;
+      border-radius: 0.4em;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    .accept-btn {
+      background: var(--green);
+    }
+
+    .reject-btn {
+      background: var(--red);
+    }
+
+    .view-btn {
+      background: var(--blue);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: var(--card);
+      padding: 1.5em;
+      border-radius: 1em;
+      width: 90%;
+      max-width: 500px;
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 0.5em;
+      right: 0.8em;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .loc-table {
+      margin-top: 1em;
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .loc-table th,
+    .loc-table td {
+      border-bottom: 1px solid #eee;
+      padding: 0.4em;
+      font-size: 0.92em;
+    }
+
+    .loc-table th {
+      background: #f0fdf4;
+    }
+
+    @media(max-width:900px) {
+      main {
+        padding: 1em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <aside>
+    <a href="#" class="logo">🍃
+      leef</a>
+    <nav>
+      <a href="admin-dashboard.html">Overview</a>
+      <a href="new-registration.html">Registration Requests</a>
+      <a href="order.html" class="active">Orders</a>
+      <a href="product-admin.html">Products</a>
+      <a href="feedback-admin.html">Feedback</a>
+      <a href="questions-admin.html">Questions</a>
+      <a href="refund-approval.html">Refunds</a>
+
+      <a href="admin-profile.html">Profile</a>
+    </nav>
+    <button class="redeem-btn">Logout</button>
+  </aside>
+
+  <!-- Main -->
+  <main>
+    <h1>Order Management</h1>
+
+    <!-- Pending Orders -->
+    <div class="card">
+      <h2>Pending Orders</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer ID</th>
+            <th>Product Name</th>
+            <th>Available Quantity</th>
+            <th>Locations & Qty</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="pending-orders">
+          <tr>
+            <td>#A-1006</td>
+            <td>CUST-2005</td>
+            <td>Carrots</td>
+            <td>25kg</td>
+            <td>
+              <ul>
+                <li>Colombo: 10kg</li>
+                <li>Kandy: 5kg</li>
+              </ul>
+            </td>
+            <td>
+              <button class="view-btn" onclick="viewOrder('A-1006')">View</button>
+              <button class="accept-btn" onclick="acceptOrder(this, 'A-1006')">Accept</button>
+              <button class="reject-btn" onclick="rejectOrder(this, 'A-1006')">Reject</button>
+            </td>
+          </tr>
+          <tr>
+            <td>#A-1007</td>
+            <td>CUST-1001</td>
+            <td>Potatoes</td>
+            <td>30kg</td>
+            <td>
+              <ul>
+                <li>Galle: 8kg</li>
+                <li>Matara: 7kg</li>
+              </ul>
+            </td>
+            <td>
+              <button class="view-btn" onclick="viewOrder('A-1007')">View</button>
+              <button class="accept-btn" onclick="acceptOrder(this, 'A-1007')">Accept</button>
+              <button class="reject-btn" onclick="rejectOrder(this, 'A-1007')">Reject</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Accepted Orders -->
+    <div class="card">
+      <h2>Accepted Orders</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer ID</th>
+            <th>Product Name</th>
+            <th>Available Quantity</th>
+            <th>Locations & Qty</th>
+            <th>Accepted By</th>
+            <th>Accepted At</th>
+          </tr>
+        </thead>
+        <tbody id="accepted-orders">
+          <tr>
+            <td>#A-1002</td>
+            <td>CUST-3002</td>
+            <td>Tomatoes</td>
+            <td>20kg</td>
+            <td>
+              <ul>
+                <li>Kandy: 6kg</li>
+                <li>Colombo: 4kg</li>
+              </ul>
+            </td>
+            <td>Admin</td>
+            <td>2025-10-16 09:30</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Rejected Orders -->
+    <div class="card">
+      <h2>Rejected Orders</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer ID</th>
+            <th>Product Name</th>
+            <th>Available Quantity</th>
+            <th>Locations & Qty</th>
+            <th>Rejected By</th>
+            <th>Rejected At</th>
+            <th>Reason</th>
+          </tr>
+        </thead>
+        <tbody id="rejected-orders">
+          <tr>
+            <td>#A-1003</td>
+            <td>CUST-4003</td>
+            <td>Beans</td>
+            <td>15kg</td>
+            <td>
+              <ul>
+                <li>Matara: 3kg</li>
+                <li>Galle: 2kg</li>
+              </ul>
+            </td>
+            <td>Admin</td>
+            <td>2025-10-16 10:00</td>
+            <td>Not delivering to Matara</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Today's Orders (updated to show Cart ID and two orders in one cart) -->
+    <div class="card" style="margin-bottom:2em;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1em;">
+        <h2>Today's Orders</h2>
+        <select id="order-day-select"
+          style="padding:0.5em 1em; border-radius:0.5em; border:1px solid #ccc; font-size:1em;">
+          <option value="today">Today</option>
+          <option value="yesterday">Yesterday</option>
+          <option value="2025-10-15">2025-10-15</option>
+          <option value="2025-10-14">2025-10-14</option>
+        </select>
+      </div>
+
+      <table id="todays-orders-table" style="width:100%; border-collapse:collapse;">
+        <thead>
+          <tr style="background:#f5f5f5;">
+            <th>Cart ID</th>
+            <th>Order ID</th>
+            <th>Customer ID</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Location</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Cart with 2 orders (both for same location and delivered) -->
+          <tr>
+            <td rowspan="2" style="vertical-align:middle;font-weight:600;">CART-9001</td>
+            <td>#ORD-5001</td>
+            <td>CUST-1001</td>
+            <td>Banana</td>
+            <td>10kg</td>
+            <td>Colombo</td>
+            <td><span style="color:#16a34a;font-weight:600;">Delivered</span></td>
+          </tr>
+          <tr>
+            <td>#ORD-5002</td>
+            <td>CUST-1001</td>
+            <td>Papaya</td>
+            <td>6kg</td>
+            <td>Colombo</td>
+            <td><span style="color:#16a34a;font-weight:600;">Delivered</span></td>
+          </tr>
+
+          <!-- Additional example orders (if needed) -->
+          <tr>
+            <td>CART-9002</td>
+            <td>#ORD-5003</td>
+            <td>CUST-3002</td>
+            <td>Carrot</td>
+            <td>8kg</td>
+            <td>Kandy</td>
+            <td><span style="color:#f97316;font-weight:600;">Pending</span></td>
+          </tr>
+          <tr>
+            <td>CART-9003</td>
+            <td>#ORD-5004</td>
+            <td>CUST-4003</td>
+            <td>Potato</td>
+            <td>12kg</td>
+            <td>Galle</td>
+            <td><span style="color:#2563eb;font-weight:600;">On Route</span></td>
+          </tr>
+          <tr>
+            <td>CART-9004</td>
+            <td>#ORD-5005</td>
+            <td>CUST-5004</td>
+            <td>Cabbage</td>
+            <td>9kg</td>
+            <td>Colombo</td>
+            <td><span style="color:#f97316;font-weight:600;">Pending</span></td>
+          </tr>
+          <tr>
+            <td>CART-9005</td>
+            <td>#ORD-5006</td>
+            <td>CUST-6005</td>
+            <td>Coriander</td>
+            <td>5kg</td>
+            <td>Kandy</td>
+            <td><span style="color:#2563eb;font-weight:600;">On Route</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="text-align:right; margin-top:1em;">
+        <button class="download-btn"
+          style="background:#2563eb; color:#fff; padding:0.7em 1.4em; border:none; border-radius:0.6em; font-weight:600; cursor:pointer; box-shadow:0 2px 8px rgba(37,99,235,0.10);">
+          ⬇️ Download Order Details
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Fetch and render orders on page load
+    document.addEventListener("DOMContentLoaded", fetchAllOrders);
+
+    async function fetchAllOrders() {
+      try {
+        const res = await fetch("http://localhost:5000/api/orders/admin/all");
+        if (!res.ok) throw new Error("Failed to fetch orders");
+        const orders = await res.json();
+        renderOrders(orders);
+      } catch (err) {
+        console.error("Error fetching orders:", err);
+        showToast("Error loading orders from server", "error");
+      }
+    }
+
+    function renderOrders(orders) {
+      const pendingTbody = document.getElementById("pending-orders");
+      const acceptedTbody = document.getElementById("accepted-orders");
+      const rejectedTbody = document.getElementById("rejected-orders");
+
+      pendingTbody.innerHTML = "";
+      acceptedTbody.innerHTML = "";
+      rejectedTbody.innerHTML = "";
+
+      orders.forEach(order => {
+        // Parse locations if it's a string, else use as-is
+        let locs = order.locations;
+        if (typeof locs === "string") {
+          try { locs = JSON.parse(locs); } catch (e) { locs = []; }
+        }
+
+        const locationsHtml = Array.isArray(locs)
+          ? `<ul>${locs.map(l => `<li>${l.location}: ${l.qty}</li>`).join('')}</ul>`
+          : "<ul><li>N/A</li></ul>";
+
+        if (order.status === "pending") {
+          pendingTbody.innerHTML += `
+            <tr>
+              <td>#REQ-${order.id}</td>
+              <td>${order.customer_name || order.user_id}</td>
+              <td>${order.product_name}</td>
+              <td>${order.total_qty} units</td>
+              <td>${locationsHtml}</td>
+              <td>
+                <button class="accept-btn" onclick="acceptOrder(${order.id})">Accept</button>
+                <button class="reject-btn" onclick="rejectOrder(${order.id})">Reject</button>
+              </td>
+            </tr>
+          `;
+        } else if (order.status === "approved") {
+          acceptedTbody.innerHTML += `
+            <tr>
+              <td>#REQ-${order.id}</td>
+              <td>${order.customer_name || order.user_id}</td>
+              <td>${order.product_name}</td>
+              <td>${order.total_qty} units</td>
+              <td>${locationsHtml}</td>
+              <td>Admin</td>
+              <td>${new Date(order.created_at).toLocaleString()}</td>
+            </tr>
+          `;
+        } else if (order.status === "rejected") {
+          rejectedTbody.innerHTML += `
+            <tr>
+              <td>#REQ-${order.id}</td>
+              <td>${order.customer_name || order.user_id}</td>
+              <td>${order.product_name}</td>
+              <td>${order.total_qty} units</td>
+              <td>${locationsHtml}</td>
+              <td>Admin</td>
+              <td>${new Date(order.updated_at || order.created_at).toLocaleString()}</td>
+              <td>${order.rejection_reason || 'N/A'}</td>
+            </tr>
+          `;
+        }
+      });
+
+      if (pendingTbody.innerHTML === "") pendingTbody.innerHTML = "<tr><td colspan='6' style='text-align:center'>No pending requests</td></tr>";
+      if (acceptedTbody.innerHTML === "") acceptedTbody.innerHTML = "<tr><td colspan='7' style='text-align:center'>No accepted requests</td></tr>";
+      if (rejectedTbody.innerHTML === "") rejectedTbody.innerHTML = "<tr><td colspan='8' style='text-align:center'>No rejected requests</td></tr>";
+    }
+
+    async function acceptOrder(id) {
+      if (!confirm("Are you sure you want to accept this order request?")) return;
+      const adminNote = prompt("Enter an optional note for the customer (e.g. managing from another seller):");
+
+      try {
+        const res = await fetch(`http://localhost:5000/api/orders/admin/${id}/accept`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ adminNote: adminNote || '' })
+        });
+        if (!res.ok) {
+          const errText = await res.text();
+          throw new Error(errText || "Failed to accept");
+        }
+        showToast("Order accepted successfully!");
+        fetchAllOrders(); // Refresh tables
+      } catch (err) {
+        console.error(err);
+        showToast("Backend Error: " + err.message, "error", 6000);
+      }
+    }
+
+    async function rejectOrder(id) {
+      const reason = prompt("Enter a reason for rejection (optional):");
+      if (reason === null) return; // User cancelled prompt
+      try {
+        const res = await fetch(`http://localhost:5000/api/orders/admin/${id}/reject`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ reason: reason })
+        });
+        if (!res.ok) {
+          const errText = await res.text();
+          throw new Error(errText || "Failed to reject");
+        }
+        showToast("Order rejected.");
+        fetchAllOrders(); // Refresh tables
+      } catch (err) {
+        console.error(err);
+        showToast("Backend Error: " + err.message, "error", 6000);
+      }
+    }
+
+    // Show a small toast notification
+    function showToast(message, type = 'success', timeout = 4000) {
+      let toast = document.createElement('div');
+      toast.className = 'leef-toast';
+      toast.textContent = message;
+      const bgColor = type === 'success' ? '#16a34a' : '#dc2626';
+      Object.assign(toast.style, {
+        position: 'fixed',
+        right: '20px',
+        bottom: '20px',
+        background: bgColor,
+        color: '#fff',
+        padding: '10px 14px',
+        borderRadius: '8px',
+        zIndex: 9999,
+        boxShadow: '0 6px 18px rgba(0,0,0,0.2)',
+        fontSize: '14px'
+      });
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.transition = 'opacity 300ms';
+        toast.style.opacity = '0';
+      }, timeout - 300);
+      setTimeout(() => toast.remove(), timeout);
+    }
+  </script>
+</body>
+
+</html>

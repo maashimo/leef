@@ -1,0 +1,462 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+.header {
+    background-color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #28a745;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-icon {
+    background-color: #28a745;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+}
+
+.nav {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #666;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s;
+}
+
+.nav a:hover,
+.nav a.active {
+    background-color: #e9ecef;
+    color: #28a745;
+}
+
+.nav .profile {
+    margin-right: auto;
+}
+
+.logout {
+    color: #dc3545 !important;
+    font-weight: bold;
+}
+
+.main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.subtitle {
+    color: #666;
+}
+
+.new-request-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.new-request-btn:hover {
+    background-color: #218838;
+}
+
+.stats-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    flex: 1;
+    text-align: center;
+    position: relative;
+}
+
+.stat-card h3 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 0.25rem;
+}
+
+.stat-card p {
+    color: #666;
+    font-size: 0.875rem;
+}
+
+.stat-card .icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.25rem;
+    opacity: 0.5;
+}
+
+.pending .icon { color: #ffc107; }
+.approved .icon { color: #007bff; }
+.completed .icon { color: #28a745; }
+
+.requests-section {
+    margin-bottom: 2rem;
+}
+
+.requests-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.request-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    position: relative;
+}
+
+.request-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.request-details {
+    flex: 1;
+}
+
+.request-product {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.request-meta {
+    color: #666;
+    margin-bottom: 0.25rem;
+    font-size: 0.875rem;
+}
+
+.request-reason {
+    font-style: italic;
+    color: #999;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+}
+
+.progress-container {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.progress-bar {
+    height: 4px;
+    background-color: #e9ecef;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+    height: 100%;
+    transition: width 0.3s ease-in-out;
+}
+
+.tomato .progress-fill {
+    background-color: #007bff;
+    width: 50%; /* Up to Approved */
+}
+
+.potato .progress-fill {
+    background-color: #28a745;
+    width: 100%; /* Full to Refunded */
+}
+
+.progress-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #999;
+}
+
+.status {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-left: auto;
+    align-self: flex-start;
+}
+
+.approved-status {
+    background-color: #e7f3ff;
+    color: #007bff;
+}
+
+.completed-status {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.refund-amount {
+    font-weight: bold;
+    color: #28a745;
+    font-size: 1.125rem;
+    margin-left: auto;
+    align-self: flex-end;
+    text-align: right;
+}
+
+.return-request-form {
+    max-width: 430px;
+    margin: 2em auto;
+    background: #fff;
+    padding: 0;
+    border-radius: 1.2em;
+    box-shadow: 0 4px 16px 0 rgba(0,0,0,0.07);
+    overflow: hidden;
+    font-size: 1rem;
+}
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5em 2em 1em 2em;
+    border-bottom: 1px solid #eee;
+}
+.modal-header h2 {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: #888;
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 1;
+}
+.modal-section {
+    padding: 1.2em 2em 0 2em;
+}
+.modal-label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.7em;
+    color: #222;
+}
+.modal-orders {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+}
+.modal-order {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    border: 1.5px solid #eee;
+    border-radius: 0.7em;
+    padding: 0.9em 1em;
+    cursor: pointer;
+    transition: border 0.18s, background 0.18s;
+    font-size: 1em;
+    background: #fff;
+    position: relative;
+}
+.modal-order.selected,
+.modal-order input[type="radio"]:checked ~ .modal-order-img,
+.modal-order input[type="radio"]:checked ~ span ~ .modal-order-price {
+    border-color: #16a34a !important;
+    background: #f6fef9;
+}
+.modal-order input[type="radio"] {
+    margin-right: 0.7em;
+    accent-color: #16a34a;
+}
+.modal-order-img {
+    width: 2em;
+    height: 2em;
+    margin-right: 0.5em;
+    display: inline-block;
+    vertical-align: middle;
+}
+.modal-order-title {
+    font-weight: 600;
+}
+.modal-order-id {
+    font-size: 0.9em;
+    color: #888;
+}
+.modal-order-price {
+    margin-left: auto;
+    font-weight: bold;
+    color: #16a34a;
+    font-size: 1.1em;
+}
+.modal-reasons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+.modal-reason {
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    border: 1.5px solid #eee;
+    border-radius: 0.7em;
+    padding: 0.7em 1em;
+    cursor: pointer;
+    font-size: 1em;
+    background: #fff;
+    transition: border 0.18s, background 0.18s;
+}
+.modal-reason input[type="radio"] {
+    margin-right: 0.7em;
+    accent-color: #16a34a;
+}
+.modal-reason input[type="radio"]:checked + span,
+.modal-reason input[type="radio"]:checked {
+    border-color: #16a34a;
+    background: #f6fef9;
+}
+.modal-textarea {
+    width: 100%;
+    border: 1.5px solid #eee;
+    border-radius: 0.7em;
+    padding: 0.7em 1em;
+    font-size: 1em;
+    margin-top: 0.5em;
+    resize: vertical;
+    min-height: 60px;
+    transition: border 0.18s;
+}
+.modal-textarea:focus {
+    border-color: #16a34a;
+    outline: none;
+}
+.modal-upload {
+    border: 2px dashed #ccc;
+    border-radius: 0.7em;
+    padding: 2em 1em;
+    text-align: center;
+    color: #888;
+    cursor: pointer;
+    margin-top: 0.5em;
+    transition: border 0.18s;
+}
+.modal-upload:hover {
+    border-color: #16a34a;
+    color: #16a34a;
+}
+.modal-upload-icon {
+    display: block;
+    margin-bottom: 0.5em;
+}
+.modal-upload-help {
+    font-size: 0.95em;
+    color: #aaa;
+    margin-top: 0.2em;
+}
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1em;
+    padding: 1.5em 2em 1.5em 2em;
+    border-top: 1px solid #eee;
+    margin-top: 1em;
+    background: #fafafa;
+}
+.modal-btn-cancel {
+    background: #fff;
+    color: #222;
+    border: 1.5px solid #eee;
+    border-radius: 0.5em;
+    padding: 0.7em 2em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.18s, border 0.18s;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+.modal-btn-cancel:hover {
+    background: #f3f4f6;
+    border-color: #bbb;
+}
+.modal-btn-submit {
+    background: #16a34a;
+    color: #fff;
+    border: none;
+    border-radius: 0.5em;
+    padding: 0.7em 2em;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px 0 rgba(22,163,74,0.10);
+    transition: background 0.18s;
+}
+.modal-btn-submit:hover {
+    background: #15803d;
+}
+@media (max-width: 600px) {
+    .return-request-form { max-width: 98vw; }
+    .modal-header, .modal-section, .modal-actions { padding-left: 1em; padding-right: 1em; }
+}

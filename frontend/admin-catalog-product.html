@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalog Product - 🍃 Leef</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #fafaf9;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            color: #16a34a;
+            margin-bottom: 0.5rem;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        label {
+            display: block;
+            margin-top: 1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-top: 0.4rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        .row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .col {
+            flex: 1;
+        }
+
+        .btn {
+            padding: 0.8em 1.5em;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .btn-primary {
+            background: #16a34a;
+            color: white;
+            width: 100%;
+            font-size: 1.1rem;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+            margin-right: 1rem;
+        }
+
+        .price-box {
+            background: #f0fdf4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #bbf7d0;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h1>Catalog Product</h1>
+            <a href="product-admin.html" class="btn btn-secondary">Cancel</a>
+        </div>
+        <p style="color:#666;">Finalize details and set pricing before publishing.</p>
+
+        <form id="catalogForm">
+
+            <!-- Section 1: Product Details -->
+            <div class="section">
+                <h3>📦 Product Details</h3>
+                <div class="row">
+                    <div class="col">
+                        <label>Product Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="col">
+                        <label>Category</label>
+                        <input type="text" id="category" required>
+                    </div>
+                </div>
+                <label>Description</label>
+                <textarea id="description" rows="3"></textarea>
+            </div>
+
+            <!-- Section 1.5: Product Image -->
+            <div class="section">
+                <h3>🖼️ Product Image</h3>
+                <div class="row" style="align-items: flex-start;">
+                    <div class="col" style="flex: 0 0 150px;">
+                        <img id="previewImage" src="images/default.png"
+                            style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd;">
+                    </div>
+                    <div class="col">
+                        <label>Upload New Image (Optional)</label>
+                        <input type="file" id="imageInput" accept="image/*">
+                        <div id="downloadLinkContainer" style="margin-top: 0.5rem; display: none;">
+                            <a id="downloadLink" href="#" target="_blank"
+                                style="color: #2563eb; font-size: 0.9rem; text-decoration: none;">⬇️ Download Seller's
+                                Image</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Seller Details -->
+            <div class="section">
+                <h3>👤 Seller Info</h3>
+                <div class="row">
+                    <div class="col">
+                        <label>Seller Name</label>
+                        <input type="text" id="sellerName">
+                    </div>
+                    <div class="col">
+                        <label>Shop Name</label>
+                        <input type="text" id="shopName">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Pricing Strategy -->
+            <div class="section">
+                <h3>💰 Pricing Strategy</h3>
+                <div class="price-box">
+                    <div class="row">
+                        <div class="col">
+                            <label style="color:#16a34a;">Selling Price (LKR)</label>
+                            <input type="text" id="finalPrice" placeholder="e.g. 1500 or 1500/kg"
+                                style="border: 2px solid #16a34a; font-weight:bold; font-size:1.1rem;" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Features -->
+            <div class="section">
+                <h3>✨ Features</h3>
+                <div style="display:flex; flex-direction:column; gap:1rem; margin-top:0.5rem;">
+
+                    <label style="display:flex; align-items:center; gap:0.5rem;">
+                        <input type="checkbox" id="featMulti" style="width:auto; margin:0;"> Multiple Locations
+                    </label>
+
+                    <!-- Coins with Percentage -->
+                    <div>
+                        <label style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
+                            <input type="checkbox" id="featCoins" style="width:auto; margin:0;"
+                                onchange="toggleInput('coinsInput', this.checked)"> Use Coins
+                        </label>
+                        <input type="number" id="coinsInput" placeholder="Enter Coin Percentage (e.g. 5)"
+                            style="display:none; width: 200px; margin-left: 1.5rem;" min="0" max="100">
+                    </div>
+
+                    <label style="display:flex; align-items:center; gap:0.5rem;">
+                        <input type="checkbox" id="featAds" style="width:auto; margin:0;"> Promotion
+                    </label>
+
+                    <!-- Sales with Details -->
+                    <div>
+                        <label style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
+                            <input type="checkbox" id="featSales" style="width:auto; margin:0;"
+                                onchange="toggleInput('salesInput', this.checked)"> Add Sale
+                        </label>
+                        <input type="text" id="salesInput"
+                            placeholder="Enter Sale Details (e.g. 'Buy 1 Get 1' or 'New Price: 100')"
+                            style="display:none; width: 100%; margin-left: 1.5rem;">
+                    </div>
+
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Publish Product</button>
+        </form>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('id');
+        const type = params.get('type');
+
+        function toggleInput(id, show) {
+            document.getElementById(id).style.display = show ? 'block' : 'none';
+            if (!show) document.getElementById(id).value = ''; // clear if unchecked
+        }
+
+        // Preview Image Logic
+        document.getElementById('imageInput').addEventListener('change', function (e) {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('previewImage').src = e.target.result;
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        // Load Data
+        document.addEventListener("DOMContentLoaded", async () => {
+            if (!productId) return alert("No product ID specified");
+
+            try {
+                const res = await fetch("http://localhost:5000/api/products/admin/pending");
+                const products = await res.json();
+
+                let p;
+                if (type === 'Update') {
+                    p = products.find(i => i.request_id == productId);
+                } else {
+                    p = products.find(i => i.product_id == productId);
+                }
+
+                if (p) {
+                    document.getElementById('name').value = p.name;
+                    document.getElementById('category').value = p.category;
+                    document.getElementById('description').value = p.description;
+                    document.getElementById('sellerName').value = p.seller_name;
+                    document.getElementById('shopName').value = p.shop_name;
+                    // Stock input is removed from HTML, so we don't load it.
+
+                    document.getElementById('finalPrice').value = p.price;
+
+                    // Image Handling
+                    if (p.image_url) {
+                        document.getElementById('previewImage').src = p.image_url;
+                        const dl = document.getElementById('downloadLink');
+                        dl.href = p.image_url;
+                        dl.download = p.image_url.split('/').pop();
+                        document.getElementById('downloadLinkContainer').style.display = 'block';
+                    }
+                }
+
+            } catch (err) {
+                console.error(err);
+                alert("Error loading product data");
+            }
+        });
+
+        document.getElementById('catalogForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData();
+            formData.append('id', productId);
+            formData.append('type', type || 'New');
+            formData.append('name', document.getElementById('name').value);
+            formData.append('finalPrice', document.getElementById('finalPrice').value);
+            formData.append('description', document.getElementById('description').value);
+            // Stock is not in HTML, so we skip it to preserve existing value in DB.
+
+            // Features
+            if (document.getElementById('featCoins').checked) {
+                formData.append('coinsPercent', document.getElementById('coinsInput').value);
+            }
+            if (document.getElementById('featSales').checked) {
+                formData.append('saleDetails', document.getElementById('salesInput').value);
+            }
+            if (document.getElementById('featAds').checked) {
+                formData.append('isAds', 'true');
+            }
+
+            // Image
+            const fileInput = document.getElementById('imageInput');
+            if (fileInput.files.length > 0) {
+                formData.append('image', fileInput.files[0]);
+            }
+
+            try {
+                const res = await fetch("http://localhost:5000/api/products/admin/approve", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (res.ok) {
+                    alert("Product Published Successfully!");
+                    window.location.href = "product-admin.html";
+                } else {
+                    const err = await res.json();
+                    alert("Failed to publish: " + (err.message || 'Unknown error'));
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Error connecting to server");
+            }
+        });
+    </script>
+
+</body>
+
+</html>

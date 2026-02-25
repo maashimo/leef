@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🍃
+Leef</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <header>
+    <a href="index.html">← Back to Home</a>
+    <h1>Chat with 🍃
+Leef
+  </header>
+
+  <section class="chatbot">
+    <div class="chat-window">
+      <div class="messages">
+        <p class="bot">Hi! How can I help you today?</p>
+      </div>
+      <input type="text" placeholder="Type your message..." id="userInput">
+      <button id="sendBtn">Send</button>
+    </div>
+  </section>
+
+  <script>
+    const sendBtn = document.getElementById('sendBtn');
+    const userInput = document.getElementById('userInput');
+    const messages = document.querySelector('.messages');
+
+    sendBtn.addEventListener('click', () => {
+      const text = userInput.value.trim();
+      if(text !== "") {
+        const userMsg = document.createElement('p');
+        userMsg.classList.add('user');
+        userMsg.textContent = text;
+        messages.appendChild(userMsg);
+
+        const botMsg = document.createElement('p');
+        botMsg.classList.add('bot');
+        botMsg.textContent = "Sorry, I'm a demo chatbot and cannot answer questions yet.";
+        messages.appendChild(botMsg);
+
+        userInput.value = "";
+        messages.scrollTop = messages.scrollHeight;
+      }
+    });
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .chat-window {
+      width: 100%;
+      max-width: 500px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .messages {
+      height: 300px;
+      overflow-y: auto;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .messages p {
+      margin: 0;
+      padding: 5px 10px;
+      border-radius: 20px;
+    }
+
+    .bot {
+      background-color: #f0f0f0;
+      align-self: flex-start;
+    }
+
+    .user {
+      background-color: #4CAF50;
+      color: white;
+      align-self: flex-end;
+    }
+
+    #userInput {
+      width: 100%;
+      padding: 10px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+    }
+
+    #sendBtn {
+      padding: 10px 20px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 20px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+  </style>
+</body>
+</html>

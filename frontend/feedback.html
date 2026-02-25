@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback - leef 🍃</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <style>
+    /* Top Navbar Styles */
+    .top-navbar {
+      background-color: rgba(10, 10, 10, 0.95);
+      border-bottom: 1px solid #333;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .navbar-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .navbar-logo {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: bold;
+      color: #4ade80;
+    }
+
+    .navbar-location {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-left: 2rem;
+    }
+
+    .navbar-nav {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 2rem;
+    }
+
+    .navbar-link {
+      text-decoration: none;
+      color: #eee;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      transition: background-color 0.2s;
+    }
+
+    .navbar-link.active {
+      background-color: #10b981;
+      color: white;
+    }
+
+    .navbar-link:hover {
+      background-color: #333;
+    }
+
+    @media (max-width: 768px) {
+      .top-navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar-nav {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+
+    /* Dark Modal Styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 600px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+      color: #eee;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.6rem;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 6px;
+      color: #fff;
+      margin-top: 0.3rem;
+    }
+
+    .form-input:focus {
+      border-color: #4ade80;
+      outline: none;
+    }
+
+    .order-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #222;
+      border: 1px solid #333;
+      border-radius: 0.7em;
+      padding: 1em 1.2em;
+      margin-bottom: 1em;
+    }
+
+    .order-item.highlight {
+      background: rgba(22, 163, 74, 0.1);
+      border-color: rgba(22, 163, 74, 0.3);
+    }
+  </style>
+</head>
+
+<body class="">
+
+  <!-- Top Navbar -->
+  <nav class="top-navbar">
+    <div class="navbar-header">
+      <a href="index.html" class="navbar-logo">
+        leef 🍃
+      </a>
+      <div class="navbar-location">Colombo, Sri Lanka</div>
+    </div>
+    <ul class="navbar-nav">
+      <li><a href="customer-dashboard.html" class="navbar-link">Dashboard</a></li>
+      <li><a href="products.html" class="navbar-link">Products</a></li>
+      <li><a href="cart.html" class="navbar-link">Cart</a></li>
+
+      <li><a href="feedback.html" class="navbar-link active">Feedback</a></li>
+      <li><a href="returns.html" class="navbar-link">Refund</a></li>
+      <li><a href="profile.html" class="navbar-link ">Profile</a></li>
+      <li><a href="index.html" class="navbar-link">Logout</a></li>
+    </ul>
+  </nav>
+
+  <main class="main-content container" style="max-width: 900px; margin: 2em auto;">
+    <h1 class="page-title">Product Feedback</h1>
+    <p class="page-subtitle" style="margin-bottom: 2em;">Share your experience and help others make informed decisions
+    </p>
+
+    <!-- Recent Orders Card -->
+    <div class="product-card" style="text-align: left; background: #1a1a1a; border: 1px solid #333;">
+      <h2 class="section-title" style="margin-bottom: 1.5em; border-bottom: 1px solid #333; padding-bottom: 1rem;">
+        Recent Transactions</h2>
+
+      <div style="display:flex; flex-direction:column; gap:1em;">
+
+        <!-- Order 1: Banana -->
+        <div class="order-item highlight">
+          <div style="display:flex; align-items:center; gap:1em;">
+            <img src="images/banana.jpg" alt="Banana"
+              style="width:48px; height:48px; object-fit:cover; border-radius:0.5em;">
+            <div>
+              <div style="font-weight:600; color: #fff;">Banana</div>
+              <div style="font-size:0.9em; color:#9ca3af;">Order: ORD-2024-005</div>
+              <div style="font-size:0.9em; color:#6b7280;">2024-12-02</div>
+            </div>
+          </div>
+          <a href="#" onclick="openFeedback(event,'Banana','ORD-2024-005')" class="btn btn-primary"
+            style="text-decoration:none; padding: 0.5em 1em; font-size: 0.9rem;">Leave Feedback</a>
+        </div>
+
+        <!-- Order 2: Cabbage -->
+        <div class="order-item">
+          <div style="display:flex; align-items:center; gap:1em;">
+            <img src="images/cabbage.png" alt="Cabbage"
+              style="width:48px; height:48px; object-fit:cover; border-radius:0.5em;">
+            <div>
+              <div style="font-weight:600; color: #fff;">Cabbage</div>
+              <div style="font-size:0.9em; color:#9ca3af;">Order: ORD-2024-006</div>
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <div style="color:#fbbf24; font-size:1.1em;">⭐⭐⭐⭐⭐</div>
+            <div style="color:#4ade80; font-weight:600; font-size:0.9em;">Review Submitted</div>
+          </div>
+        </div>
+
+        <!-- Order 3: Papaya -->
+        <div class="order-item highlight">
+          <div style="display:flex; align-items:center; gap:1em;">
+            <img src="images/papaya.jpg" alt="Papaya"
+              style="width:48px; height:48px; object-fit:cover; border-radius:0.5em;">
+            <div>
+              <div style="font-weight:600; color: #fff;">Papaya</div>
+              <div style="font-size:0.9em; color:#9ca3af;">Order: ORD-2024-007</div>
+            </div>
+          </div>
+          <a href="#" onclick="openFeedback(event,'Papaya','ORD-2024-007')" class="btn btn-primary"
+            style="text-decoration:none; padding: 0.5em 1em; font-size: 0.9rem;">Leave Feedback</a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Feedback Modal -->
+  <div id="feedbackModal" class="modal-overlay">
+    <div class="modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <h3 class="section-title" style="margin:0;">Leave Feedback</h3>
+        <button onclick="closeFeedback()"
+          style="background:transparent; border:none; font-size:1.5rem; color:#fff; cursor:pointer;">&times;</button>
+      </div>
+
+      <form id="feedbackForm" onsubmit="submitFeedback(event)">
+        <div style="display:flex; gap:1rem; margin-bottom: 1rem;">
+          <div style="flex:1;">
+            <label style="font-size:0.9rem; color:#ccc;">Product</label>
+            <input id="fbProduct" readonly class="form-input" style="opacity: 0.7;">
+          </div>
+          <div style="width:140px;">
+            <label style="font-size:0.9rem; color:#ccc;">Order ID</label>
+            <input id="fbOrder" readonly class="form-input" style="opacity: 0.7;">
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; margin-bottom: 1rem;">
+          <div>
+            <label style="font-size:0.9rem; color:#ccc;">Product Quality</label>
+            <select id="ratingProduct" required class="form-input">
+              <option value="">Rate...</option>
+              <option value="5">5 - Excellent</option>
+              <option value="4">4 - Very Good</option>
+              <option value="3">3 - Good</option>
+              <option value="2">2 - Fair</option>
+              <option value="1">1 - Poor</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:0.9rem; color:#ccc;">Seller Service</label>
+            <select id="ratingSeller" required class="form-input">
+              <option value="">Rate...</option>
+              <option value="5">5</option>
+              <option value="4">4</option>
+              <option value="3">3</option>
+              <option value="2">2</option>
+              <option value="1">1</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <label style="font-size:0.9rem; color:#ccc;">Comments</label>
+          <textarea id="fbComments" rows="4" placeholder="Write about product quality, packaging, delivery..."
+            class="form-input"></textarea>
+        </div>
+
+        <div style="display:flex; gap:0.6rem; justify-content:flex-end;">
+          <button type="button" onclick="closeFeedback()" class="btn"
+            style="background: #333; color: #fff;">Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit Feedback</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openFeedback(e, product, orderId) {
+      e.preventDefault();
+      document.getElementById('fbProduct').value = product;
+      document.getElementById('fbOrder').value = orderId;
+      document.getElementById('feedbackModal').style.display = 'flex';
+    }
+
+    function closeFeedback() {
+      document.getElementById('feedbackModal').style.display = 'none';
+    }
+
+    function submitFeedback(e) {
+      e.preventDefault();
+      const orderId = document.getElementById('fbOrder').value;
+
+      // Find the button and replace it with "Review Submitted"
+      const anchors = Array.from(document.querySelectorAll('a'));
+      anchors.forEach(a => {
+        if (a.onclick && a.onclick.toString().includes(orderId)) {
+          a.outerHTML = `<div style="color:#4ade80; font-weight:600; font-size:0.9em;">Review Submitted</div>`;
+
+          // Also update the parent container style to look "completed" (remove highlight)
+          const container = a.closest('.order-item');
+          if (container) {
+            container.classList.remove('highlight');
+            container.style.background = '#222';
+            container.style.borderColor = '#333';
+          }
+        }
+      });
+
+      closeFeedback();
+      // Toast
+      const t = document.createElement('div');
+      t.textContent = 'Thank you — feedback submitted';
+      Object.assign(t.style, {
+        position: 'fixed', right: '20px', bottom: '20px',
+        background: '#16a34a', color: '#fff', padding: '10px 14px',
+        borderRadius: '8px', zIndex: 99999, boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+      });
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 3500);
+    }
+  </script>
+</body>
+
+</html>

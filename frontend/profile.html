@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - leef 🍃</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        /* Top Navbar Styles */
+        .top-navbar {
+            background-color: rgba(10, 10, 10, 0.95);
+            border-bottom: 1px solid #333;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .navbar-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-logo {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            color: #4ade80;
+        }
+
+        .navbar-location {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-left: 2rem;
+        }
+
+        .navbar-nav {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 2rem;
+        }
+
+        .navbar-link {
+            text-decoration: none;
+            color: #eee;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s;
+        }
+
+        .navbar-link.active {
+            background-color: #10b981;
+            color: white;
+        }
+
+        .navbar-link:hover {
+            background-color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .top-navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .navbar-nav {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        /* Profile Specific Styles */
+        .profile-card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #ccc;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            background: #111;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            /* Left padding for icon */
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            border-color: #4ade80;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #555;
+        }
+
+        .relative {
+            position: relative;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .loyalty-card {
+            background: linear-gradient(135deg, #16a34a, #14532d);
+            border-radius: 16px;
+            padding: 1.5rem;
+            color: white;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(22, 163, 74, 0.2);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #333;
+            color: #ccc;
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+
+        .summary-val {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        @media (max-width: 900px) {
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body class="">
+
+    <!-- Top Navbar -->
+    <nav class="top-navbar">
+        <div class="navbar-header">
+            <a href="index.html" class="navbar-logo">
+                leef 🍃
+            </a>
+            <div class="navbar-location">Colombo, Sri Lanka</div>
+        </div>
+        <ul class="navbar-nav">
+            <li><a href="customer-dashboard.html" class="navbar-link">Dashboard</a></li>
+            <li><a href="products.html" class="navbar-link">Products</a></li>
+            <li><a href="cart.html" class="navbar-link">Cart</a></li>
+            <li><a href="feedback.html" class="navbar-link">Feedback</a></li>
+            <li><a href="returns.html" class="navbar-link">Refund</a></li>
+            <li><a href="profile.html" class="navbar-link active">Profile</a></li>
+            <li><a href="index.html" class="navbar-link">Logout</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content container" style="max-width: 1200px; margin: 2rem auto; padding: 0 1rem;">
+        <h1 class="page-title">My Profile</h1>
+        <p class="page-subtitle" style="margin-bottom: 2rem;">Manage your account information and preferences</p>
+
+        <div class="grid-layout">
+
+            <!-- Left Column: Forms -->
+            <div>
+                <!-- Personal Info -->
+                <div class="profile-card">
+                    <h2 class="section-title"
+                        style="margin-bottom: 1.5rem; border-bottom: 1px solid #333; padding-bottom: 1rem;">Personal
+                        Information</h2>
+                    <form class="space-y-6">
+                        <div class="form-grid">
+                            <div>
+                                <label class="form-label">Full Name</label>
+                                <div class="relative">
+                                    <span class="input-icon">👤</span>
+                                    <input type="text" value="Nimal Perera" class="form-input" />
+                                </div>
+                            </div>
+                            <div>
+                                <label class="form-label">Username</label>
+                                <div class="relative">
+                                    <span class="input-icon">@</span>
+                                    <input type="text" class="form-input" placeholder="username" />
+                                </div>
+                            </div>
+                            <div>
+                                <label class="form-label">Email Address</label>
+                                <div class="relative">
+                                    <span class="input-icon">✉️</span>
+                                    <input type="email" value="nimal.perera@gmail.com" class="form-input" />
+                                </div>
+                            </div>
+                            <div>
+                                <label class="form-label">Phone Numbers</label>
+                                <div id="phone-numbers-list">
+                                    <div class="relative phone-number-row" style="margin-bottom:0.5em;">
+                                        <span class="input-icon">📞</span>
+                                        <input type="tel" name="phone[]" value="+94 77 123 4567" class="form-input"
+                                            style="padding-right: 40px;" />
+                                        <button type="button" class="remove-phone-btn"
+                                            style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; color:#f87171; font-size:1.2em; cursor:pointer; display:none;">&times;</button>
+                                    </div>
+                                </div>
+                                <button type="button" id="add-phone-btn"
+                                    style="margin-top:0.5rem; background:rgba(22, 163, 74, 0.1); color:#4ade80; border:none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">
+                                    + Add another phone
+                                </button>
+                            </div>
+                            <div>
+                                <label class="form-label">Location</label>
+                                <div class="relative">
+                                    <span class="input-icon">📍</span>
+                                    <input type="text" value="Colombo, Sri Lanka" class="form-input" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 1.5rem;">
+                            <label class="form-label">Address</label>
+                            <textarea rows="3" class="form-input"
+                                style="padding-left: 1rem;">No. 45, Galle Road, Colombo 03</textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="margin-top: 2rem;">Save Changes</button>
+                    </form>
+                </div>
+
+                <!-- Change Password -->
+                <div class="profile-card">
+                    <h2 class="section-title"
+                        style="margin-bottom: 1.5rem; border-bottom: 1px solid #333; padding-bottom: 1rem;">Change
+                        Password</h2>
+                    <form>
+                        <div style="margin-bottom: 1.5rem;">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <label class="form-label">Current Password</label>
+                                <a href="forgot-password.html"
+                                    style="color:#4ade80; font-size:0.9rem; text-decoration:none;">Forgot Password?</a>
+                            </div>
+                            <div class="relative">
+                                <span class="input-icon">🔒</span>
+                                <input type="password" class="form-input" />
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div>
+                                <label class="form-label">New Password</label>
+                                <div class="relative">
+                                    <span class="input-icon">🔒</span>
+                                    <input type="password" class="form-input" />
+                                </div>
+                            </div>
+                            <div>
+                                <label class="form-label">Confirm New Password</label>
+                                <div class="relative">
+                                    <span class="input-icon">🔒</span>
+                                    <input type="password" class="form-input" />
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 2rem;">Update Password</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Column: Stats -->
+            <div>
+                <!-- Loyalty -->
+                <div class="loyalty-card">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3 style="font-size: 1.1rem; font-weight: 600;">🪙 Loyalty Coins</h3>
+                        <span style="font-size: 1.5rem;">⭐</span>
+                    </div>
+                    <div id="coinBalance" style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">0.00
+                    </div>
+                    <p style="color: rgba(255,255,255,0.8); margin-bottom: 1rem;">Available coins</p>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.85rem;">Earn 1% coins on every purchase. Use
+                        coins on products with coin offers in the cart!</p>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="profile-card">
+                    <h3 class="section-title" style="font-size: 1.1rem; margin-bottom: 1rem;">Account Summary</h3>
+                    <div class="space-y-3">
+                        <div class="summary-row">
+                            <span>Total Orders</span>
+                            <span class="summary-val">23</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Reviews Written</span>
+                            <span class="summary-val" style="color: #4ade80;">18</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Refunds</span>
+                            <span class="summary-val" style="color: #fbbf24;">2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const user = JSON.parse(localStorage.getItem('user'));
+            // Allow both customer and seller
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const phoneNumbersList = document.getElementById('phone-numbers-list');
+            const addPhoneBtn = document.getElementById('add-phone-btn');
+
+            // Fetch Profile Data
+            try {
+                // Determine endpoint based on role
+                const endpoint = user.role === 'seller'
+                    ? `http://localhost:5000/api/auth/profile/seller/${user.id}`
+                    : `http://localhost:5000/api/auth/profile/customer/${user.id}`;
+
+                const res = await fetch(endpoint);
+                if (res.ok) {
+                    const data = await res.json();
+
+                    // Populate Fields
+                    // Inputs: 0:Name, 1:Username, 2:Email, 3:Phone, 4:Location, 5:Address
+                    const inputs = document.querySelectorAll('.form-input');
+
+                    if (data.name) inputs[0].value = data.name;
+                    if (data.username) inputs[1].value = data.username;
+                    if (data.email) inputs[2].value = data.email;
+                    if (data.phone) inputs[3].value = data.phone;
+
+                    // Handle Seller vs Customer fields
+                    // Customer: town, address
+                    // Seller: shop_town, shop_details (mapped to address), shop_name (maybe append to name or ignore for now)
+
+                    if (user.role === 'seller') {
+                        if (data.shop_town) inputs[4].value = data.shop_town;
+                        if (data.shop_details) inputs[5].value = data.shop_details;
+                    } else {
+                        if (data.town) inputs[4].value = data.town;
+                        if (data.address) inputs[5].value = data.address;
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to load profile", err);
+            }
+
+            // Fetch Coin Balance
+            if (user.role === 'customer') {
+                try {
+                    const coinRes = await fetch(`http://${window.location.hostname}:5000/api/coins/${user.id}`);
+                    if (coinRes.ok) {
+                        const coinData = await coinRes.json();
+                        document.getElementById('coinBalance').textContent = parseFloat(coinData.coins).toFixed(2);
+                    }
+                } catch (err) {
+                    console.error("Failed to load coins", err);
+                }
+            }
+
+            // Handle Profile Update
+            const forms = document.querySelectorAll('form');
+            const profileForm = forms[0];
+
+            profileForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const inputs = profileForm.querySelectorAll('.form-input');
+                const name = inputs[0].value;
+                const username = inputs[1].value;
+                const phone = inputs[3].value;
+                const town = inputs[4].value;
+                const address = inputs[5].value;
+
+                // Prepare Body based on Role
+                const body = {
+                    role: user.role,
+                    id: user.id,
+                    name,
+                    username,
+                    phone
+                };
+
+                if (user.role === 'customer') {
+                    body.town = town;
+                    body.address = address;
+                } else if (user.role === 'seller') {
+                    body.shop_town = town; // Map 'Location' input to shop_town
+                    body.shop_details = address; // Map 'Address' input to shop_details
+                }
+
+                try {
+                    const res = await fetch("http://localhost:5000/api/auth/profile/update", {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(body)
+                    });
+                    const result = await res.json();
+                    if (res.ok) {
+                        alert("Profile Updated Successfully!");
+                    } else {
+                        alert("Update failed: " + result.message);
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert("Server Error");
+                }
+            });
+
+            addPhoneBtn.addEventListener('click', function () {
+                const div = document.createElement('div');
+                div.className = 'relative phone-number-row';
+                div.style.marginBottom = '0.5em';
+                div.innerHTML = `
+                    <span class="input-icon">📞</span>
+                    <input type="tel" name="phone[]" class="form-input" style="padding-right: 40px;" />
+                    <button type="button" class="remove-phone-btn" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; color:#f87171; font-size:1.2em; cursor:pointer;">&times;</button>
+                `;
+                phoneNumbersList.appendChild(div);
+                updateRemoveButtons();
+            });
+
+            function updateRemoveButtons() {
+                const rows = phoneNumbersList.querySelectorAll('.phone-number-row');
+                rows.forEach((row, idx) => {
+                    const btn = row.querySelector('.remove-phone-btn');
+                    btn.style.display = rows.length > 1 ? 'block' : 'none';
+                    btn.onclick = function () {
+                        if (rows.length > 1) {
+                            row.remove();
+                            updateRemoveButtons();
+                        }
+                    };
+                });
+            }
+
+            updateRemoveButtons();
+        });
+    </script>
+</body>
+
+</html>

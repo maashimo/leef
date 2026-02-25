@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - leef 🍃</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        /* Top Navbar Styles */
+        .top-navbar {
+            background-color: rgba(10, 10, 10, 0.95);
+            border-bottom: 1px solid #333;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .navbar-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-logo {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            color: #4ade80;
+        }
+
+        .navbar-location {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-left: 2rem;
+        }
+
+        .navbar-nav {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 2rem;
+        }
+
+        .navbar-link {
+            text-decoration: none;
+            color: #eee;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s;
+        }
+
+        .navbar-link.active {
+            background-color: #10b981;
+            color: white;
+        }
+
+        .navbar-link:hover {
+            background-color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .top-navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .navbar-nav {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body class="">
+
+    <!-- Top Navbar -->
+    <nav class="top-navbar">
+        <div class="navbar-header">
+            <a href="index.html" class="navbar-logo">
+                leef 🍃
+            </a>
+            <div class="navbar-location">Colombo, Sri Lanka</div>
+        </div>
+        <ul class="navbar-nav">
+            <li><a href="customer-dashboard.html" class="navbar-link active">Dashboard</a></li>
+            <li><a href="products.html" class="navbar-link">Products</a></li>
+            <li><a href="cart.html" class="navbar-link ">Cart</a></li>
+
+            <li><a href="feedback.html" class="navbar-link">Feedback</a></li>
+            <li><a href="returns.html" class="navbar-link">Refund</a></li>
+            <li><a href="profile.html" class="navbar-link ">Profile</a></li>
+            <li><a href="index.html" class="navbar-link">Logout</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div class="dashboard-header">
+            <div>
+                <h1 class="page-title">Welcome back!</h1>
+                <p class="page-subtitle">Here's what's happening with your account</p>
+            </div>
+            <div class="header-actions">
+                <!-- Notifications -->
+                <div class="notifications">
+                    <button class="btn btn-icon">🔔</button>
+                    <span class="notification-count">4</span>
+                </div>
+                <!-- Chat Support -->
+                <div class="chatbot-widget">
+                    <button class="btn btn-primary">💬 Chat Support</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Featured Products -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">You may like</h2>
+                <a href="products.html" class="link">View All →</a>
+            </div>
+            <div class="products-grid" id="adsGrid"
+                style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:2em; margin-top:2em;">
+                <div style="grid-column: 1/-1; text-align: center; color: #888;">Loading recommendations...</div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", async () => {
+                // User Name Logic
+                try {
+                    const user = JSON.parse(localStorage.getItem("user"));
+                    // Permissive auth check - just try to get a name, don"t redirect
+                    let displayName = "Customer";
+                    if (user && (user.name || user.username || user.email)) {
+                        displayName = user.name || user.username || user.email.split('@')[0];
+                        document.querySelector(".page-title").innerText = `Welcome back, ${displayName}!`;
+                    }
+                } catch (e) {
+                    console.log("Auth check error (ignored):", e);
+                }
+
+                // Logout logic
+                const logoutLinks = document.querySelectorAll(".navbar-link[href='index.html']");
+                logoutLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        localStorage.removeItem("user");
+                        localStorage.removeItem("token");
+                    });
+                });
+
+                // Load Ads
+                try {
+                    const res = await fetch("http://localhost:5000/api/products/marketplace");
+                    const products = await res.json();
+
+                    const grid = document.getElementById("adsGrid");
+                    grid.innerHTML = "";
+
+                    // Filter only Ads for this section
+                    const ads = products.filter(p => p.is_ads == 1);
+
+                    if (ads.length === 0) {
+                        grid.innerHTML = "<div style='grid-column: 1/-1; text-align: center; color: #888;'>No recommendations available right now.</div>";
+                        return;
+                    }
+
+                    ads.forEach(p => {
+                        const imageUrl = p.image_url ? `http://localhost:5000/${p.image_url}` : 'images/default.png';
+
+                        // Sale Badge Logic
+                        const saleBadge = p.sale_details ?
+                            `<div style="position:absolute; top:10px; left:10px; background:#ef4444; color:white; padding:0.2em 0.6em; border-radius:1em; font-size:0.75rem; font-weight:bold; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">SALE: ${p.sale_details}</div>`
+                            : '';
+
+                        const card = document.createElement("div");
+                        card.className = "product-card";
+                        card.style.textAlign = "center";
+                        // Simple price display — no coin discount on cards
+                        let priceHtml = "";
+                        if (p.sale_details) {
+                            priceHtml = `<div style="margin:0.5rem 0;">
+                                           <span style="text-decoration: line-through; color: #999; font-size: 0.8rem;">Rs. ${p.price}</span>
+                                           <div style="color:#ef4444; font-weight:bold; font-size:1rem;">Rs. ${p.sale_details}</div>
+                                           ${p.coins_percent ? `<span style="color:#f59e0b; font-size:0.8rem;">🪙 Earn ${p.coins_percent}% Coins</span>` : ''}
+                                         </div>`;
+                        } else {
+                            priceHtml = `<div style="display:flex;justify-content:space-between;align-items:center;margin:0.5rem 0">
+                                           <span style="color:#4ade80;font-weight:bold">Rs. ${p.price}</span>
+                                           ${p.coins_percent ? `<span style="color:#f59e0b; font-size:0.8rem;">🪙 Earn ${p.coins_percent}% Coins</span>` : ''}
+                                         </div>`;
+                        }
+
+                        card.innerHTML = `
+                        <div style="position:relative;">
+                            <img src="${imageUrl}" class="product-image"
+                                style="width:100%; height:120px; object-fit:cover; border-radius:1em; margin-bottom:1em;">
+                            ${saleBadge}
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title" style="font-size:1.1em; margin-bottom:0.4em;">${p.name}</h3>
+                            <p class="text-muted" style="font-size:0.9rem">Seller: ${p.shop_name}</p>
+                            ${priceHtml}
+                            <button class="btn btn-primary btn-block" style="width:100%" onclick="window.location.href='product-details.html?id=${p.id}'">View Details</button>
+                        </div>
+                        `;
+                        grid.appendChild(card);
+                    });
+
+                } catch (err) {
+                    console.error(err);
+                }
+
+                // Load Customer's Custom Requests (Notifications)
+                try {
+                    const userStr = localStorage.getItem("user");
+                    if (!userStr) throw new Error("Not logged in");
+                    const user = JSON.parse(userStr);
+
+                    const tbody = document.getElementById("recent-orders-tbody");
+                    const res = await fetch(`http://localhost:5000/api/orders/customer/${user.id}`);
+                    if (!res.ok) throw new Error("Failed to fetch customer orders");
+                    const orders = await res.json();
+
+                    let htmlStr = "";
+                    let renderedCount = 0;
+
+                    orders.forEach(order => {
+                        const orderDate = new Date(order.updated_at || order.created_at);
+                        const now = new Date();
+                        const hoursDiff = (now - orderDate) / (1000 * 60 * 60);
+
+                        // Show Approved/Rejected orders that are less than 30 days old (720 hours)
+                        if (order.status !== "pending" && hoursDiff <= 720) {
+                            const isApproved = order.status === "approved";
+                            const statusColor = isApproved ? "#16a34a" : "#dc2626";
+                            const adminNote = isApproved ? (order.admin_note ? `Note: ${order.admin_note}` : "") : `Reason: ${order.rejection_reason || 'N/A'}`;
+
+                            // Define the action button per the user's request
+                            const actionHtml = isApproved
+                                ? `<a href="cart.html" class="link" style="background:#16a34a; color:#fff; padding:0.4em 1em; border-radius:0.5em; font-weight:600; text-decoration:none;">Add to Cart</a>`
+                                : `<span style="color:${statusColor}; font-weight:bold;">Rejected</span>`;
+
+                            // Calculate Total Price
+                            let totalPriceDisplay = "N/A";
+                            if (order.price && order.total_qty) {
+                                // Extract the first number from the price string (e.g. "90 per 300g" -> 90)
+                                const priceMatch = order.price.match(/[\d.]+/);
+                                if (priceMatch) {
+                                    const basePrice = parseFloat(priceMatch[0]);
+                                    const total = basePrice * parseFloat(order.total_qty);
+                                    totalPriceDisplay = `Rs. ${total.toFixed(2)}`;
+                                }
+                            }
+
+                            htmlStr += `
+                                <tr>
+                                    <td>#REQ-${order.id}</td>
+                                    <td>
+                                        ${order.product_name}<br>
+                                        <small style="color:#666">${adminNote}</small>
+                                    </td>
+                                    <td>${orderDate.toLocaleDateString()}</td>
+                                    <td>${totalPriceDisplay}</td>
+                                    <td>
+                                        ${actionHtml}
+                                    </td>
+                                </tr>
+                            `;
+                            renderedCount++;
+                        }
+                    });
+
+                    if (renderedCount === 0) {
+                        tbody.innerHTML = "<tr><td colspan='5' style='text-align:center'>No recent order notifications</td></tr>";
+                    } else {
+                        tbody.innerHTML = htmlStr;
+                    }
+
+                } catch (err) {
+                    console.error("Error loading order notifications:", err);
+                    document.getElementById("recent-orders-tbody").innerHTML = "<tr><td colspan='5' style='text-align:center;color:red;'>Failed to load orders</td></tr>";
+                }
+            });
+        </script>
+
+        <!-- Recent Orders -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">Recent Orders (Last 30 days)</h2>
+                <a href="orders.html" class="link">View All →</a>
+            </div>
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Product</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recent-orders-tbody">
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: #888;">Loading recent orders...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    </div>
+</body>
+
+</html>
